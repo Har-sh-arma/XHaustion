@@ -1,0 +1,6 @@
+{
+    "num_fans":4,
+    "num_dampers":5,
+    "fans":[150, 185, 210, 235],
+    "dampers":{"shut":1.1,"open":2}
+}
