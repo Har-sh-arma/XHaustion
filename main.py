@@ -1,17 +1,12 @@
 import json
-from Unit import FanUnit, DamperUnit
 import time
-
+from SystemClasses import System
 
 config = json.load(open("./config.json"))
 
-fan = [FanUnit(i) for i in range(config["num_fans"])]
-damper = [DamperUnit(i) for i in range(config["num_dampers"])]
-
 if __name__ == "__main__":
+    sys = System(config)
     while True:
-        print("Polling...")
-        for i in range(config["num_fans"]):
-            print(f"Fan {i} temperature: {fan[i].info()["temperature"]}")
-                    
+        inp = input("Enter command: ")
+        print(list(inp.split()))
         time.sleep(1)
