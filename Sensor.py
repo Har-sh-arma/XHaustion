@@ -1,14 +1,15 @@
 class temperatureSensor:
     def __init__(self, id):
         self.id = id
-        self.temperature = self.get_temperature()
+        # self.temperature = self.get_temperature()
+        self.temperature = 80
         self.unit = "Celsius"
 
     def get_temperature(self) -> float:
         #Actual GPIO Program to get Temperature
-        default_temp = 80
-        # print(f"Temperature Sensor {self.id}: {default_temp}")
-        return default_temp
+        
+        print(f"Temperature Sensor {self.id}: {self.temperature}")
+        return self.temperature
     
 
 class pressureSensor:

@@ -1,17 +1,18 @@
 
 {
-    "has_intake": "True",
+    "has_intake": "False",
     "override": {"fans": {"exhaust": "False", "intake": "False" }, "dampers" : ["False","False","False","False" ]},
     "num_dampers": 4,
     "passive_modes" :{
-             "default":{"fans": {"exhaust": 30, "intake": 10 }, "dampers" : [25, 25, 25, 25 ]},
+             "default":{"fans": {"exhaust": 10, "intake": 5 }, "dampers" : [25, 25, 25, 25 ]},
              "1":{"fans": {"exhaust": 40, "intake": 10 }, "dampers" : [35, 25, 35, 25 ]},
              "2":{"fans": {"exhaust": 50, "intake": 10 }, "dampers" : [35, 35, 35, 35 ]},
              "3":{"fans": {"exhaust": 70, "intake": 20 }, "dampers" : [45, 45, 45, 45 ]}
            },
-    "Power_scaling_for_hoods":[[40, 60, 80, 100],
+    "fan_power_scaling_for_hoods":[[40, 60, 80, 100],
                                [30, 50, 70, 90],
                                [20, 40, 60, 80],
-                               [10, 30, 50, 70]]
+                               [10, 30, 50, 70]],
+    "damper_angles": [25, 45, 60, 90]
 }
      
