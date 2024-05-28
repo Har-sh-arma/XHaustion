@@ -1,13 +1,26 @@
-05-24 20:26:19 - INFO - Damper 3 is set to 25 degrees
-05-24 20:26:19 - INFO - System Initialized Successfully
-05-24 20:26:23 - INFO - Temperature for hood 2 set to 200 F
-05-24 20:26:23 - INFO - Fan 0: set to 80%
-05-24 20:26:23 - INFO - Damper 2 is set to 90 degrees
-05-24 20:26:34 - INFO - Temperature for hood 2 set to 100 F
-05-24 20:26:34 - INFO - Fan 0: set to 20%
-05-24 20:26:34 - INFO - Damper 2 is set to 25 degrees
-05-24 20:26:44 - INFO - Temperature for hood 2 set to 80 F
-05-24 20:26:44 - INFO - Fan 0: set to 10%
-05-24 20:27:10 - INFO - Temperature for hood 2 set to 200 F
-05-24 20:27:10 - INFO - Fan 0: set to 80%
-05-24 20:27:10 - INFO - Damper 2 is set to 90 degrees
+05-28 11:41:22 - INFO - System Initialized Successfully
+05-28 11:41:30 - INFO - Temperature for hood 1 set to 90 F
+05-28 11:41:30 - INFO - Fan 0: set to 50%
+05-28 11:41:30 - INFO - Damper 1 is set to 45 degrees
+05-28 11:41:30 - INFO - System Mode: active
+05-28 11:41:38 - INFO - Temperature for hood 2 set to 100 F
+05-28 11:41:38 - INFO - Fan 0: set to 90%
+05-28 11:41:38 - INFO - Damper 2 is set to 45 degrees
+05-28 11:41:48 - INFO - Temperature for hood 1 set to 70 F
+05-28 11:41:48 - INFO - Fan 0: set to 70%
+05-28 11:41:48 - INFO - Damper 1 is set to 25 degrees
+05-28 11:42:36 - INFO - Temperature for hood 1 set to 71 F
+05-28 11:42:36 - INFO - Fan 0: set to 90%
+05-28 11:42:36 - INFO - Damper 1 is set to 45 degrees
+05-28 11:42:48 - INFO - Temperature for hood 1 set to 85 F
+05-28 11:42:57 - INFO - Temperature for hood 1 set to 83 F
+05-28 11:43:01 - INFO - Temperature for hood 1 set to 82 F
+05-28 11:43:09 - INFO - Temperature for hood 2 set to 74 F
+05-28 11:43:13 - INFO - Temperature for hood 2 set to 75 F
+05-28 11:43:18 - INFO - Temperature for hood 2 set to 0 F
+05-28 11:43:18 - INFO - Fan 0: set to 50%
+05-28 11:43:18 - INFO - Damper 2 is set to 25 degrees
+05-28 11:43:26 - INFO - Temperature for hood 1 set to 0 F
+05-28 11:43:26 - INFO - Fan 0: set to 10%
+05-28 11:43:26 - INFO - Damper 1 is set to 25 degrees
+05-28 11:43:26 - INFO - System Mode: passive

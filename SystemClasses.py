@@ -5,14 +5,19 @@ logger = logging.getLogger("XHaustion")
 class System:
     def __init__(self, config):
         self.config = config
+        self.mode = config["mode"]
         if(config["has_intake"]=="True"):
             self.intake = Fan(1, config["passive_modes"]["default"]["fans"]["intake"])
         self.exhaust = Fan(0, config["passive_modes"]["default"]["fans"]["exhaust"]) 
         self.dampers = [Damper(i, config["passive_modes"]["default"]["dampers"][i]) for i in range(config["num_dampers"])]
         self.tempSensors = [temperatureSensor(i) for i in range(config["num_dampers"])]
         
-
+    def log_fan_power(self ,temperature_i, power , temp_sensor, added_fan_power):
+        if(self.exhaust.fan_speed == added_fan_power):
+            return
+        logger.debug(f"Temperature: {temperature_i} \t Power: {power} \t Hood: {temp_sensor.id}")
     def update(self):
+        active_flag = False
         if(self.config["has_intake"]=="True"):
             if (self.config["override"]["fans"]["intake"]== "False"):
                 # Query how does intake scale with the temperature?
@@ -24,20 +29,17 @@ class System:
             power = 0
             for i in self.tempSensors:
                 temperature_i = i.get_temperature()
-                if(temperature_i >180):
-                    power+= self.config["fan_power_scaling_for_hoods"][i.id][-1]
-                    logger.debug(f"Temperature: {temperature_i} \t Power: {power} \t Hood: {i.id}")
-                elif(temperature_i > 150):
-                    power+= self.config["fan_power_scaling_for_hoods"][i.id][-2]
-                    logger.debug(f"Temperature: {temperature_i} \t Power: {power} \t Hood: {i.id}")
-                elif(temperature_i > 120):
-                    power+= self.config["fan_power_scaling_for_hoods"][i.id][-3]
-                    logger.debug(f"Temperature: {temperature_i} \t Power: {power} \t Hood: {i.id}")
-                elif(temperature_i > 90):
-                    power+= self.config["fan_power_scaling_for_hoods"][i.id][-4]
-                    logger.debug(f"Temperature: {temperature_i} \t Power: {power} \t Hood: {i.id}")
+                l = len(self.config["temperature_range"])
+                while(l):
+                    if(temperature_i > self.config["temperature_range"][l-1]):
+                        power+= self.config["fan_power_scaling_for_hoods"][i.id][l-1]
+                        active_flag = True
+                        break
+                    l-=1
+
             if(power == 0):
                 self.exhaust.set_fan_speed(self.config["passive_modes"]["default"]["fans"]["exhaust"])
+
             else:
                 if power>100:
                     power = 100
@@ -46,18 +48,23 @@ class System:
         for i in self.tempSensors:
              temperature_i = i.get_temperature()
              if(self.config["override"]["dampers"][i.id] == "False"):
-                if(temperature_i >180):
-                    self.dampers[i.id].set_damper_angle(self.config["damper_angles"][-1])
-                elif(temperature_i > 150):
-                    self.dampers[i.id].set_damper_angle(self.config["damper_angles"][-2])
-                elif(temperature_i > 120):
-                    self.dampers[i.id].set_damper_angle(self.config["damper_angles"][-3])
-                elif(temperature_i > 90):
-                    self.dampers[i.id].set_damper_angle(self.config["damper_angles"][-4])
-                else:
-                    if(self.dampers[i.id].damper_angle == self.config["passive_modes"]["default"]["dampers"][i.id]):
-                        continue
+                l = len(self.config["temperature_range"])
+                default_damper = True
+                while(l):
+                    if(temperature_i > self.config["temperature_range"][l-1]):
+                        self.dampers[i.id].set_damper_angle(self.config["damper_angles"][l-1])
+                        active_flag = True
+                        default_damper = False
+                        break
+                    l-=1
+                if(default_damper):
                     self.dampers[i.id].set_damper_angle(self.config["passive_modes"]["default"]["dampers"][i.id])
+        if (((self.mode == "passive") and (active_flag)) or ((self.mode == "active")and (not active_flag))):
+            if(active_flag):
+                self.mode = "active"
+            else:
+                self.mode = "passive"
+            logger.info("System Mode: " + self.mode)
 
 
 class Fan():
@@ -69,6 +76,8 @@ class Fan():
         pass
     def set_fan_speed(self, fan_speed_percentage:int):
         #Actual GPIO Program to set fan Speed
+        if (self.fan_speed == fan_speed_percentage):
+            return
         logger.info(f"Fan {self.id}: set to {fan_speed_percentage}%")
         self.fan_speed = fan_speed_percentage
 
@@ -84,6 +93,8 @@ class Damper():
         pass
     def set_damper_angle(self, angle:int):
         #Actual GPIO Program to set damper angle
+        if (self.damper_angle == angle):
+            return
         logger.info(f"Damper {self.id} is set to {angle} degrees")
         self.damper_angle = angle
         pass

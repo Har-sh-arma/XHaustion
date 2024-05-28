@@ -1,8 +1,10 @@
 
 {
+    "mode": "passive",
     "has_intake": "False",
     "override": {"fans": {"exhaust": "False", "intake": "False" }, "dampers" : ["False","False","False","False" ]},
     "num_dampers": 4,
+    "temperature_range": [40, 70, 100, 150],
     "passive_modes" :{
              "default":{"fans": {"exhaust": 10, "intake": 5 }, "dampers" : [25, 25, 25, 25 ]},
              "1":{"fans": {"exhaust": 40, "intake": 10 }, "dampers" : [35, 25, 35, 25 ]},

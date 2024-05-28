@@ -24,7 +24,7 @@ if __name__ == "__main__":
         inp = list(input("Enter command: ").split())
         if(inp[0] == "T"):
             sys.tempSensors[int(inp[1])].temperature = int(inp[2])
-            logger.info(f"Temperature for hood {inp[1]} set to {inp[2]} F")
+            logger.info(f"Temperature for hood {inp[1]} set to {inp[2]} C")
             # print(f"Temperature for hood {inp[1]} set to {inp[2]} F")
         sys.update()
         time.sleep(1)

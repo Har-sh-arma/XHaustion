@@ -2,7 +2,7 @@ class temperatureSensor:
     def __init__(self, id):
         self.id = id
         # self.temperature = self.get_temperature()
-        self.temperature = 80
+        self.temperature = 25
         self.unit = "Celsius"
 
     def get_temperature(self) -> float:
