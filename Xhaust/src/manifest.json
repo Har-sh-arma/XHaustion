@@ -324,6 +324,7 @@
         }
       ],
     "start_url": "index.html",
+    "display_override": ["fullscreen", "minimal-ui"],
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#ffffff",

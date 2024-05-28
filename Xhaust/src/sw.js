@@ -4,7 +4,7 @@ self.addEventListener('install', (event) => {
     event.waitUntil(
         caches
             .open('my-site-cache-v1')
-            .then((cache) => cache.addAll(['/', 'index.html', 'modeCustom/index.html']))
+            .then((cache) => cache.addAll(["modeCustom/index.html", "modeCustom/style.css", "modeCustom/script.js", "index.html", "style.css", "script.js"]))
     );
 })
 
