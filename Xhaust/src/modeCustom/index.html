@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mode Custom</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="content">
+        <div class="heading"></div>
+        <div class="left">
+            <div class="fan_area">
+            </div>
+        </div>
+        <div class="right">
+            <div class="damper_area">
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        let mode = {"Default":{"fans": {"exhaust": 10, "intake": 5 }, "dampers" : [25, 25, 25, 25 ]}}
+        
+        const heading = document.querySelector('.heading')
+        let arr = Object.entries(mode)
+        heading.innerText = `Customize: ${arr[0][0]}`
+
+        const fan_area = document.querySelector('.fan_area')
+        const damper_area = document.querySelector('.damper_area')
+
+        let fans = Object.entries(mode[arr[0][0]]['fans'])
+        let dampers = Object.entries(mode[arr[0][0]]['dampers'])
+
+
+        for(let i = 0; i < fans.length; i++){
+            let div = document.createElement('div')
+            div.classList.add('fan')
+            let label_div = document.createElement('div')
+            label_div.classList.add('label')
+            label_div.innerText = `${fans[i][0]}:`
+            div.appendChild(label_div)
+
+            let input = document.createElement('input')
+            input.type = 'range'
+            input.min = '0'
+            input.max = '100'
+            input.value = fans[i][1]
+            input.classList.add('fan_input')
+            input.classList.add(fans[i][0])
+            input.addEventListener('input', (e) => {
+                mode[arr[0][0]]['fans'][e.target.classList[1]] = e.target.value
+            })
+            div.appendChild(input)
+
+
+            fan_area.appendChild(div)
+        }
+    </script>
+</body>
+</html>
