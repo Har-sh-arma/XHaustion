@@ -1,0 +1,50 @@
+
+div{
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid black; */
+}
+
+body{
+grid-template-rows: 1fr 7fr;
+}
+.content{
+    margin-top: 1%;
+    display: grid;
+    height: 95%;
+    width: 100%;
+    grid-template-rows: repeat(5, 1fr);
+}
+
+.row{
+    display: grid;
+    grid-template-columns: 3fr repeat(3, 2fr);
+}
+
+.row > div {
+    border: 2px solid var(--light);
+    display: grid;
+    place-items: center;
+}
+
+.heading{
+    background-color:  var(--very-dark);
+    font-weight: bold;
+    font-size: 1em;
+    color: var(--very-light) !important;
+}
+
+.row:nth-child(even){
+    background-color:var(--very-light);
+    color: var(--very-dark);
+}
+
+.row:nth-child(odd){
+    background-color: var(dark);
+    color: var(--light);
+}
+
+.row:hover{
+    background-color: var(--primary-color);
+    color: var(--very-light);
+}

@@ -19,3 +19,32 @@
   *{
     user-select: none;
   }
+
+body > div > div {
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid black; */
+}
+
+
+  a{
+    color: var(--light);
+    text-decoration: none;
+  }
+
+
+  
+.nav{
+  font: 1em sans-serif;
+  color: var(--light);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.nav > div{
+  border-radius: 5%;
+  background-color: var(--primary-color);
+  border: 3px solid var(--light);
+  display: grid;
+  place-items: center;
+}

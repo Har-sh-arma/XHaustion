@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="manifest" href="manifest.json" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#317EFB" />
+    <meta charset="UTF-8" />
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="../global.css">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="nav">
+      <div class="nav-font"><a href="/">DASHBOARD</a></div>
+      <div class="nav-font"><a href="../hood/">HOODS</a></div>
+      <div class="nav-font"><a href="../fan/">FAN</a></div>
+      <div class="nav-font"><a href="../help/">HELP</a></div>
+      <div class="nav-font"><a href="../config/">CONFIG</a></div>
+    </div>
+
+    <div class="content">
+        <div class="heading row">
+            <div>Name</div>
+            <div>Air-flow [m^3/min]</div>
+            <div>Temperature [°C]</div>
+            <div>Damper angle [°]</div>
+        </div>
+
+    </div>
+
+    <script>
+        let data = {data:[
+            {name:"hood1", airflow: 56, temp: 36, damper_angle: 60},
+            {name:"hood2", airflow: 78, temp: 46, damper_angle: 70},
+            {name:"hood3", airflow: 98, temp: 56, damper_angle: 80},
+            {name:"hood4", airflow: 108, temp: 66, damper_angle: 90}
+        ]}
+
+
+        for(let i = 0; i < data.data.length; i++){
+            let div = document.createElement('div')
+            div.classList.add('row')
+            let name = document.createElement('div')
+            name.innerText = data.data[i].name
+            let airflow = document.createElement('div')
+            airflow.innerText = data.data[i].airflow
+            let temp = document.createElement('div')
+            temp.innerText = data.data[i].temp
+            let damper = document.createElement('div')
+            damper.innerText = data.data[i].damper_angle
+            div.appendChild(name)
+            div.appendChild(airflow)
+            div.appendChild(temp)
+            div.appendChild(damper)
+            document.querySelector('.content').appendChild(div)
+        }
+
+
+    </script>
+        
+    </body>
+
+
+</html>
