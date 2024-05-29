@@ -1,0 +1,161 @@
+
+.nav{
+    font: 1em sans-serif;
+    color: var(--light);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  
+  .nav > div{
+    border-radius: 5%;
+    background-color: var(--primary-color);
+    border: 3px solid var(--light);
+    display: grid;
+    place-items: center;
+  }
+  
+  
+
+.content{
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 3fr;
+}
+
+.label{
+    background-color: var(--primary-color);
+}
+
+.content > div{
+
+    color: var(--very-light);
+    border: 2px solid var(--primary-color);
+}
+
+.left{
+    display: grid;
+    place-items: center;
+    background-color: var(--dark);
+}
+
+.right{
+    background-color: var(--dark);
+}
+
+
+
+div{
+    /* border: 1px solid black; */
+    height: 100%;
+    width: 100%;
+}
+
+.heading {
+    display: grid;
+    place-items: center;
+    font-size: xx-large;
+    grid-column: 1/3;
+    color: var(--very-dark) !important;
+    font-weight: 600;
+}
+
+.damper_heading{
+    background-color: var(--primary-color);
+    font-size: xx-large;
+}
+
+.fan_area{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.fan{
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    place-items: center;
+}
+
+.label{
+    font-size: xx-large;
+}
+
+
+/********** Range Input Styles **********/
+/*Range Reset*/
+input[type="range"] {
+   -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    /* width: 15rem; */
+}
+
+/* Removes default focus */
+input[type="range"]:focus {
+  outline: none;
+}
+
+/***** Chrome, Safari, Opera and Edge Chromium styles *****/
+/* slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+   background-color: #053a5f;
+   border-radius: 0.5rem;
+   height: 0.5rem;  
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+   appearance: none;
+   margin-top: -12px; /* Centers thumb on the track */
+
+   /*custom styles*/
+   background-color: #5cd5eb;
+   height: 2rem;
+   width: 1rem;
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {   
+  border: 1px solid #053a5f;
+  outline: 3px solid #053a5f;
+  outline-offset: 0.125rem; 
+}
+
+/******** Firefox styles ********/
+/* slider track */
+input[type="range"]::-moz-range-track {
+   background-color: #053a5f;
+   border-radius: 0.5rem;
+   height: 0.5rem;
+}
+
+/* slider thumb */
+input[type="range"]::-moz-range-thumb {
+   border: none; /*Removes extra border that FF applies*/
+   border-radius: 0; /*Removes default border-radius that FF applies*/
+
+   /*custom styles*/
+   background-color: #5cd5eb;
+   height: 2rem;
+   width: 1rem;
+}
+
+input[type="range"]:focus::-moz-range-thumb {
+  border: 1px solid #053a5f;
+  outline: 3px solid #053a5f;
+  outline-offset: 0.125rem; 
+}
+
+.fan_input{
+    height: 85%;
+    width: 85%;
+}
+
+.damper_area{
+    display: grid;
+    place-items: center ;
+    grid-template-rows: 4fr repeat(4, 5fr);
+}
+

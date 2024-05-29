@@ -1,16 +1,17 @@
 from Sensor import temperatureSensor, pressureSensor
+from watchdog.observers import Observer
 import logging
 logger = logging.getLogger("XHaustion")
 
 class System:
     def __init__(self, config):
         self.config = config
-        self.mode = config["mode"]
-        if(config["has_intake"]=="True"):
-            self.intake = Fan(1, config["passive_modes"]["default"]["fans"]["intake"])
-        self.exhaust = Fan(0, config["passive_modes"]["default"]["fans"]["exhaust"]) 
-        self.dampers = [Damper(i, config["passive_modes"]["default"]["dampers"][i]) for i in range(config["num_dampers"])]
-        self.tempSensors = [temperatureSensor(i) for i in range(config["num_dampers"])]
+        self.mode = self.config["mode"]
+        if(self.config["has_intake"]=="True"):
+            self.intake = Fan(1, self.config["passive_modes"]["default"]["fans"]["intake"])
+        self.exhaust = Fan(0, self.config["passive_modes"]["default"]["fans"]["exhaust"]) 
+        self.dampers = [Damper(i, self.config["passive_modes"]["default"]["dampers"][i]) for i in range(self.config["num_dampers"])]
+        self.tempSensors = [temperatureSensor(i) for i in range(self.config["num_dampers"])]
         
     def log_fan_power(self ,temperature_i, power , temp_sensor, added_fan_power):
         if(self.exhaust.fan_speed == added_fan_power):
