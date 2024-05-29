@@ -1,0 +1,9 @@
+[Unit]
+Description=xhaust daemon
+
+[Service]
+User=harsh
+WorkingDirectory=/home/harsh/XHaustion
+ExecStart=/home/harsh/XHaustion/.venv/bin/python3 main.py
+[Install]
+WantedBy=multi-user.target

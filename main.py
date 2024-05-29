@@ -13,7 +13,7 @@ time_format = "%m-%d %H:%M:%S"
 formatter = logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(message)s', datefmt=time_format)
 
 logger = logging.getLogger('XHaustion')
-handler = logging.handlers.RotatingFileHandler('ExhaustSystem.log', maxBytes=5000, backupCount=5)
+handler = logging.handlers.RotatingFileHandler('logs/ExhaustSystem.log', maxBytes=5000, backupCount=5)
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.setLevel(logging.INFO)
@@ -45,7 +45,7 @@ class Watcher:
 class Handler(FileSystemEventHandler):
  
     @staticmethod
-    def on_any_event(event):
+    def on_modified(event):
         config = json.load(open("./config/config.json"))
         sys = System(config)
         logger.info("System Config Changed")
