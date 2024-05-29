@@ -23,6 +23,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if(not api_req(self)):
             super().do_GET()
             return
+        # Get reqs for information from the system
         print("api request")
         self.send_response(200)
         self.end_headers()

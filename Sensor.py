@@ -8,7 +8,7 @@ class temperatureSensor:
     def get_temperature(self) -> float:
         #Actual GPIO Program to get Temperature
         
-        print(f"Temperature Sensor {self.id}: {self.temperature}")
+        # print(f"Temperature Sensor {self.id}: {self.temperature}")
         return self.temperature
     
 
