@@ -34,6 +34,7 @@ class Watcher:
         self.observer.start()
         try:
             while True:
+                sys.tempSensors[0].temperature = 35
                 sys.update()
                 time.sleep(1)
         except:
@@ -46,9 +47,12 @@ class Handler(FileSystemEventHandler):
  
     @staticmethod
     def on_modified(event):
-        config = json.load(open("./config/config.json"))#add try except
-        sys.config = config
-        logger.info("System Config Changed")
+        try:
+            config = json.load(open("./config/config.json"))#add try except
+            sys.config = config
+            logger.info("System Config Changed")
+        except json.decoder.JSONDecodeError:
+            pass
 
         
  
@@ -56,6 +60,10 @@ class Handler(FileSystemEventHandler):
  
 if __name__ == '__main__':
     system_state = SharedMemoryDict('system_state', 1024)
+    config["mode"] = "passive"
+    config["passive_mode"] = "default"
+    config["override"] = {"fans": {"exhaust": 0, "intake": 0}, "dampers": [0, 0, 0, 0]}
+    json.dump(config, open("./config/config.json", "w"))
     sys = System(config, system_state)
     logger.info("System Initialized Successfully")
     watch = Watcher(os.path.join( os.getcwd(), "config"))
