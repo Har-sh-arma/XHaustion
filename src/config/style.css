@@ -33,7 +33,7 @@ body{
 .content > div{
 
     color: var(--very-light);
-    border: 2px solid var(--primary-color);
+    /* border: 2px solid var(--primary-color); */
 }
 
 .left{
@@ -161,3 +161,22 @@ input[type="range"]:focus::-moz-range-thumb {
     grid-template-rows: 4fr repeat(4, 5fr);
 }
 
+.modes{
+    display: grid;
+    grid-template-rows: 4fr 3fr;
+    place-items: center;
+    padding-top: 8vh;
+    /* border: solid black; */
+    font: 2em sans-serif;
+    color: var(--light);
+    display: grid;
+    grid-template-columns: repeat(2fr, 2fr);
+
+}
+.modes > div{
+    border-radius: 5%;
+  background-color: var(--primary-color);
+  border: 3px solid var(--light);
+  display: grid;
+  place-items: center;
+}

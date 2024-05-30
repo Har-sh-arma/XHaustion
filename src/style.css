@@ -20,6 +20,11 @@
 /* .air-flow, .fan-speed, .dampers {
 
 } */
+/* .air-flow{
+  font-display: bottom ;
+  font-size: xx-large;
+
+} */
 
 .icon{
   background-size: contain;
@@ -42,12 +47,12 @@
 }
 
 .arrow{
-  width: 20vh;
+  width: 21vh;
   border-radius: 20%;
   border: 4px solid black;
   transition: all 2s ease-in;
   transform-origin: right ; /* Fixed transform origin */
-  transform: translateX(-50%) translateY(500%) rotate(0deg);
+  transform: translateX(-50%) translateY(24vh) rotate(0deg);
 }
 
 .modes{
@@ -134,4 +139,23 @@
   font-weight: 500;
   color: var(--light);
   width: fit-content;
+}
+
+.speedometer-value {
+  /* position: absolute;
+  top: 50%;
+  left: 50%; */
+  /* transform: translate(-1.6vw, 3.9vh) scale(4); */
+  display: grid;
+  place-items: center;
+  font: 5vw sans-serif !important;
+  height: 9vw;
+  width: 9vw;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  background: var(--light);
+  box-shadow: 0 0px 5vh 2vh var(--light);
+  padding: 5px 10px;
+  border-radius: 50%;
+  z-index: 2;
 }

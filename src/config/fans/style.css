@@ -1,0 +1,28 @@
+
+body{
+    grid-template-rows: 1fr 7fr;
+}
+
+
+.content {
+    width: 98vw !important;
+    display: grid;
+    height: 99%;
+    grid-template-columns: repeat(4, 25vw);
+}
+
+
+  
+  
+  
+  
+.input-range {
+    -webkit-appearance: none !important;
+    -webkit-appearance: slider-vertical !important; /* WebKit */
+    
+}
+  
+  
+  
+  
+  

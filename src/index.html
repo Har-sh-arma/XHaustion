@@ -22,16 +22,19 @@
       <div class="air-flow">
         <div class="con">
           <div class="arrow"></div>
+          <div class="speedometer-value">0</div>
         </div>
       </div>
       <div class="fan-speed">
         <div class="con">
           <div class="arrow"></div>
+          <div class="speedometer-value">0</div>
         </div>
       </div>
       <div class="dampers">
         <div class="con">
           <div class="arrow"></div>
+          <div class="speedometer-value">0</div>
         </div>
       </div>
     </div>
@@ -40,8 +43,12 @@
       <div class="mode-label">MODES: </div>
       <div class="mode-list">
         <div>Default</div>
-        <div class="add-mode">
-          <p>+</p>
+        <div>MODE1</div>
+        <div>MODE2</div>
+        <div>MODE3</div>
+        <!-- <div class="add-mode">
+          <p>+</p> -->
+
         </div>
       </div>
     </div>
@@ -56,21 +63,21 @@
     </div>
   
    <script>
-
     function setDialRotation(selector, value) {
       const dial = document.querySelector(selector + ' .arrow');
       const degree =  value;
-      dial.style.transform = `translateX(-50%) translateY(500%) rotate(${degree}deg)`;
+      dial.style.transform = `translateX(-50%) translateY(24vh) rotate(${degree}deg)`;
+      
+      // Update speedometer value
+      const speedometerValue = document.querySelector(selector + ' .speedometer-value');
+      speedometerValue.textContent = value; // Update value
     }
   
     document.addEventListener('DOMContentLoaded', () => {
       setDialRotation('.air-flow', 60);
-      setDialRotation('.fan-speed', 90);
+      setDialRotation('.fan-speed', 180);
       setDialRotation('.dampers', 30);
     });
   </script>
-  
-  
   </body>
-  
 </html>
