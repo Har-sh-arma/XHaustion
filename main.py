@@ -6,7 +6,7 @@ from SystemClasses import System
 import logging
 import logging.handlers
 import os
-
+from shared_memory_dict import SharedMemoryDict
 
 sys = None
 time_format = "%m-%d %H:%M:%S"
@@ -46,8 +46,8 @@ class Handler(FileSystemEventHandler):
  
     @staticmethod
     def on_modified(event):
-        config = json.load(open("./config/config.json"))
-        sys = System(config)
+        config = json.load(open("./config/config.json"))#add try except
+        sys.config = config
         logger.info("System Config Changed")
 
         
@@ -55,7 +55,8 @@ class Handler(FileSystemEventHandler):
              
  
 if __name__ == '__main__':
-    sys = System(config)
+    system_state = SharedMemoryDict('system_state', 1024)
+    sys = System(config, system_state)
     logger.info("System Initialized Successfully")
     watch = Watcher(os.path.join( os.getcwd(), "config"))
     watch.run()

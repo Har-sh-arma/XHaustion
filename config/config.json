@@ -1,6 +1,7 @@
 
 {
     "mode": "passive",
+    "passive_mode": "default",
     "has_intake": "False",
     "override": {"fans": {"exhaust": "False", "intake": "False" }, "dampers" : ["False","False","False","False" ]},
     "num_dampers": 4,

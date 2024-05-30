@@ -2,9 +2,9 @@
 import http.server
 import socketserver
 import json
+from shared_memory_dict import SharedMemoryDict
 
-
-
+system_state = None
 PORT = 8000
 DIRECTORY = "src"
 
@@ -25,9 +25,10 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return
         # Get reqs for information from the system
         print("api request")
-        self.send_response(200)
+        self.send_response(200, f"{system_state["mode"]}")
         self.end_headers()
         return
+    
     def do_POST(self):
         if(self.path.split("/")[2] == "config"):
             pass
@@ -37,6 +38,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 
 if __name__ == "__main__":
+    system_state = SharedMemoryDict('system_state', 1024)
     with socketserver.TCPServer(("", PORT), Handler) as httpd:
         print("serving at port", PORT)
         httpd.serve_forever()
