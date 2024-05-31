@@ -71,6 +71,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 if __name__ == "__main__":
     system_state = SharedMemoryDict('system_state', 1024)
-    with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    with socketserver.TCPServer(("127.0.0.1", PORT), Handler) as httpd:
         print("serving at port", PORT)
         httpd.serve_forever()
