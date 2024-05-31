@@ -142,20 +142,22 @@
 }
 
 .speedometer-value {
-  /* position: absolute;
-  top: 50%;
-  left: 50%; */
-  /* transform: translate(-1.6vw, 3.9vh) scale(4); */
+
   display: grid;
   place-items: center;
   font: 5vw sans-serif !important;
   height: 9vw;
   width: 9vw;
-  font-size: 1.2rem;
+  font-size: 2vw;
   color: var(--primary-color);
   background: var(--light);
   box-shadow: 0 0px 5vh 2vh var(--light);
   padding: 5px 10px;
   border-radius: 50%;
   z-index: 2;
+}
+
+.mode.active{
+  background-color: var(--primary-color) !important;
+  border: 3px solid var(--light) !important;
 }

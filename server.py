@@ -16,6 +16,12 @@ def api_req(request) -> bool:
         return False
     return True
 
+
+
+'''
+Shared memory manipulation works only on the higher level so pull the dict modify and push it back
+'''
+
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=DIRECTORY, **kwargs)
@@ -39,6 +45,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.send_header('Content-type', 'application/json')
             self.end_headers()
             self.wfile.write(shared_memory_dict.serializers.JSONSerializer().dumps(str(system_state).replace("'", '"')))
+            return
         self.send_response(404)
         self.end_headers()
         return
@@ -51,18 +58,21 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             json.dump(config, open("./config/config.json", "w"))
 
 
+        # curl -H "Content-Type: application/json" -d "{\"exhaust\": 0, \"intake\": 0}" http://127.0.0.1:8000/api/fanspeed
         elif(self.path.split("/")[2] == "fanspeed"):
             req = self.rfile.read(int(self.headers['Content-Length'])).decode("utf-8")
             speed = json.loads(req)
             key = list(speed.keys())[0]
-            print(key, speed[key])
-            config = json.load(open("./config/config.json"))#add try except
             if(speed[key] == "-1"):
-                config["override"]["fans"][key] = 0
+                override = system_state["override"]
+                override["fans"][key] = 1
+                system_state["override"] = override
             else:
-                config["override"]["fans"][key] = 1
+                override = system_state["override"]
+                override["fans"][key] = 1
+                system_state["override"] = override
                 system_state[key] = int(speed[key])
-            json.dump(config, open("./config/config.json", "w"))
+                
         self.send_response(200)
         self.end_headers()
         return

@@ -12,7 +12,7 @@
   <body>
     <div class="nav">
       <div class="nav-font"><a href="/">DASHBOARD</a></div>
-      <div class="nav-font"><a href="hood/">HOODS</a></div>
+      <div class="nav-font"><a href="hoods/">HOODS</a></div>
       <div class="nav-font"><a href="fan/">FAN</a></div>
       <div class="nav-font"><a href="help/">HELP</a></div>
       <div class="nav-font"><a href="config/">CONFIG</a></div>
@@ -42,13 +42,10 @@
     <div class="modes">
       <div class="mode-label">MODES: </div>
       <div class="mode-list">
-        <div>Default</div>
+        <!-- <div>Default</div>
         <div>MODE1</div>
         <div>MODE2</div>
-        <div>MODE3</div>
-        <!-- <div class="add-mode">
-          <p>+</p> -->
-
+        <div>MODE3</div> -->
         </div>
       </div>
     </div>
@@ -61,23 +58,49 @@
         <div class="start-label">START</div>
       </div>
     </div>
-  
+  <script src="global.js"></script>
    <script>
-    function setDialRotation(selector, value) {
+
+
+
+    let selected_fan = "exhaust"
+    let selected_damper = 0
+    let selected_passive_mode = "default"
+    let selected_mode = "passive"
+    let conf = {};
+    let sys_state = {}
+    // init
+    async function init() {
+      conf = await getConfig();
+      sys_state = await getSystemState();
+    }
+    init().then(
+      ()=>{
+        window.requestAnimationFrame(animate)
+      }
+    )
+
+    const animate = () => {
+      window.requestAnimationFrame(animate)
+      // setDialRotation(".air-flow", sys_state["air_flow"], sys_state["air_flow"])
+      setDialRotation(".fan-speed", sys_state[selected_fan], sys_state[selected_fan]+"Rpm")
+      setDialRotation(".dampers", sys_state["dampers"][selected_damper]*2, sys_state["dampers"][selected_damper])
+    }
+    
+
+
+
+    function setDialRotation(selector, value, display_value) {
       const dial = document.querySelector(selector + ' .arrow');
       const degree =  value;
       dial.style.transform = `translateX(-50%) translateY(24vh) rotate(${degree}deg)`;
-      
-      // Update speedometer value
       const speedometerValue = document.querySelector(selector + ' .speedometer-value');
-      speedometerValue.textContent = value; // Update value
+      speedometerValue.textContent = display_value; // Update value
     }
-  
-    document.addEventListener('DOMContentLoaded', () => {
-      setDialRotation('.air-flow', 60);
-      setDialRotation('.fan-speed', 180);
-      setDialRotation('.dampers', 30);
-    });
+
+
+
+
   </script>
   </body>
 </html>

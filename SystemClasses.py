@@ -6,36 +6,59 @@ from shared_memory_dict import SharedMemoryDict
 import asyncio
 import json
 
+
+
+'''
+
+    Big change!!!  any issue pe first check this
+
+    "mode": "passive",
+    "passive_mode": "default",
+
+    "override": {
+        "fans": {
+            "exhaust": 0,
+            "intake": 0
+        },
+        "dampers": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+
+    moved to shm
+'''
+
 class System:
     def __init__(self, config, shm):
         self.shm = shm
         self.config = config
-        self.passive_mode = self.config["passive_mode"]
-        self.mode = self.config["mode"]
+        self.shm["mode"] = "passive"
+        self.shm["passive_mode"] = "default"
+        self.shm["override"] = {"fans":{"exhaust": 0, "intake": 0}, "dampers": [0, 0, 0, 0]}
         if(self.config["has_intake"]):
-            self.intake = Fan(1, self.config["passive_modes"][self.passive_mode]["fans"]["intake"])
-        self.exhaust = Fan(0, self.config["passive_modes"][self.passive_mode]["fans"]["exhaust"]) 
-        self.dampers = [Damper(i, self.config["passive_modes"][self.passive_mode]["dampers"][i]) for i in range(self.config["num_dampers"])]
+            self.intake = Fan(1, self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["intake"])
+        self.exhaust = Fan(0, self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["exhaust"]) 
+        self.dampers = [Damper(i, self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i]) for i in range(self.config["num_dampers"])]
         self.tempSensors = [temperatureSensor(i) for i in range(self.config["num_dampers"])]
-        self.sync_sys_state()
-    def sync_sys_state(self):
-        self.shm["mode"] = self.mode
-        self.shm["passive_mode"] = self.passive_mode
-        self.shm["override"] = self.config["override"]
+        self.init_sys_state()
+    def init_sys_state(self):
         if(self.config["has_intake"]):
             self.shm["intake"] = self.intake
         self.shm["exhaust"] = self.exhaust.fan_speed
         self.shm["dampers"] = [i.damper_angle for i in self.dampers]
-
+        self.temperatures = [i.get_temperature() for i in self.tempSensors]
 
     def update(self):
         active_flag = False
         if(self.config["has_intake"]):
-            if (not self.config["override"]["fans"]["intake"]):
+            if (not self.shm["override"]["fans"]["intake"]):
                 # Query how does intake scale with the temperature?
-                self.intake.set_fan_speed(self.config["passive_modes"][self.passive_mode]["fans"]["intake"])
+                self.intake.set_fan_speed(self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["intake"])
 
-        if(not self.config["override"]["fans"]["exhaust"]):
+        if(not self.shm["override"]["fans"]["exhaust"]):
             # Adding the power according to each hood.
             # if multiple stations are active then the power will be scaled accordingly [can vary the way to scale]
             power = 0
@@ -49,7 +72,7 @@ class System:
                         break
                     l-=1
             if(power == 0):
-                self.exhaust.set_fan_speed(self.config["passive_modes"][self.passive_mode]["fans"]["exhaust"])
+                self.exhaust.set_fan_speed(self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["exhaust"])
             else:
                 if power>100:
                     power = 100
@@ -58,7 +81,7 @@ class System:
             self.exhaust.set_fan_speed(self.shm["exhaust"])
         for i in self.tempSensors:
              temperature_i = i.get_temperature()
-             if( not self.config["override"]["dampers"][i.id]):
+             if( not self.shm["override"]["dampers"][i.id]):
                 l = len(self.config["temperature_range"])
                 default_damper = True
                 while(l):
@@ -69,17 +92,16 @@ class System:
                         break
                     l-=1
                 if(default_damper):
-                    self.dampers[i.id].set_damper_angle(self.config["passive_modes"][self.passive_mode]["dampers"][i.id])
-        if (((self.mode == "passive") and (active_flag)) or ((self.mode == "active")and (not active_flag))):
+                    self.dampers[i.id].set_damper_angle(self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i.id])
+
+        if (((self.shm["mode"] == "passive") and (active_flag)) or ((self.shm["mode"] == "active")and (not active_flag))):
             if(active_flag):
-                self.mode = "active"
+                self.shm["mode"] = "active"
             else:
-                self.mode = "passive"
-                self.config["override"] = {"fans": {"exhaust": 0, "intake": 0}, "dampers": [0, 0, 0, 0]} 
+                self.shm["mode"] = "passive"
+                self.shm["override"] = {"fans": {"exhaust": 0, "intake": 0}, "dampers": [0, 0, 0, 0]} 
                 # so that changes to the system made while cooking are transient and if the over ride is done while the system is in passive mode they stay
-            self.config["mode"] = self.mode
-            json.dump(self.config, open("./config/config.json", "w"))
-            logger.info("System Mode: " + self.mode)
+            logger.info("System Mode: " + self.shm["mode"])
 
 
 class Fan():

@@ -35,6 +35,9 @@ class Watcher:
         try:
             while True:
                 sys.tempSensors[0].temperature = 35
+                print("...Running..")
+                # print(sys.shm["exhaust"])
+                print(sys.shm["override"])
                 sys.update()
                 time.sleep(1)
         except:
@@ -60,10 +63,6 @@ class Handler(FileSystemEventHandler):
  
 if __name__ == '__main__':
     system_state = SharedMemoryDict('system_state', 1024)
-    config["mode"] = "passive"
-    config["passive_mode"] = "default"
-    config["override"] = {"fans": {"exhaust": 0, "intake": 0}, "dampers": [0, 0, 0, 0]}
-    json.dump(config, open("./config/config.json", "w"))
     sys = System(config, system_state)
     logger.info("System Initialized Successfully")
     watch = Watcher(os.path.join( os.getcwd(), "config"))

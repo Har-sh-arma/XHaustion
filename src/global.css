@@ -16,6 +16,15 @@
     padding: 0;
   }
   
+  .nav > div>a:hover{
+    background-color: var(--very-light);
+    color: var(--primary-color);
+  }
+
+  .nav > div>a.current_nav{
+    background-color: var(--very-light);
+    color: var(--primary-color); 
+  }
   *{
     user-select: none;
   }

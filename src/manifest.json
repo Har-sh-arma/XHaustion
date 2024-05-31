@@ -323,7 +323,7 @@
           "sizes": "256x256"
         }
       ],
-    "start_url": "index.html",
+    "start_url": "/",
     "display_override": ["fullscreen", "minimal-ui"],
     "display": "standalone",
     "background_color": "#ffffff",
