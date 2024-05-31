@@ -1,1 +1,2 @@
+shared-memory-dict==0.7.2
 watchdog==4.0.1
