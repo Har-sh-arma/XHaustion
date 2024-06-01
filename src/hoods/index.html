@@ -30,31 +30,41 @@
     <script src="../global.js"></script>
 
     <script>
-        let data = {data:[
-            {name:"hood1", airflow: 56, temp: 36, damper_angle: 60},
-            {name:"hood2", airflow: 78, temp: 46, damper_angle: 70},
-            {name:"hood3", airflow: 98, temp: 56, damper_angle: 80},
-            {name:"hood4", airflow: 108, temp: 66, damper_angle: 90}
-        ]}
+
+        let conf = {};
+        let sys_state = {};
+        
+        const animate = async()=>{
+            conf = await getConfig();
+            sys_state = await getSystemState();
+
+            document.querySelector('.content').innerHTML = '';
+            document.querySelector('.content').innerHTML = '<div class="heading row"><div>Name</div><div><p>Air-flow [m<sup>3</sup>/min]</p></div><div>Temperature [°C]</div><div>Damper angle [°]</div></div>';
+
+            for(let i = 0; i < conf.num_dampers; i++){
+                let div = document.createElement('div')
+                div.classList.add('row')
+                let name = document.createElement('div')
+                name.innerText = i
+                let airflow = document.createElement('div')
+                // airflow.innerText = sys_state["air_flow"]
+                let temp = document.createElement('div')
+                temp.innerText = sys_state["temperatures"][i]
+                let damper = document.createElement('div')
+                damper.innerText = sys_state["dampers"][i]
+                div.appendChild(name)
+                div.appendChild(airflow)
+                div.appendChild(temp)
+                div.appendChild(damper)
+                document.querySelector('.content').appendChild(div)
+            }
 
 
-        for(let i = 0; i < data.data.length; i++){
-            let div = document.createElement('div')
-            div.classList.add('row')
-            let name = document.createElement('div')
-            name.innerText = data.data[i].name
-            let airflow = document.createElement('div')
-            airflow.innerText = data.data[i].airflow
-            let temp = document.createElement('div')
-            temp.innerText = data.data[i].temp
-            let damper = document.createElement('div')
-            damper.innerText = data.data[i].damper_angle
-            div.appendChild(name)
-            div.appendChild(airflow)
-            div.appendChild(temp)
-            div.appendChild(damper)
-            document.querySelector('.content').appendChild(div)
         }
+        animate()
+
+        setInterval(animate, 1000);
+
 
 
     </script>

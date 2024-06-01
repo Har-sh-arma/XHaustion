@@ -57,22 +57,13 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             config = json.loads(req)
             json.dump(config, open("./config/config.json", "w"))
 
-
-        # curl -H "Content-Type: application/json" -d "{\"exhaust\": 0, \"intake\": 0}" http://127.0.0.1:8000/api/fanspeed
-        elif(self.path.split("/")[2] == "fanspeed"):
-            req = self.rfile.read(int(self.headers['Content-Length'])).decode("utf-8")
-            speed = json.loads(req)
-            key = list(speed.keys())[0]
-            if(speed[key] == "-1"):
-                override = system_state["override"]
-                override["fans"][key] = 1
-                system_state["override"] = override
-            else:
-                override = system_state["override"]
-                override["fans"][key] = 1
-                system_state["override"] = override
-                system_state[key] = int(speed[key])
                 
+        elif(self.path.split("/")[2] == "system_state"):
+            req = self.rfile.read(int(self.headers['Content-Length'])).decode("utf-8")
+            new_state = json.loads(req)
+            for key in system_state:
+                system_state[key] = new_state[key]
+
         self.send_response(200)
         self.end_headers()
         return

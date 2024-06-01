@@ -19,6 +19,7 @@ grid-template-rows: 1fr 7fr;
 .row{
     display: grid;
     grid-template-columns: 3fr repeat(3, 2fr);
+    font-size: 4vh;
 }
 
 .row > div {
@@ -30,7 +31,7 @@ grid-template-rows: 1fr 7fr;
 .heading{
     background-color:  var(--very-dark);
     font-weight: bold;
-    font-size: 1em;
+    font-size: 2vw;
     color: var(--very-light) !important;
 }
 

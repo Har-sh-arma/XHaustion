@@ -1,6 +1,7 @@
 
 
 
+
 .content{
   display: grid;
   place-items: center;
@@ -16,15 +17,10 @@
   display: grid;
   place-items: center;
 }
-
-/* .air-flow, .fan-speed, .dampers {
-
-} */
-/* .air-flow{
-  font-display: bottom ;
-  font-size: xx-large;
-
-} */
+ 
+.air-flow .speedometer-value{
+  font-size: 3vw;
+}
 
 .icon{
   background-size: contain;
@@ -55,6 +51,19 @@
   transform: translateX(-50%) translateY(24vh) rotate(0deg);
 }
 
+.current{
+  display: grid;
+  place-items: center;
+  width: 100%;
+  position: absolute;
+  top :5%;
+  background-color: var(--primary-color);
+  filter: opacity(0.7);
+  font-size: 3vw;
+  z-index: 1000;
+}
+
+
 .modes{
   display: grid;
   background-color: var(--very-dark);
@@ -79,6 +88,14 @@
   margin-bottom: 5%;
   border: 3px solid var(--light);
   font-size: 1.4rem;
+}
+
+.mode-list > div:hover{
+  background-color: var(--primary-color);
+}
+
+.mode-list > div.selected{
+  background-color: var(--primary-color);
 }
 
 .mode-label{
@@ -121,7 +138,7 @@
 .status-label{
   display: grid;
   place-items: center;
-  font-size: 2rem;
+  font-size: 3vw;
   font-weight: 500;
   color: var(--primary-color);
 }
@@ -135,20 +152,19 @@
 .start-label{
   display: grid;
   place-items: center;
-  font-size: 2.5rem;
+  font-size: 5vw;
   font-weight: 500;
   color: var(--light);
   width: fit-content;
 }
 
 .speedometer-value {
-
   display: grid;
   place-items: center;
-  font: 5vw sans-serif !important;
+  font:sans-serif !important;
   height: 9vw;
   width: 9vw;
-  font-size: 2vw;
+  font-size: 5vw;
   color: var(--primary-color);
   background: var(--light);
   box-shadow: 0 0px 5vh 2vh var(--light);
@@ -157,7 +173,4 @@
   z-index: 2;
 }
 
-.mode.active{
-  background-color: var(--primary-color) !important;
-  border: 3px solid var(--light) !important;
-}
+

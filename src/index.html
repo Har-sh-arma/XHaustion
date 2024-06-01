@@ -27,12 +27,14 @@
       </div>
       <div class="fan-speed">
         <div class="con">
+          <div class="current">EXHAUST</div>
           <div class="arrow"></div>
           <div class="speedometer-value">0</div>
         </div>
       </div>
       <div class="dampers">
         <div class="con">
+          <div class="current">1</div>
           <div class="arrow"></div>
           <div class="speedometer-value">0</div>
         </div>
@@ -42,10 +44,6 @@
     <div class="modes">
       <div class="mode-label">MODES: </div>
       <div class="mode-list">
-        <!-- <div>Default</div>
-        <div>MODE1</div>
-        <div>MODE2</div>
-        <div>MODE3</div> -->
         </div>
       </div>
     </div>
@@ -65,8 +63,6 @@
 
     let selected_fan = "exhaust"
     let selected_damper = 0
-    let selected_passive_mode = "default"
-    let selected_mode = "passive"
     let conf = {};
     let sys_state = {}
     // init
@@ -74,31 +70,48 @@
       conf = await getConfig();
       sys_state = await getSystemState();
     }
-    init().then(
-      ()=>{
-        window.requestAnimationFrame(animate)
-      }
-    )
+    init().then(() => {animate();setInterval(animate, 1000);})
+
 
     const animate = () => {
-      window.requestAnimationFrame(animate)
-      // setDialRotation(".air-flow", sys_state["air_flow"], sys_state["air_flow"])
-      setDialRotation(".fan-speed", sys_state[selected_fan], sys_state[selected_fan]+"Rpm")
-      setDialRotation(".dampers", sys_state["dampers"][selected_damper]*2, sys_state["dampers"][selected_damper])
+      init()
+      let modeList = document.querySelector('.mode-list')
+      modeList.innerHTML = ''
+      Object.keys(conf.passive_modes).forEach((mode) => {
+        let div = document.createElement('div')
+        div.innerText = mode.toUpperCase()
+        if(mode === sys_state["passive_mode"]) div.classList.add('selected')
+        div.addEventListener('click', async() => {
+          sys_state = await getSystemState();
+          sys_state["passive_mode"] = mode
+          setSystemState(sys_state).then(() => {
+            requestAnimationFrame(animate)
+          })
+        })
+        modeList.appendChild(div)
+      })
+      document.querySelector(".fan-speed .current").innerText = selected_fan.toUpperCase()
+      document.querySelector(".dampers .current").innerText = selected_damper+1
+      setDialRotation(".air-flow", 0,"<center><p>0 m<sup>3</sup>/min</p></center>")
+      setDialRotation(".fan-speed", sys_state[selected_fan]*1.8, (sys_state[selected_fan]/100)*conf[`${selected_fan}_max_rpm`] +"\nrpm")
+      setDialRotation(".dampers", sys_state["dampers"][selected_damper]*2, sys_state["dampers"][selected_damper]+"°")
     }
     
-
-
+    
 
     function setDialRotation(selector, value, display_value) {
       const dial = document.querySelector(selector + ' .arrow');
       const degree =  value;
       dial.style.transform = `translateX(-50%) translateY(24vh) rotate(${degree}deg)`;
       const speedometerValue = document.querySelector(selector + ' .speedometer-value');
-      speedometerValue.textContent = display_value; // Update value
+      speedometerValue.innerHTML = display_value; // Update value
     }
 
-
+    document.querySelector(".fan-speed").addEventListener("click", () => {
+      if (! conf["has_intake"]) return;
+      if(selected_fan === "intake") selected_fan = "exhaust"
+      else selected_fan = "intake"
+    })
 
 
   </script>

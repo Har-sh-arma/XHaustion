@@ -36,8 +36,7 @@ class Watcher:
             while True:
                 sys.tempSensors[0].temperature = 35
                 print("...Running..")
-                # print(sys.shm["exhaust"])
-                print(sys.shm["override"])
+                print(system_state)
                 sys.update()
                 time.sleep(1)
         except:

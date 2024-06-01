@@ -17,16 +17,35 @@ if (!flag) {
 
 
 const getSystemState = async() => {
-    let res = await fetch("api/system_state/")
+    let res = await fetch(`${window.location.origin}/api/system_state/` , {origin: window.location.origin})
     let data = await res.json()
     return JSON.parse(data)
 }
 
 const getConfig = async() => {
-    let res = await fetch("api/config/")
+    let res = await fetch(`${window.location.origin}/api/config/`)
     let data = await res.json()
     return data
 }
 
+const setConfig = async(config) => {
+    let res = await fetch(`${window.location.origin}/api/config/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(config),
+    })
+}
 
+
+const setSystemState = async(sys_state) => {
+    let res = await fetch(`${window.location.origin}/api/system_state/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sys_state),
+    })
+}
 
