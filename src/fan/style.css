@@ -29,16 +29,18 @@ grid-template-rows: 1fr 7fr;
 }
 
 .speed{
+    background-color: var(--light);
     display: grid;
+    place-items: center;
     grid-template-rows: repeat(2, 1fr);
 }
 .heading{
     display: grid;
     place-items: center;
-    font-size: 1.5rem;
+    font-size: 8vw;
     font-weight: bolder;
-    color: black;
-    background-color: aliceblue;
+    color: var(--very-dark);
+    background-color: var(--light);
 }
 
 .stats > div{
@@ -55,7 +57,12 @@ grid-template-rows: 1fr 7fr;
     place-items: center;
     font-size: 1.5rem;
     font-weight: bolder;
-    color: black;
+    color: var(--primary-color);
+}
+
+input[type="range"]{
+    width: 70%;
+    height: 50%;
 }
 
 

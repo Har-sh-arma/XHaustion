@@ -55,8 +55,10 @@ class System:
         active_flag = False
         if(self.config["has_intake"]):
             if (not self.shm["override"]["fans"]["intake"]):
-                # Query how does intake scale with the temperature?
+                # Query how does intake scale with the temperature        ????? 
                 self.intake.set_fan_speed(self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["intake"])
+            else:
+                self.intake.set_fan_speed(self.shm["intake"])
 
         if(not self.shm["override"]["fans"]["exhaust"]):
             # Adding the power according to each hood.
@@ -92,6 +94,7 @@ class System:
                         break
                     l-=1
                 if(default_damper):
+                    
                     self.dampers[i.id].set_damper_angle(self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i.id])
 
         if (((self.shm["mode"] == "passive") and (active_flag)) or ((self.shm["mode"] == "active")and (not active_flag))):

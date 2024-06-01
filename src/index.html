@@ -53,7 +53,7 @@
         <div class="status-label"> PASSIVE </div>
       </div>
       <div class="start">
-        <div class="start-label">START</div>
+        <div class="start-label">RESET</div>
       </div>
     </div>
   <script src="global.js"></script>
@@ -92,11 +92,18 @@
       })
       document.querySelector(".fan-speed .current").innerText = selected_fan.toUpperCase()
       document.querySelector(".dampers .current").innerText = selected_damper+1
+      document.querySelector(".status-label").innerText = sys_state["mode"].toUpperCase()
       setDialRotation(".air-flow", 0,"<center><p>0 m<sup>3</sup>/min</p></center>")
       setDialRotation(".fan-speed", sys_state[selected_fan]*1.8, (sys_state[selected_fan]/100)*conf[`${selected_fan}_max_rpm`] +"\nrpm")
       setDialRotation(".dampers", sys_state["dampers"][selected_damper]*2, sys_state["dampers"][selected_damper]+"°")
     }
     
+    document.querySelector(".start-label").addEventListener("click", () => {
+      sys_state["override"] = {"fans":{"exhaust": 0, "intake": 0}, "dampers": [0, 0, 0, 0]}
+      sys_state["mode"] = "passive"
+      sys_state["passive_mode"] = "default"    
+      setSystemState(sys_state).then(() => { requestAnimationFrame(animate) })
+    })
     
 
     function setDialRotation(selector, value, display_value) {

@@ -51,7 +51,6 @@
               el.addEventListener("input", () => {
                 sys_state[el.className] = el.value
                 sys_state["override"]["fans"][el.className] = 1
-                console.log(sys_state)
                 setSystemState(sys_state).then(() => { requestAnimationFrame(animate) })
               })
             })
@@ -63,98 +62,7 @@
 
         animate()
 
-        // let exhaust = document.createElement("div")
-        // exhaust.classList.add("section")
-        // let heading = document.createElement("div")
-        //  heading.classList.add("heading")
-        //         heading.innerText = "INTAKE"
-        // let stats = document.createElement("div")
-        // stats.classList.add("stats")
-        // let air_flow = document.createElement("div")
-        // air_flow.classList.add("stat")
-        // air_flow.innerText = " " + data["data"][0]["air_flow"]+ " l / min"
-        // let duct_temperature = document.createElement("div")
-        // duct_temperature.classList.add("stat")
-        // duct_temperature.innerText = " " + data["data"][0]["duct_temperature"]+ "°C"
-        // let duct_pressure = document.createElement("div")
-        // duct_pressure.classList.add("stat")
-        // duct_pressure.innerText = " " + data["data"][0]["duct_pressure"]+ "Pa"
-        // stats.appendChild(air_flow)
-        // stats.appendChild(duct_temperature)
-        // stats.appendChild(duct_pressure)
-
-        // let speed = document.createElement("div")
-        // speed.classList.add("speed")
-        // let speed_val = document.createElement("div")
-        // speed_val.classList.add("speed_val")
-        // speed_val.innerText = "Fan Speed: " + data["data"][0]["fan_speed"]+"Rpm"
-        // speed.appendChild(speed_val)
-        // let speed_slider = document.createElement("input")
-        // speed_slider.type = "range"
-        // speed_slider.min = "0"
-        // speed_slider.max = "10000"
-        // speed_slider.value = data["data"][0]["fan_speed"]
-        // speed_slider.classList.add("speed_slider")
-        // speed_slider.addEventListener("input", (e) => {
-        //   speed_val.innerText = "Fan Speed: " + e.target.value
-        // })
-
-        // speed.appendChild(speed_slider)
-        // exhaust.appendChild(heading)
-        // exhaust.appendChild(stats)
-        // exhaust.appendChild(speed)
-
-        // // let intake = document.createElement("div")
-        // // if (config["has_intake"] === "True"){
-        // //         intake.classList.add("section")
-        // //         let heading = document.createElement("div")
-        // //         heading.classList.add("heading")
-        // //         heading.innerText = "INTAKE"
-        // //         let stats = document.createElement("div")
-        // //         stats.classList.add("stats")
-        // //         let air_flow = document.createElement("div")
-        // //         air_flow.classList.add("stat")
-        // //         air_flow.innerText = " " + data["data"][1]["air_flow"]+ " l / min"
-        // //         let duct_temperature = document.createElement("div")
-        // //         duct_temperature.classList.add("stat")
-        // //         duct_temperature.innerText = "" + data["data"][1]["duct_temperature"]+ "°C"
-        // //         let duct_pressure = document.createElement("div")
-        // //         duct_pressure.classList.add("stat")
-        // //         duct_pressure.innerText = " " + data["data"][1]["duct_pressure"]+ "Pa"
-        // //         stats.appendChild(air_flow)
-        // //         stats.appendChild(duct_temperature)
-        // //         stats.appendChild(duct_pressure)
-
-        // //         let speed = document.createElement("div")
-        // //         speed.classList.add("speed")
-        // //         let speed_val = document.createElement("div")
-        // //         speed_val.classList.add("speed_val")
-        // //         speed_val.innerText = "Fan Speed: " + data["data"][1]["fan_speed"]+"Rpm"
-        // //         speed.appendChild(speed_val)
-        // //         let speed_slider = document.createElement("input")
-        // //         speed_slider.type = "range"
-        // //         speed_slider.min = "0"
-        // //         speed_slider.max = "10000"
-        // //         speed_slider.value = data["data"][1]["fan_speed"]
-        // //         speed_slider.classList.add("speed_slider")
-        // //         speed_slider.addEventListener("input", (e) => {
-        // //           speed_val.innerText = "Fan Speed: " + e.target.value 
-        // //         })
-
-        // //         speed.appendChild(speed_slider)
-        // //         intake.appendChild(heading)
-        // //         intake.appendChild(stats)
-        // //         intake.appendChild(speed)
-
-        // // }
-
-        // let content = document.getElementsByClassName("content")
-        // content[0].appendChild(exhaust)
-        // // content[0].appendChild(intake)
-
-
-
-
+    
     </script>
         
     </body>

@@ -34,7 +34,7 @@ class Watcher:
         self.observer.start()
         try:
             while True:
-                sys.tempSensors[0].temperature = 35
+                sys.tempSensors[0].temperature = 95
                 print("...Running..")
                 print(system_state)
                 sys.update()

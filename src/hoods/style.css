@@ -18,20 +18,21 @@ grid-template-rows: 1fr 7fr;
 
 .row{
     display: grid;
-    grid-template-columns: 3fr repeat(3, 2fr);
-    font-size: 4vh;
+    grid-template-columns: 1fr repeat(3, 2fr);
 }
 
 .row > div {
     border: 2px solid var(--light);
+    /* font-size: 5vh !important; */
     display: grid;
     place-items: center;
+
 }
 
 .heading{
     background-color:  var(--very-dark);
     font-weight: bold;
-    font-size: 2vw;
+    font-size: 2vw !important;
     color: var(--very-light) !important;
 }
 
