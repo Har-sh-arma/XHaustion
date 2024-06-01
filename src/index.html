@@ -120,6 +120,11 @@
       else selected_fan = "intake"
     })
 
+    document.querySelector(".dampers").addEventListener("click", () => {
+      if(selected_damper === 3) selected_damper = 0
+      else selected_damper += 1
+    })
+
 
   </script>
   </body>
