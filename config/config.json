@@ -1,4 +1,5 @@
 {
+    "pwm_pins": [12, 32],
     "exhaust_max_rpm": 5000,
     "intake_max_rpm": 3000,
     "has_intake": 1,

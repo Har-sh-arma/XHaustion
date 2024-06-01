@@ -5,31 +5,11 @@ logger = logging.getLogger("XHaustion")
 from shared_memory_dict import SharedMemoryDict
 import asyncio
 import json
+from actuator import Fan, Damper
 
 
 
-'''
 
-    Big change!!!  any issue pe first check this
-
-    "mode": "passive",
-    "passive_mode": "default",
-
-    "override": {
-        "fans": {
-            "exhaust": 0,
-            "intake": 0
-        },
-        "dampers": [
-            0,
-            0,
-            0,
-            0
-        ]
-    },
-
-    moved to shm
-'''
 
 class System:
     def __init__(self, config, shm):
@@ -39,8 +19,8 @@ class System:
         self.shm["passive_mode"] = "default"
         self.shm["override"] = {"fans":{"exhaust": 0, "intake": 0}, "dampers": [0, 0, 0, 0]}
         if(self.config["has_intake"]):
-            self.intake = Fan(1, self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["intake"])
-        self.exhaust = Fan(0, self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["exhaust"]) 
+            self.intake = Fan(1, self.config["pwm_pins"][1] ,self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["intake"])
+        self.exhaust = Fan(0, self.config["pwm_pins"][0] , self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["exhaust"]) 
         self.dampers = [Damper(i, self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i]) for i in range(self.config["num_dampers"])]
         self.tempSensors = [temperatureSensor(i) for i in range(self.config["num_dampers"])]
         self.init_sys_state()
@@ -110,39 +90,5 @@ class System:
         self.shm["dampers"] = [i.damper_angle for i in self.dampers]
         self.shm["intake"] = self.intake.fan_speed
         self.shm["exhaust"] = self.exhaust.fan_speed
-
-
-class Fan():
-
-    def __init__(self, id , default_speed):
-        self.id = id
-        self.fan_speed = default_speed
-        self.set_fan_speed(default_speed)
-        pass
-    def set_fan_speed(self, fan_speed_percentage:int):
-        #Actual GPIO Program to set fan Speed
-        if (self.fan_speed == fan_speed_percentage):
-            return
-        logger.info(f"Fan {self.id}: set to {fan_speed_percentage}%")
-        self.fan_speed = fan_speed_percentage
-    def __str__(self) -> str:
-        return str(self.id)
-
-class Damper():
-
-    def __init__(self, id, default_angle:int):
-        self.id = id
-        self.damper_angle = default_angle
-        self.set_damper_angle(default_angle)
-        pass
-    def set_damper_angle(self, angle:int):
-        #Actual GPIO Program to set damper angle
-        if (self.damper_angle == angle):
-            return
-        logger.info(f"Damper {self.id} is set to {angle} degrees")
-        self.damper_angle = angle
-        pass
-    def __str__(self) -> str:
-        return str(self.id)
 
 
