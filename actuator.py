@@ -1,7 +1,8 @@
 import logging
 logger = logging.getLogger("XHaustion")
-import asyncio
+import threading
 import RPi.GPIO as GPIO
+from time import sleep
 
 class Fan():
 
@@ -14,19 +15,24 @@ class Fan():
         GPIO.setmode(GPIO.BOARD)		#set pin numbering system
         GPIO.setup(self.pin,GPIO.OUT)
         self.pi_pwm = GPIO.PWM(self.pin,1000)		#create PWM instance with frequency
-        self.pi_pwm.start(0)	
-        pass
+        self.pi_pwm.start(0)
+        thread = threading.Thread(target=self.start)
+        thread.start()
+    
     def set_fan_speed(self, fan_speed_percentage:int):
         #Actual GPIO Program to set fan Speed
         if (self.fan_speed == fan_speed_percentage):
             return
+        print("fanspeed altered!!")
         logger.info(f"Fan {self.id}: set to {fan_speed_percentage}%")
         self.fan_speed = fan_speed_percentage
     
-    async def start(self):
+    def start(self):
         while True:
-            self.pi_pwm.ChangeDutyCycle(self.fan_speed)
-
+            print(self.fan_speed)
+            self.pi_pwm.ChangeDutyCycle(int(self.fan_speed))
+            sleep(1)
+    
     def __str__(self) -> str:
         return str(self.id)
 
