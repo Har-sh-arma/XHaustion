@@ -39,3 +39,7 @@
 06-01 14:12:17 - INFO - Damper 1 is set to 45 degrees
 06-01 14:12:17 - INFO - Damper 2 is set to 45 degrees
 06-01 14:12:17 - INFO - Damper 3 is set to 45 degrees
+06-01 18:48:19 - INFO - System Initialized Successfully
+06-01 18:48:19 - INFO - Fan 0: set to 60%
+06-01 18:48:19 - INFO - Damper 0 is set to 45 degrees
+06-01 18:48:19 - INFO - System Mode: active
