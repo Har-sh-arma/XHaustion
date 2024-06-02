@@ -39,6 +39,8 @@ class Watcher:
                 sys.update()
                 time.sleep(1)
         except:
+            sys.exhaust.thread.join()
+            sys.intake.thread.join()
             self.observer.stop()
             print("Observer Stopped")
         self.observer.join()
