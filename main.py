@@ -38,7 +38,9 @@ class Watcher:
                 sys.tempSensors[0].temperature = 25
                 print("...Running..")
                 sys.update()
-                time.sleep(1)
+                time.sleep(0.5)
+                #time.sleep(15)
+                #system.exit()
         except:
             self.observer.stop()
             print("Observer Stopped")
