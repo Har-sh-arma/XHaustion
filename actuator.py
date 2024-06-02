@@ -6,7 +6,7 @@ from time import sleep
 
 class Fan():
 
-    def __init__(self, id , pin , default_speed, thread):
+    def __init__(self, id , pin , default_speed ):
         self.id = id
         self.fan_speed = default_speed
         self.pin = pin
@@ -17,19 +17,18 @@ class Fan():
         self.pi_pwm = GPIO.PWM(self.pin,1000)		#create PWM instance with frequency
         self.pi_pwm.start(0)
         self.thread = threading.Thread(target=self.start)
+        self.thread.daemon = True
         self.thread.start()
     
     def set_fan_speed(self, fan_speed_percentage:int):
         #Actual GPIO Program to set fan Speed
         if (self.fan_speed == fan_speed_percentage):
             return
-        print("fanspeed altered!!")
         logger.info(f"Fan {self.id}: set to {fan_speed_percentage}%")
         self.fan_speed = fan_speed_percentage
     
     def start(self):
         while True:
-            print(self.fan_speed)
             self.pi_pwm.ChangeDutyCycle(int(self.fan_speed))
             sleep(1)
     

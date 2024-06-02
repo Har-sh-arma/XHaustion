@@ -7,6 +7,7 @@ import logging
 import logging.handlers
 import os
 from shared_memory_dict import SharedMemoryDict
+import sys as system
 
 sys = None
 time_format = "%m-%d %H:%M:%S"
@@ -39,10 +40,12 @@ class Watcher:
                 sys.update()
                 time.sleep(1)
         except:
-            sys.exhaust.thread.join()
-            sys.intake.thread.join()
             self.observer.stop()
             print("Observer Stopped")
+            sys.shm.shm.close()
+            sys.shm.shm.unlink()
+            self.observer.join()
+            system.exit()
         self.observer.join()
  
  
