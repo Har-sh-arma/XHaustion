@@ -37,6 +37,7 @@ class Watcher:
             while True:
                 sys.tempSensors[0].temperature = 25
                 print("...Running..")
+                print(sys.shm)
                 sys.update()
                 time.sleep(0.5)
                 #time.sleep(15)

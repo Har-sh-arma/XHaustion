@@ -121,7 +121,7 @@
     })
 
     document.querySelector(".dampers").addEventListener("click", () => {
-      if(selected_damper === conf["dampers"].length-1) selected_damper = 0
+      if(selected_damper === conf["num_dampers"]-1) selected_damper = 0
       else selected_damper += 1
     })
 
