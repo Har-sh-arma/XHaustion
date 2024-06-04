@@ -55,3 +55,6 @@ document.addEventListener('contextmenu', event => {
 document.addEventListener("keydown", e => {
     if(e.key == "F11") e.preventDefault();
 });
+document.onkeydown = function (e) {
+    return false;
+}
