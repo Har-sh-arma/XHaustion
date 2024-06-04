@@ -49,3 +49,9 @@ const setSystemState = async(sys_state) => {
     })
 }
 
+document.addEventListener('contextmenu', event => {
+    event.preventDefault();
+});
+document.addEventListener("keydown", e => {
+    if(e.key == "F11") e.preventDefault();
+});
