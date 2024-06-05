@@ -2,7 +2,7 @@
     "pwm_pins": [12, 32],
     "CS_PIN": 38,
     "SCK_PIN":40,
-    "temperature_sensor_pins": [37, 35, 33, 31, 29],
+    "temperature_pins": [37, 35, 33, 31, 29],
     "exhaust_max_rpm": 5000,
     "intake_max_rpm": 3000,
     "has_intake": 1,

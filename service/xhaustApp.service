@@ -1,0 +1,11 @@
+[Unit]
+Description=xhaust daemon
+
+[Service]
+User=harsh
+WorkingDirectory=/home/harsh/XHaustion
+ExecStart= sleep 5;/usr/bin/chromium-browser --profile-directory=Default --app-id=mngloiodpbedloingimookgdhhkgcblo
+Restart=always
+RestartSec=3
+[Install]
+WantedBy=multi-user.target

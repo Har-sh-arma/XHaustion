@@ -22,7 +22,7 @@ class System:
             self.intake = Fan(1, self.config["pwm_pins"][1] ,self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["intake"])
         self.exhaust = Fan(0, self.config["pwm_pins"][0] , self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["exhaust"]) 
         self.dampers = [Damper(i, self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i]) for i in range(self.config["num_dampers"])]
-        self.tempSensors = [temperatureSensor(i, self.config["CS_PIN"], self.config["CLK_PIN"] , self.config["temperature_pins"][i]) for i in range(self.config["num_dampers"])]
+        self.tempSensors = [temperatureSensor(i, self.config["CS_PIN"], self.config["SCK_PIN"] , self.config["temperature_pins"][i]) for i in range(self.config["num_dampers"])]
         self.init_sys_state()
     def init_sys_state(self):
         if(self.config["has_intake"]):

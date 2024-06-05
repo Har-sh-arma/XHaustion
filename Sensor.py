@@ -17,6 +17,7 @@ class temperatureSensor:
         self.unit = "Celsius"
 
     def get_temperature(self) -> float:
+        print("Temp Called")
         GPIO.output(38,GPIO.HIGH)
         sleep(0.5)
         GPIO.output(38,GPIO.LOW)

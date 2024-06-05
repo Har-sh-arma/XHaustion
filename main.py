@@ -39,7 +39,7 @@ class Watcher:
                 # print("...Running..")
                 print(sys.shm["temperatures"])
                 sys.update()
-                time.sleep(0.5)
+                #time.sleep(0.5)
                 #time.sleep(15)
                 #system.exit()
         except:
