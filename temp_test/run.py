@@ -24,4 +24,4 @@ while True:
         sleep(0.01)
         n -= 1
 
-    print(int(b[1:-5], 2))
+    print(int(b[1:-5], 2)+ int(b[-5])*0.5 + int(b[-4])*0.25)
