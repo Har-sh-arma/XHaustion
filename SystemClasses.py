@@ -45,7 +45,7 @@ class System:
             # if multiple stations are active then the power will be scaled accordingly [can vary the way to scale]
             power = 0
             for i in self.tempSensors:
-                temperature_i = i.get_temperature()
+                temperature_i = i.temperature
                 l = len(self.config["temperature_range"])
                 while(l):
                     if(temperature_i > self.config["temperature_range"][l-1]):
@@ -62,7 +62,7 @@ class System:
         else:
             self.exhaust.set_fan_speed(self.shm["exhaust"])
         for i in self.tempSensors:
-             temperature_i = i.get_temperature()
+             temperature_i = i.temperature
              if( not self.shm["override"]["dampers"][i.id]):
                 l = len(self.config["temperature_range"])
                 default_damper = True

@@ -1,5 +1,8 @@
 import RPi.GPIO as GPIO
 from time import sleep
+import threading
+
+
 
 class temperatureSensor:
     def __init__(self, id, cs_pin, clk_pin, so_pin):
@@ -15,9 +18,11 @@ class temperatureSensor:
         GPIO.setup(so_pin,GPIO.IN)
         self.get_temperature()
         self.unit = "Celsius"
+        self.thread = threading.Thread(target=self.sense())
+        self.thread.daemon = True
+        self.thread.start()
 
     def get_temperature(self) -> float:
-        print("Temp Called")
         GPIO.output(38,GPIO.HIGH)
         sleep(0.5)
         GPIO.output(38,GPIO.LOW)
@@ -32,7 +37,9 @@ class temperatureSensor:
             n -= 1
         self.temperature = int(b[1:-5], 2)+ int(b[-5])*0.5 + int(b[-4])*0.25
         return self.temperature
-    
+    def sense(self):
+        while True:
+            self.get_temperature()
 
 class pressureSensor:
     def __init__(self, id):
