@@ -8,6 +8,7 @@ class Fan():
 
     def __init__(self, id , pin , default_speed ):
         self.id = id
+        print(f"Fan {self.id} init")
         self.fan_speed = default_speed
         self.pin = pin
         self.set_fan_speed(default_speed)

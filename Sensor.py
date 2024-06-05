@@ -7,6 +7,7 @@ import threading
 class temperatureSensor:
     def __init__(self, id, cs_pin, clk_pin, so_pin):
         self.id = id
+        print(f"{id} init")
         self.cs_pin = cs_pin
         self.clk_pin = clk_pin
         self.so_pin = so_pin
@@ -16,11 +17,12 @@ class temperatureSensor:
         GPIO.setup(cs_pin,GPIO.OUT)
         GPIO.setup(clk_pin,GPIO.OUT)
         GPIO.setup(so_pin,GPIO.IN)
-        self.get_temperature()
+        self.temperature = 0
         self.unit = "Celsius"
-        self.thread = threading.Thread(target=self.sense())
+        self.thread = threading.Thread(target=self.sense)
         self.thread.daemon = True
         self.thread.start()
+        return
 
     def get_temperature(self) -> float:
         GPIO.output(38,GPIO.HIGH)
@@ -36,7 +38,6 @@ class temperatureSensor:
             sleep(0.01)
             n -= 1
         self.temperature = int(b[1:-5], 2)+ int(b[-5])*0.5 + int(b[-4])*0.25
-        return self.temperature
     def sense(self):
         while True:
             self.get_temperature()

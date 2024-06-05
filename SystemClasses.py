@@ -23,10 +23,13 @@ class System:
         self.exhaust = Fan(0, self.config["pwm_pins"][0] , self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["exhaust"]) 
         self.dampers = [Damper(i, self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i]) for i in range(self.config["num_dampers"])]
         self.tempSensors = [temperatureSensor(i, self.config["CS_PIN"], self.config["SCK_PIN"] , self.config["temperature_pins"][i]) for i in range(self.config["num_dampers"])]
+        print(self.config["num_dampers"])
+        print(self.tempSensors)
         self.init_sys_state()
     def init_sys_state(self):
         if(self.config["has_intake"]):
             self.shm["intake"] = self.intake.fan_speed
+        
         self.shm["exhaust"] = self.exhaust.fan_speed
         self.shm["dampers"] = [i.damper_angle for i in self.dampers]
         self.shm["temperatures"] = [i.temperature for i in self.tempSensors]
