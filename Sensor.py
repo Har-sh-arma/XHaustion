@@ -37,7 +37,9 @@ class temperatureSensor:
             GPIO.output(40,GPIO.LOW)
             sleep(0.01)
             n -= 1
+            print(f"{id}: {b}")
         self.temperature = int(b[1:-5], 2)+ int(b[-5])*0.5 + int(b[-4])*0.25
+
     def sense(self):
         while True:
             self.get_temperature()
