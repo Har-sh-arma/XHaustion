@@ -35,10 +35,9 @@ class Watcher:
         self.observer.start()
         try:
             while True:
-                # print("...Running..")
-                print(sys.shm["temperatures"])
                 sys.update()
                 time.sleep(0.5)
+                print(sys.shm)
                 #time.sleep(15)
                 #system.exit()
         except:
