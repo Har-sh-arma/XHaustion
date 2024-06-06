@@ -31,13 +31,7 @@
 
     <script>
 
-        let conf = {};
-        let sys_state = {};
-        
-        const animate = async()=>{
-            // conf = await getConfig();
-            // sys_state = await getSystemState();
-            conf = {
+        let conf =  {
     "pwm_pins": [12, 32],
     "CS_PIN": 38,
     "SCK_PIN":40,
@@ -135,14 +129,20 @@
         90
     ]
 }
-
-            sys_state = {
+;
+        let sys_state = {
                 "mode": "passive",
                 "passive_mode": "default",
                 "temperatures": [0, 0, 0, 0],
                 "dampers": [0, 0, 0, 0],
                 "air_flow": 0
             }
+        
+        const animate = async()=>{
+            // conf = await getConfig();
+            // sys_state = await getSystemState();
+            
+          
 
             document.querySelector('.content').innerHTML = '';
             document.querySelector('.content').innerHTML = '<div class="heading row"><div>Name</div><div><p>Air-flow [m<sup>3</sup>/min]</p></div><div>Temperature [°C]</div><div>Damper angle [°]</div></div>';
@@ -159,6 +159,17 @@
                 let damper = document.createElement('div')
                 damper.classList.add('damper')
                 damper.innerHTML = `<div class="button dec">-</div> ${sys_state["dampers"][i]}<div class="button inc">+</div>`
+                damper.addEventListener('click', (e)=>{
+                    if(e.target.classList.contains('dec')){
+                        if(sys_state["dampers"][i] > 0){
+                            sys_state["dampers"][i] -= 5
+                        }
+                    }else if(e.target.classList.contains('inc')){
+                        if(sys_state["dampers"][i] < 100){
+                            sys_state["dampers"][i] += 5
+                        }
+                    }
+                })
                 div.appendChild(name)
                 div.appendChild(airflow)
                 div.appendChild(temp)
