@@ -89,6 +89,7 @@
                 Object.keys(config["passive_modes"]).forEach((mode) => {
                     config["passive_modes"][mode]["dampers"] = Array(config["num_dampers"]).fill(Math.round(90/config["damper_step"]));
                 })
+                config["fan_power_scaling_for_hoods"] = Array(config["num_dampers"]).fill(Array(config["temperature_range"].length).fill(0));
                 console.log(config["passive_modes"]["1"]["dampers"]);
                 setConfig(config)
             }
