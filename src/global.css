@@ -130,3 +130,6 @@ input[type="range"]:focus::-moz-range-thumb {
  outline: 3px solid #053a5f;
  outline-offset: 0.125rem; 
 }
+html, body {
+  overscroll-behavior-x: none;
+}

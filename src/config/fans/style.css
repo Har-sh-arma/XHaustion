@@ -5,10 +5,11 @@ body{
 
 
 .content {
-    width: 98vw !important;
+    width: 98vw;
     display: grid;
     height: 99%;
     grid-template-columns: repeat(4, 25vw);
+    grid-template-rows: 3fr, 3fr;
 }
 
 
@@ -16,11 +17,6 @@ body{
   
   
   
-.input-range {
-    -webkit-appearance: none !important;
-    -webkit-appearance: slider-vertical !important; /* WebKit */
-    
-}
   
   
   

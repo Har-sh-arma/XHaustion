@@ -7,17 +7,91 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="../../global.css">
     <link rel="stylesheet" href="style.css">
-    <title>config</title>
+    <title>Config Dampers</title>
 </head>
 <body>
     <div class="nav">
         <div class="nav-font"><a href="../index.html">BACK</a></div>
-
-      </div>
-
-    <div class="content">
-
     </div>
 
+    <div class="content">
+        <h2>Damper Configuration</h2>
+        <div class="counter-box">
+            <div class="counter">
+                <button id="decrement">−</button>
+                <span id="value">1</span>
+                <button id="increment">+</button>
+                <div class="label">NUMBER OF DAMPERS</div>
+            </div>
+        </div>
+        <div class="damper-container">
+            <!-- Dynamically generate input bars for damper angles -->
+        </div>
+    </div>
+
+    <script src="../../global.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const valueElement = document.getElementById("value");
+            const incrementButton = document.getElementById("increment");
+            const decrementButton = document.getElementById("decrement");
+
+            function generateDamperInputs(numDampers) {
+                const damperContainer = document.querySelector('.damper-container');
+                damperContainer.innerHTML = '';
+
+                for (let i = 0; i < numDampers; i++) {
+                    const label = document.createElement('label');
+                    label.textContent = `Damper ${i + 1} Angle:`;
+                    const input = document.createElement('input');
+                    input.type = 'range';
+                    input.min = '0';
+                    input.max = '90';
+                    input.value = localStorage.getItem(`damper_${i + 1}`) || '25';
+                    input.addEventListener('input', function () {
+                        updateDamperAngle(i, parseInt(input.value));
+                    });
+
+                    const valueSpan = document.createElement('span');
+                    valueSpan.textContent = input.value;
+
+                    const degreeSpan = document.createElement('span');
+                    degreeSpan.textContent = '°';
+
+                    label.appendChild(input);
+                    label.appendChild(valueSpan);
+                    label.appendChild(degreeSpan);
+
+                    damperContainer.appendChild(label);
+                }
+            }
+
+            function updateNumDampers(newValue) {
+                valueElement.textContent = newValue;
+                localStorage.setItem('num_dampers', newValue);
+                generateDamperInputs(newValue);
+            }
+
+            function updateDamperAngle(index, value) {
+                localStorage.setItem(`damper_${index + 1}`, value);
+                console.log(`Damper ${index + 1} angle updated: ${value}°`);
+            }
+
+            const initialNumDampers = localStorage.getItem('num_dampers') || '1';
+            updateNumDampers(initialNumDampers);
+
+            incrementButton.addEventListener("click", function () {
+                let currentValue = parseInt(valueElement.textContent);
+                updateNumDampers(currentValue + 1);
+            });
+
+            decrementButton.addEventListener("click", function () {
+                let currentValue = parseInt(valueElement.textContent);
+                if (currentValue > 1) {
+                    updateNumDampers(currentValue - 1);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
