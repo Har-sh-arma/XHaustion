@@ -7,7 +7,6 @@ body{
     height: 90vh;
     width: 97vw;
     grid-template-columns: 1fr 1fr;
-    font-style: italic;
     padding: 10px;
     box-sizing: border-box;
 }
@@ -49,33 +48,6 @@ body{
     color: #fff;
 }
 
-button {
-    background-color: white;
-    border: 2px solid #1e90ff;
-    color: #1e90ff;
-    border-radius: 50%;
-    font-size: 2rem;
-    width: 60px;
-    height: 60px;
-    cursor: pointer;
-    outline: none;
-    display: grid;
-    place-items: center;
-}
-
-button:active {
-    background-color: #1e90ff;
-    color: white;
-}
-
-#value {
-    margin: 0 1rem;
-    font-size: 3rem;
-    display: grid;
-    place-items: center;
-    color: white;
-}
-
 .additional-links {
     display: grid;
     place-items: center;
@@ -85,12 +57,11 @@ button:active {
 }
 
 .additional-links > div {
-    border-radius: 5%;
+    border-radius: 1rem;
     background-color:#D67B60 ;
     border: 3px solid white;
-    text-align: center;
     color: var(--very-light);
-    width: 50%;
+    width: 70%;
     height: 70%;
 }
 
@@ -120,12 +91,11 @@ button:active {
 }
 
 .temp-heading {
-    /* grid-column: 1 / span 3; */
-    /* text-align: center; */
     display: grid;
     place-items: center;
-    font-size: 2rem;
+    font-size: 10vh;
     color: white;
+    background-color: var(--very-dark);
 }
 
 .temp-container {
@@ -137,15 +107,8 @@ button:active {
 }
 
 .temp-container label {
-    font-size: 1.5rem;
-    color: white;
-    margin-bottom: 5px;
-}
-
-.temp-container span {
-    font-size: 1.2rem;
-    color: white;
-    margin-left: 10px;
+    font-size: 5vh;
+    color: var(--very-dark);
 }
 
 

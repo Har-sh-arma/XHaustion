@@ -33,29 +33,6 @@
 
     <script>
 
-    const tempInputs = document.querySelectorAll(".tempinput");
-
-
-    tempInputs.forEach(function (input, index) {
-        input.addEventListener("input", function () {
-            let currentValue = parseFloat(input.value);
-            if (index < tempInputs.length - 1) {
-                // Set the start temperature of the next input
-                tempInputs[index + 1].min = currentValue;
-                // Update the temperature label of the next input
-                document.getElementById("temp" + (index + 2) + "value").textContent = currentValue;
-            }
-            // Update displayed value beside the label
-            document.getElementById("temp" + (index + 1) + "value").textContent = currentValue;
-            updateConfig();
-        });
-    });
-
-    temp_div = `<div class="temp-container">
-                    <label for="temp1">Temperature 1: 3°C</label>
-                    <input class="tempinput" id="temp1" type="range" step="5" value="5" min="1" max="200">
-                </div>`
-
     const animate = async() => {
         let conf = await getConfig();
             
@@ -75,13 +52,13 @@
             }
 
             const elementHTML = `<div class="temp-container">
-                    <label for="temp1">Temperature 1: ${conf["temperature_range"][i]}°C</label>
+                    <label for="temp1">Temperature ${i+1}: <b>${conf["temperature_range"][i]}°C</b></label>
                     <input class="tempinput" id="temp_inp${i}" type="range" step="5" value="${conf["temperature_range"][i]}" min="${min}" max="${min+100}">
                 </div>`
             main_cont.innerHTML += elementHTML
         }
         for (let i = 0; i < 4; i++) {
-            document.getElementById(`temp_inp${i}`).addEventListener("input", function (value) {
+            document.getElementById(`temp_inp${i}`).addEventListener("change", function (value) {
                 conf["temperature_range"][i] = Number(value.target.value)
                 setConfig(conf)
                 setTimeout(animate, 0)

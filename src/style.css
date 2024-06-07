@@ -147,14 +147,23 @@
   grid-column: 3/4;
   background-color: var(--primary-color) !important;
   border: 3px solid var(--light) !important;
+  color: var(--light);
 }
 
+.start:hover{
+  background-color: var(--very-light) !important;
+  border: 3px solid var(--primary-color) !important;
+  color: var(--primary-color);
+}
+
+
+
 .start-label{
+  color: inherit;
   display: grid;
   place-items: center;
   font-size: 5vw;
   font-weight: 500;
-  color: var(--light);
   width: fit-content;
 }
 
