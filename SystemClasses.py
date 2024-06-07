@@ -16,7 +16,7 @@ class System:
         self.config = config
         self.shm["mode"] = "passive"
         self.shm["passive_mode"] = "default"
-        self.shm["override"] = {"fans":{"exhaust": 0, "intake": 0}, "dampers": [0, 0, 0, 0]}
+        self.shm["override"] = {"fans":{"exhaust": 0, "intake": 0}, "dampers": [0]*config["num_dampers"]}
         if(self.config["has_intake"]):
             self.intake = Fan(1, self.config["pwm_pins"][1] ,self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["intake"])
         self.exhaust = Fan(0, self.config["pwm_pins"][0] , self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["exhaust"]) 
@@ -77,7 +77,6 @@ class System:
                     l-=1
                 if(default_damper):
                     self.dampers[i.id].set_damper_angle(self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i.id])
-                print("here")
 
         if (((self.shm["mode"] == "passive") and (active_flag)) or ((self.shm["mode"] == "active")and (not active_flag))):
             if(active_flag):
