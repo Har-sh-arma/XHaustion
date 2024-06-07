@@ -40,6 +40,8 @@
     "intake_max_rpm": 3000,
     "has_intake": 1,
     "num_dampers": 4,
+    "damper_step":4,
+    "fan_step": 4,
     "temperature_range": [
         40,
         70,
@@ -129,7 +131,7 @@
         90
     ]
 }
-;
+
         let sys_state = {
                 "mode": "passive",
                 "passive_mode": "default",
@@ -162,19 +164,22 @@
                 damper.addEventListener('click', (e)=>{
                     if(e.target.classList.contains('dec')){
                         if(sys_state["dampers"][i] > 0){
-                            sys_state["dampers"][i] -= 5
+                            sys_state["dampers"][i] -= 90/conf["damper_step"]
                         }
                     }else if(e.target.classList.contains('inc')){
-                        if(sys_state["dampers"][i] < 100){
-                            sys_state["dampers"][i] += 5
+                        if(sys_state["dampers"][i] < 90){
+                            sys_state["dampers"][i] += 90/conf["damper_step"]
                         }
                     }
+                    // setSystemState(sys_state).then(() => { requestAnimationFrame(animate) })
                 })
                 div.appendChild(name)
                 div.appendChild(airflow)
                 div.appendChild(temp)
                 div.appendChild(damper)
                 document.querySelector('.content').appendChild(div)
+
+                // update state using set state
             }
 
 
