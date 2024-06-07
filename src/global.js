@@ -118,8 +118,7 @@ const getSystemState = async() => {
     // let res = await fetch(`${window.location.origin}/api/system_state/` , {origin: window.location.origin})
     // let data = await res.json()
     // return JSON.parse(data)
-
-
+    
 }
 
 const getConfig = async() => {
