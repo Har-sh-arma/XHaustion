@@ -3,10 +3,9 @@ from watchdog.observers import Observer
 import logging
 logger = logging.getLogger("XHaustion")
 from shared_memory_dict import SharedMemoryDict
-import asyncio
 import json
 from actuator import Fan, Damper
-
+import threading
 
 
 
@@ -22,7 +21,8 @@ class System:
             self.intake = Fan(1, self.config["pwm_pins"][1] ,self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["intake"])
         self.exhaust = Fan(0, self.config["pwm_pins"][0] , self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["exhaust"]) 
         self.dampers = [Damper(i, self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i]) for i in range(self.config["num_dampers"])]
-        self.tempSensors = [temperatureSensor(i, self.config["CS_PIN"], self.config["SCK_PIN"] , self.config["temperature_pins"][i]) for i in range(self.config["num_dampers"])]
+        TempSensorsLock = threading.Lock()
+        self.tempSensors = [temperatureSensor(i, self.config["CS_PIN"], self.config["SCK_PIN"] , self.config["temperature_pins"][i], TempSensorsLock) for i in range(self.config["num_dampers"])]
         print(self.config["num_dampers"])
         print(self.tempSensors)
         self.init_sys_state()

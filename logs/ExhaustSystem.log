@@ -1,90 +1,50 @@
-06-05 15:14:35 - INFO - Damper 1 is set to 90 degrees
-06-05 15:14:35 - INFO - Damper 2 is set to 90 degrees
-06-05 15:14:36 - INFO - Damper 0 is set to 90 degrees
-06-05 15:14:36 - INFO - Damper 0 is set to 25 degrees
-06-05 15:14:37 - INFO - Damper 0 is set to 90 degrees
-06-05 15:14:37 - INFO - Damper 0 is set to 25 degrees
-06-05 15:14:38 - INFO - Damper 0 is set to 90 degrees
-06-05 15:14:38 - INFO - Damper 0 is set to 25 degrees
-06-05 15:14:38 - INFO - Damper 0 is set to 90 degrees
-06-05 15:14:38 - INFO - Damper 0 is set to 25 degrees
-06-05 15:14:38 - INFO - Damper 1 is set to 60 degrees
-06-05 15:14:38 - INFO - Damper 2 is set to 60 degrees
-06-05 15:14:39 - INFO - Damper 0 is set to 90 degrees
-06-05 15:14:39 - INFO - Damper 0 is set to 25 degrees
-06-05 15:14:39 - INFO - Damper 1 is set to 90 degrees
-06-05 15:14:39 - INFO - Damper 2 is set to 90 degrees
-06-05 15:14:40 - INFO - Damper 0 is set to 90 degrees
-06-05 15:14:40 - INFO - Damper 0 is set to 25 degrees
-06-05 15:14:41 - INFO - Damper 0 is set to 90 degrees
-06-05 15:14:41 - INFO - Damper 0 is set to 25 degrees
-06-05 15:14:42 - INFO - Damper 0 is set to 90 degrees
-06-05 15:14:42 - INFO - Damper 0 is set to 25 degrees
-06-05 15:14:42 - INFO - Damper 1 is set to 60 degrees
-06-05 15:14:42 - INFO - Damper 2 is set to 60 degrees
-06-05 15:15:17 - INFO - System Initialized Successfully
-06-05 15:15:18 - INFO - Fan 0: set to 60%
-06-05 15:15:18 - INFO - System Mode: active
-06-05 15:15:24 - INFO - Fan 0: set to 30%
-06-05 15:15:25 - INFO - Fan 0: set to 60%
-06-05 15:15:27 - INFO - Fan 0: set to 30%
-06-05 15:18:38 - INFO - System Initialized Successfully
-06-05 15:18:39 - INFO - Fan 0: set to 60%
-06-05 15:18:39 - INFO - System Mode: active
-06-05 15:18:57 - INFO - Fan 0: set to 30%
-06-05 15:18:57 - INFO - Fan 0: set to 100%
-06-05 15:18:57 - INFO - Damper 1 is set to 90 degrees
-06-05 15:18:57 - INFO - Damper 2 is set to 90 degrees
-06-05 15:18:57 - INFO - Damper 3 is set to 90 degrees
-06-05 15:19:19 - INFO - Fan 0: set to 30%
-06-05 15:19:19 - INFO - Damper 1 is set to 25 degrees
-06-05 15:19:19 - INFO - Damper 2 is set to 25 degrees
-06-05 15:19:19 - INFO - Damper 3 is set to 25 degrees
-06-05 15:19:42 - INFO - System Initialized Successfully
-06-05 15:19:44 - INFO - Fan 0: set to 60%
-06-05 15:19:44 - INFO - System Mode: active
-06-05 15:19:49 - INFO - Fan 0: set to 70%
-06-05 15:19:51 - INFO - Fan 0: set to 60%
-06-05 15:19:53 - INFO - Fan 0: set to 70%
-06-05 15:19:55 - INFO - Fan 0: set to 60%
-06-05 15:20:10 - INFO - Fan 0: set to 80%
-06-05 15:20:38 - INFO - Fan 0: set to 70%
-06-05 15:20:39 - INFO - Fan 0: set to 90%
-06-05 15:20:42 - INFO - Fan 0: set to 70%
-06-05 15:20:51 - INFO - Fan 0: set to 80%
-06-05 15:21:05 - INFO - Fan 0: set to 70%
-06-05 15:21:25 - INFO - Fan 0: set to 100%
-06-05 15:21:25 - INFO - Damper 0 is set to 45 degrees
-06-05 15:21:25 - INFO - Damper 2 is set to 45 degrees
-06-05 15:21:25 - INFO - Damper 3 is set to 45 degrees
-06-05 15:21:29 - INFO - Damper 0 is set to 60 degrees
-06-05 15:21:29 - INFO - Damper 2 is set to 60 degrees
-06-05 15:21:29 - INFO - Damper 3 is set to 60 degrees
-06-05 15:21:32 - INFO - Damper 0 is set to 45 degrees
-06-05 15:21:32 - INFO - Damper 1 is set to 60 degrees
-06-05 15:21:33 - INFO - Damper 0 is set to 90 degrees
-06-05 15:21:33 - INFO - Damper 1 is set to 45 degrees
-06-05 15:21:33 - INFO - Damper 2 is set to 90 degrees
-06-05 15:21:33 - INFO - Damper 3 is set to 90 degrees
-06-05 15:21:39 - INFO - Damper 1 is set to 90 degrees
-06-05 15:21:39 - INFO - Damper 3 is set to 45 degrees
-06-05 15:21:54 - INFO - Damper 0 is set to 60 degrees
-06-05 15:21:54 - INFO - Damper 1 is set to 60 degrees
-06-05 15:21:54 - INFO - Damper 2 is set to 60 degrees
-06-05 15:22:01 - INFO - Damper 3 is set to 25 degrees
-06-05 15:22:05 - INFO - Damper 2 is set to 25 degrees
-06-05 15:22:05 - INFO - Damper 3 is set to 60 degrees
-06-05 15:22:32 - INFO - Damper 0 is set to 25 degrees
-06-05 15:22:32 - INFO - Damper 2 is set to 60 degrees
-06-05 15:22:33 - INFO - Damper 0 is set to 60 degrees
-06-05 15:22:33 - INFO - Damper 2 is set to 25 degrees
-06-05 15:22:35 - INFO - Damper 0 is set to 25 degrees
-06-05 15:22:35 - INFO - Damper 2 is set to 60 degrees
-06-05 15:22:39 - INFO - Damper 0 is set to 60 degrees
-06-05 15:22:39 - INFO - Damper 2 is set to 25 degrees
-06-05 15:22:40 - INFO - Damper 1 is set to 25 degrees
-06-05 15:22:40 - INFO - Damper 2 is set to 60 degrees
-06-05 15:22:41 - INFO - Damper 0 is set to 25 degrees
-06-05 15:22:41 - INFO - Damper 1 is set to 60 degrees
-06-05 15:22:46 - INFO - Damper 0 is set to 60 degrees
-06-05 15:22:46 - INFO - Damper 1 is set to 25 degrees
+06-06 17:40:04 - INFO - Fan 0: set to 90%
+06-06 17:40:04 - INFO - Damper 1 is set to 90 degrees
+06-06 17:40:04 - INFO - System Mode: active
+06-06 17:40:06 - INFO - Fan 0: set to 10%
+06-06 17:40:06 - INFO - Damper 1 is set to 25 degrees
+06-06 17:40:06 - INFO - System Mode: passive
+06-06 17:48:40 - INFO - System Initialized Successfully
+06-07 12:20:03 - INFO - Fan 0: set to 100%
+06-07 12:20:03 - INFO - Damper 0 is set to 90 degrees
+06-07 12:20:03 - INFO - System Mode: active
+06-07 12:20:09 - INFO - Fan 0: set to 10%
+06-07 12:20:09 - INFO - Damper 0 is set to 25 degrees
+06-07 12:20:09 - INFO - System Mode: passive
+06-07 12:21:28 - INFO - System Config Changed
+06-07 12:21:28 - INFO - System Config Changed
+06-07 12:21:28 - INFO - System Config Changed
+06-07 12:21:28 - INFO - System Config Changed
+06-07 12:21:28 - INFO - System Config Changed
+06-07 12:21:28 - INFO - System Config Changed
+06-07 12:21:28 - INFO - System Config Changed
+06-07 12:21:28 - INFO - System Config Changed
+06-07 12:21:41 - INFO - System Config Changed
+06-07 12:21:46 - INFO - System Config Changed
+06-07 12:22:06 - INFO - System Config Changed
+06-07 12:22:06 - INFO - System Config Changed
+06-07 12:22:15 - INFO - System Config Changed
+06-07 12:22:15 - INFO - System Config Changed
+06-07 12:22:15 - INFO - System Config Changed
+06-07 12:22:15 - INFO - System Config Changed
+06-07 12:22:15 - INFO - System Config Changed
+06-07 12:22:15 - INFO - System Config Changed
+06-07 12:22:15 - INFO - System Config Changed
+06-07 12:22:15 - INFO - System Config Changed
+06-07 12:22:23 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:34 - INFO - System Config Changed
+06-07 12:22:47 - INFO - System Initialized Successfully
+06-07 12:29:20 - INFO - System Initialized Successfully

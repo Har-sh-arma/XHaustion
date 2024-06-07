@@ -31,12 +31,14 @@
 
     <script>
 
-        let conf = {};
-        let sys_state = {};
+	    let conf = {} 
+	    let sys_state = {}
         
         const animate = async()=>{
             conf = await getConfig();
             sys_state = await getSystemState();
+            
+          
 
             document.querySelector('.content').innerHTML = '';
             document.querySelector('.content').innerHTML = '<div class="heading row"><div>Name</div><div><p>Air-flow [m<sup>3</sup>/min]</p></div><div>Temperature [°C]</div><div>Damper angle [°]</div></div>';
@@ -51,12 +53,27 @@
                 let temp = document.createElement('div')
                 temp.innerText = sys_state["temperatures"][i]
                 let damper = document.createElement('div')
-                damper.innerText = sys_state["dampers"][i]
+                damper.classList.add('damper')
+                damper.innerHTML = `<div class="button dec">-</div> ${sys_state["dampers"][i]}<div class="button inc">+</div>`
+                damper.addEventListener('click', (e)=>{
+                    if(e.target.classList.contains('dec')){
+                        if(sys_state["dampers"][i] > 0){
+                            sys_state["dampers"][i] -= 90/conf["damper_step"]
+                        }
+                    }else if(e.target.classList.contains('inc')){
+                        if(sys_state["dampers"][i] < 90){
+                            sys_state["dampers"][i] += 90/conf["damper_step"]
+                        }
+                    }
+		    sys_state["override"]["dampers"][i]  = 1
+                    setSystemState(sys_state).then(() => { requestAnimationFrame(animate) })
+		})
                 div.appendChild(name)
                 div.appendChild(airflow)
                 div.appendChild(temp)
                 div.appendChild(damper)
                 document.querySelector('.content').appendChild(div)
+
             }
 
 

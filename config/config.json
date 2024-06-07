@@ -7,6 +7,8 @@
     "intake_max_rpm": 3000,
     "has_intake": 1,
     "num_dampers": 4,
+    "damper_step":4,
+    "fan_step": 4,
     "temperature_range": [
         40,
         70,

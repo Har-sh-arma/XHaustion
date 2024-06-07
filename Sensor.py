@@ -5,7 +5,7 @@ import threading
 
 
 class temperatureSensor:
-    def __init__(self, id, cs_pin, clk_pin, so_pin):
+    def __init__(self, id, cs_pin, clk_pin, so_pin, lock):
         self.id = id
         print(f"{id} init")
         self.cs_pin = cs_pin
@@ -19,28 +19,33 @@ class temperatureSensor:
         GPIO.setup(so_pin,GPIO.IN)
         self.temperature = 0
         self.unit = "Celsius"
+        self.lock = lock
         self.thread = threading.Thread(target=self.sense)
         self.thread.daemon = True
         self.thread.start()
         return
 
     def get_temperature(self) -> float:
-        GPIO.output(38,GPIO.HIGH)
+        self.lock.acquire()
+        print("polled")
+        GPIO.output(self.cs_pin,GPIO.HIGH)
         sleep(0.5)
-        GPIO.output(38,GPIO.LOW)
-        b=""
+        GPIO.output(self.cs_pin,GPIO.LOW)
         n = 16
+        b = ""
         while n:
-            GPIO.output(40,GPIO.HIGH)
-            sleep(0.01)
-            b += str(GPIO.input(37))
-            GPIO.output(40,GPIO.LOW)
-            sleep(0.01)
+            GPIO.output(self.clk_pin,GPIO.HIGH)
+            b += str(GPIO.input(self.so_pin))
+            GPIO.output(self.clk_pin,GPIO.LOW)
             n -= 1
+        print()
         self.temperature = int(b[1:-5], 2)+ int(b[-5])*0.5 + int(b[-4])*0.25
+        self.lock.release()
+
     def sense(self):
         while True:
             self.get_temperature()
+            sleep(0.1)
 
 class pressureSensor:
     def __init__(self, id):

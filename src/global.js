@@ -152,12 +152,12 @@ const setSystemState = async(sys_state) => {
 document.addEventListener('contextmenu', event => {
     event.preventDefault();
 });
-document.addEventListener("keydown", e => {
-    if(e.key == "F11") e.preventDefault();
-});
-// document.onkeydown = function (e) {
-//     return false;
-// }
+//document.addEventListener("keydown", e => {
+//    if(e.key == "F11") e.preventDefault();
+//});
+//// document.onkeydown = function (e) {
+////     return false;
+//// }
 document.addEventListener("gesturestart", function (e) {
 	e.preventDefault();
     document.body.style.zoom = 0.99;
