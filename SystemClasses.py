@@ -71,13 +71,12 @@ class System:
                 default_damper = True
                 while(l):
                     if(temperature_i > self.config["temperature_range"][l-1]):
-                        self.dampers[i.id].set_damper_angle(self.config["damper_angles"][l-1])
+                        self.dampers[i.id].set_damper_angle(self.config["damper_step"]*[l-1])
                         active_flag = True
                         default_damper = False
                         break
                     l-=1
                 if(default_damper):
-                    
                     self.dampers[i.id].set_damper_angle(self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i.id])
 
         if (((self.shm["mode"] == "passive") and (active_flag)) or ((self.shm["mode"] == "active")and (not active_flag))):
