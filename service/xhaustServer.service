@@ -1,5 +1,6 @@
 [Unit]
 Description=xhaustserver daemon
+Requires=xhaust.service
 
 [Service]
 User=harsh

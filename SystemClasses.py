@@ -71,7 +71,7 @@ class System:
                 default_damper = True
                 while(l):
                     if(temperature_i > self.config["temperature_range"][l-1]):
-                        self.dampers[i.id].set_damper_angle(self.config["damper_step"]*[l-1])
+                        self.dampers[i.id].set_damper_angle(self.config["damper_step"]*(l-1))
                         active_flag = True
                         default_damper = False
                         break
