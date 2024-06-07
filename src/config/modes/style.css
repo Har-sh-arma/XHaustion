@@ -16,7 +16,25 @@ body{
     place-items: center;
   }
   
-  
+  .nav>div:hover{
+    background-color: var(--very-light);
+    color: var(--primary-color);
+  }
+
+  .nav > div.active{
+    background-color: var(--very-light);
+    color: var(--primary-color); 
+}
+
+a.current_nav{
+    background-color: var(--primary-color) !important;
+    color: var(--light) !important; 
+}
+
+a:hover{
+    background-color: var(--very-light) !important;
+    color: var(--primary-color) !important; 
+}
 
 .content{
     display: grid;
@@ -25,6 +43,8 @@ body{
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 3fr;
 }
+
+
 
 .label{
     background-color: var(--primary-color);
@@ -76,25 +96,44 @@ div{
 .fan{
     display: grid;
     grid-template-rows: 1fr 2fr;
+    grid-template-columns: 5fr 2fr;
     place-items: center;
 }
 
 .label{
     font-size: xx-large;
+    grid-column : 1/3;
 }
 
+.fan > input{
+    width: 80%;
+}
 
+.damper > input{
+    width: 80%;
+}
 
+.damper{
+    display: grid;
+    place-items: center;
+    grid-template-columns: 5fr 2fr;
+    border : 1px solid var(--light);
 
-.fan_input{
-    height: 85%;
-    width: 85%;
 }
 
 .damper_area{
     display: grid;
     place-items: center ;
-    grid-template-rows: 4fr repeat(4, 5fr);
+    grid-template-rows: 6fr repeat(6, 5fr);
+}
+
+.value_display{
+    font-size: 6vh;
+    font-weight: 600;
+    color: var(--very-dark);
+    background-color: var(--light);
+    display: grid;
+    place-items: center;
 }
 
 .modes{

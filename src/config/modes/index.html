@@ -11,117 +11,96 @@
 </head>
 <body>
   <div class="nav">
-    <div class="nav-font"><a href="../index.html">BACK</a></div>
-    <div class="nav-font"><button onclick="showPage('default')">Default</button></div>
-    <div class="nav-font"><button onclick="showPage('1')">MODE1</button></div>
-    <div class="nav-font"><button onclick="showPage('2')">MODE2</button></div>
-    <div class="nav-font"><button onclick="showPage('3')">MODE3</button></div>
+    <div><a href="../">BACK</a></div>
+    <div class="mode" data-mode="default">Default</div>
+    <div class="mode" data-mode="1">Mode 1</div>
+    <div class="mode" data-mode="2">Mode 2</div>
+    <div class="mode" data-mode="3">Mode 3</div>
   </div>
 
   <div class="content">
-    <div class="heading"></div>
-    <div class="left">
-        <div class="fan_area"></div>
-    </div>
-    <div class="right">
-        <div class="damper_area"></div>
-    </div>
+
   </div>
   <script src="../../global.js"></script>
   
   <script>
     // Pull this app state and global config
-    let conf = {
-        "passive_modes": {
-            "default": {"fans": {"exhaust": 10, "intake": 5 }, "dampers" : [25, 25, 25, 25 ]},
-            "1": {"fans": {"exhaust": 40, "intake": 10 }, "dampers" : [35, 25, 35, 25 ]},
-            "2": {"fans": {"exhaust": 50, "intake": 10 }, "dampers" : [35, 35, 35, 35 ]},
-            "3": {"fans": {"exhaust": 70, "intake": 20 }, "dampers" : [45, 45, 45, 45 ]}
-        }
+ 
+    var config = {}
+    var selected_mode = "default"
+
+
+
+    window.onload = async() => {
+        getConfig().then(data=>{
+            config = data;
+            setTimeout(animate, 0)
+        })
     }
 
-    const heading = document.querySelector('.heading');
-    const fan_area = document.querySelector('.fan_area');
-    const damper_area = document.querySelector('.damper_area');
+    let animate = async() => {
 
-    function showPage(mode) {
-        const modeConfig = conf.passive_modes[mode];
-        if (!modeConfig) return;
-
-        heading.innerText = `Customize: Mode ${mode}`;
-
-        // Clear existing content
-        fan_area.innerHTML = '';
-        damper_area.innerHTML = '';
-
-        // Populate fan area
-        const fans = Object.entries(modeConfig.fans);
-        for (let i = 0; i < fans.length; i++) {
-            let div = document.createElement('div');
-            div.classList.add('fan');
-            
-            let label_div = document.createElement('div');
-            label_div.classList.add('label');
-            label_div.innerText = `${fans[i][0]}:`;
-            div.appendChild(label_div);
-
-            let input = document.createElement('input');
-            input.type = 'range';
-            input.min = '0';
-            input.max = '100';
-            input.value = fans[i][1];
-            input.classList.add('fan_input');
-            input.classList.add(fans[i][0]);
-            input.addEventListener('input', (e) => {
-                modeConfig.fans[e.target.classList[1]] = parseInt(e.target.value, 10);
-                e.target.nextElementSibling.innerText = e.target.value;
-                console.log(conf);  // Log the updated conf object
-            });
-            div.appendChild(input);
-
-            let value_display = document.createElement('span');
-            value_display.classList.add('value_display');
-            value_display.innerText = fans[i][1];
-            div.appendChild(value_display);
-
-            fan_area.appendChild(div);
+        let nav = document.querySelectorAll('.nav>div')
+        for(let i = 0; i < nav.length; i++){
+            if(nav[i].dataset.mode == selected_mode){
+                nav[i].classList.add('active')
+            }
+            else{
+                nav[i].classList.remove('active')
+            }
+            nav[i].addEventListener('click', (e)=>{
+                selected_mode = e.target.dataset.mode
+                animate()
+            })
         }
+        document.querySelector('.content').innerHTML = "";
+        let contHTML = `<div class="heading">Customize: Mode ${selected_mode}</div>
+    <div class="left">
+        <div class="fan_area">
+            <div class="fan">
+                <div class="label">Exhaust:</div>
+                <input onchange="updateFan('exhaust')" type="range" min="0" max="100" step ="${100/config["fan_step"]}" value = "${config["passive_modes"][selected_mode]['fans']['exhaust']}" class="fan_input exhaust">
+                <div class="value_display">${config["passive_modes"][selected_mode]['fans']['exhaust']}</div>
+            </div>
+            <div class="fan">
+                <div class="label">Intake:</div>
+                <input onchange="updateFan('intake')" type="range" min="0" max="100" step ="${100/config["fan_step"]}" value = "${config["passive_modes"][selected_mode]['fans']['intake']}" class="fan_input intake">
+                <div class="value_display">${config["passive_modes"][selected_mode]['fans']['intake']}</div>
+        </div>
+                
+                
+        </div>
+    </div>
+    <div class="right"><div class="damper_area"><div class="damper_heading">Dampers :</div>`
+    
+    for(let i = 0; i < config["passive_modes"][selected_mode]['dampers'].length; i++){
+        contHTML += `<div class="damper"><input onchange="updateDampers(${i})" type="range" step="${90/config["damper_step"]}" min="0" max="90" value = "${config["passive_modes"][selected_mode]['dampers'][i]}" class="damper_input d${i}">
+            <div class="value_display">${config["passive_modes"][selected_mode]['dampers'][i]}
+            </div></div>`
+    }        
+       contHTML += `</div></div>`
 
-        // Populate damper area
-        let damperHeading = document.createElement('div');
-        damperHeading.classList.add('damper_heading');
-        damperHeading.innerText = 'Dampers :';
-        damper_area.appendChild(damperHeading);
+        document.querySelector('.content').innerHTML = contHTML
+}
 
-        for (let i = 0; i < modeConfig.dampers.length; i++) {
-            let input_div = document.createElement('div');
-            input_div.classList.add('damper');
-
-            let input = document.createElement('input');
-            input.type = 'range';
-            input.min = '0';
-            input.max = '100';
-            input.value = modeConfig.dampers[i];
-            input.classList.add('damper_input');
-            input.classList.add(`damper${i}`);
-            input.addEventListener('input', (e) => {
-                modeConfig.dampers[i] = parseInt(e.target.value, 10);
-                e.target.nextElementSibling.innerText = e.target.value;
-                console.log(conf);  // Log the updated conf object
-            });
-            input_div.appendChild(input);
-
-            let value_display = document.createElement('span');
-            value_display.classList.add('value_display');
-            value_display.innerText = modeConfig.dampers[i];
-            input_div.appendChild(value_display);
-
-            damper_area.appendChild(input_div);
-        }
+    function updateFan(fan){
+        config["passive_modes"][selected_mode]['fans'][fan] = document.querySelector(`.fan_input.${fan}`).value
+        setConfig(config).then(()=>{
+            getConfig().then(data=>{
+                config = data;
+                setTimeout(animate, 0)
+            })
+        })
     }
-
-    // Initialize with default mode
-    showPage('default');
+    function updateDampers(i){
+        config["passive_modes"][selected_mode]['dampers'][i] = document.querySelector(`.d${i}`).value
+        setConfig(config).then(()=>{
+            getConfig().then(data=>{
+                config = data;
+                setTimeout(animate, 0)
+            })
+        })
+    }
   </script>
 </body>
 </html>

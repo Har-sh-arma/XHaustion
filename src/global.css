@@ -104,7 +104,14 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"].vertical {
   writing-mode:vertical-lr;
   height: 80%;
+
 }
+
+input[type="range"].vertical::-webkit-slider-thumb{
+  height: 5rem !important;
+  width: 3rem !important;
+}
+
 
 
 

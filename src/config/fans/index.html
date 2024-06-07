@@ -37,11 +37,11 @@
             for (let i = 0; i < config["num_dampers"]; i++) {
                 content.innerHTML += `<div class="inp_cont">
                     <div class="currValue">${config["fan_power_scaling_for_hoods"][selectedHood][i]} %</div>
-                    <input type="range" value="${config["fan_power_scaling_for_hoods"][selectedHood][i]}" min="0" max="100" class="vertical"><div class="temperature">${config["temperature_range"][i]} C</div></div>`
+                    <input type="range" value="${config["fan_power_scaling_for_hoods"][selectedHood][i]}" min="0" max="100" class="vertical"><div class="temperature">${config["temperature_range"][i]} °C</div></div>`
             }
             let inps = document.querySelectorAll("input")
             for (let i = 0; i < inps.length; i++) {
-                inps[i].addEventListener("input", function (value) {
+                inps[i].addEventListener("change", function (value) {
                     config["fan_power_scaling_for_hoods"][selectedHood][i] = Number(value.target.value)
                     setConfig(config)
                     setTimeout(animate, 0)

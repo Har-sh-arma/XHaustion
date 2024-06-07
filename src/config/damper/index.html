@@ -11,7 +11,8 @@
 </head>
 <body>
     <div class="nav">
-        <div class="nav-font"><a href="../index.html">BACK</a></div>
+        <div class="nav-font"><a href="../">BACK</a></div>
+        <div class="nav-font submit"><a>Submit</a></div>
     </div>
 
     <div class="content">
@@ -24,18 +25,28 @@
     </div>
     <script src="../../global.js"></script>
     <script>
+
+        var config = {}
+
+        window.onload = async() => {
+            getConfig().then(data=>{
+                config = data;
+                setTimeout(animate, 0)
+            })
+        }
         let animate= async() => {
-            let config = await getConfig()
 
             let content = document.querySelector('.content')
 
             content.innerHTML = `
             <div class="section">
+            <div class="header">Number of dampers</div>
             <div class="value">${config["num_dampers"]}</div>
             <div class="dec button" data="num_dampers">-</div>
             <div class="inc button" data="num_dampers">+</div>
             </div>
             <div class="section">
+            <div class="header">Damper control steps</div>
             <div class="value">${config["damper_step"]}</div>
             <div class="dec button" data="damper_step">-</div>
             <div class="inc button" data="damper_step">+</div>
@@ -49,36 +60,40 @@
                 if(config[event.target.getAttribute('data')] < 20){
                     config[event.target.getAttribute('data')] += 1
                 }
-                setConfig(config)
                 setTimeout(animate, 0)
             })
             inc[1].addEventListener('click', (event) => {
                 if(config[event.target.getAttribute('data')] < 20){
                     config[event.target.getAttribute('data')] += 1
                 }
-                setConfig(config)
                 setTimeout(animate, 0)
             })
             dec[0].addEventListener('click', (event) => {
                 if(config[event.target.getAttribute('data')] > 1){
                     config[event.target.getAttribute('data')] -= 1
                 }
-                setConfig(config)
                 setTimeout(animate, 0)
             })
             dec[1].addEventListener('click', (event) => {
                 if(config[event.target.getAttribute('data')] > 1){
                     config[event.target.getAttribute('data')] -= 1
                 }
-                setConfig(config)
                 setTimeout(animate, 0)
             })
-            
-
 
         }
+
+        document.getElementsByClassName('submit')[0].addEventListener('click', (event) => {
+            if(confirm('Are you sure? You will need to reset all previous configurations for dampers!')){
+                // console.log(Array(config["num_dampers"]).fill(0));
+                Object.keys(config["passive_modes"]).forEach((mode) => {
+                    config["passive_modes"][mode]["dampers"] = Array(config["num_dampers"]).fill(Math.round(90/config["damper_step"]));
+                })
+                console.log(config["passive_modes"]["1"]["dampers"]);
+                setConfig(config)
+            }
+        })
         
-        animate()
     </script>
 </body>
 </html>

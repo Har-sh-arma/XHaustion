@@ -3,7 +3,6 @@ body{
     grid-template-rows: 1fr 7fr;
 }
 
-
 .content {
     width: 98vw;
     display: grid;
@@ -12,15 +11,38 @@ body{
 }
 
 .inp_cont{
+    border: 3px solid var(--very-dark);
+    width: 100%;
+    height: 100%;
     display: grid;
     place-items: center;
     grid-template-rows: 1fr 8fr 1fr;
 }
+ 
 
+.currValue{
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 5vh;
+    color: white;
+    background-color: var(--very-dark);
+}
+  
+.temperature{
+    border: 3px solid var(--very-dark);
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 5vh;
+    color: var(--primary-color);
+    background-color: var(--very-light);
+    color: 
+}
 
-  
-  
-  
-  
-  
-  
+input[type="range"]::-webkit-slider-thumb {
+
+    transform: rotate(90deg);
+}
