@@ -25,7 +25,7 @@
         let animate =  async() => {
             let config = await getConfig()
             document.querySelector(".nav").innerHTML = `<div class="nav-font"><a href="../">BACK</a></div>`
-            for (let i = 0; i < config["num_dampers"]; i++) {
+            for (let i = 0; i < config["temperature_range"]; i++) {
                 let buttonHTML = `<div class="nav-font"><a onclick="selectHood(${i})">Hood ${i+1}</a></div>`
                 if(i == selectedHood){
                 buttonHTML = `<div class="nav-font"><a class="current_nav" onclick="console.log("hello")">Hood ${i+1}</a></div>`

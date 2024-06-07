@@ -23,8 +23,6 @@ class System:
         self.dampers = [Damper(i, self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i]) for i in range(self.config["num_dampers"])]
         TempSensorsLock = threading.Lock()
         self.tempSensors = [temperatureSensor(i, self.config["CS_PIN"], self.config["SCK_PIN"] , self.config["temperature_pins"][i], TempSensorsLock) for i in range(self.config["num_dampers"])]
-        print(self.config["num_dampers"])
-        print(self.tempSensors)
         self.init_sys_state()
     def init_sys_state(self):
         if(self.config["has_intake"]):
@@ -48,6 +46,7 @@ class System:
             # if multiple stations are active then the power will be scaled accordingly [can vary the way to scale]
             power = 0
             for i in self.tempSensors:
+                print(i.id)
                 temperature_i = i.temperature
                 l = len(self.config["temperature_range"])
                 while(l):
@@ -78,6 +77,7 @@ class System:
                     l-=1
                 if(default_damper):
                     self.dampers[i.id].set_damper_angle(self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i.id])
+                print("here")
 
         if (((self.shm["mode"] == "passive") and (active_flag)) or ((self.shm["mode"] == "active")and (not active_flag))):
             if(active_flag):

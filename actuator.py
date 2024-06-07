@@ -40,6 +40,7 @@ class Damper():
 
     def __init__(self, id, default_angle:int):
         self.id = id
+        print(f"Damper {self.id} init")
         self.damper_angle = default_angle
         self.set_damper_angle(default_angle)
         pass

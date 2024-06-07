@@ -40,7 +40,8 @@ class Watcher:
                 print(sys.shm)
                 #time.sleep(15)
                 #system.exit()
-        except:
+        except Exception as e:
+            print(e)
             self.observer.stop()
             print("Observer Stopped")
             sys.shm.shm.close()

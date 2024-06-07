@@ -7,7 +7,6 @@ import threading
 class temperatureSensor:
     def __init__(self, id, cs_pin, clk_pin, so_pin, lock):
         self.id = id
-        print(f"{id} init")
         self.cs_pin = cs_pin
         self.clk_pin = clk_pin
         self.so_pin = so_pin
@@ -27,7 +26,6 @@ class temperatureSensor:
 
     def get_temperature(self) -> float:
         self.lock.acquire()
-        print("polled")
         GPIO.output(self.cs_pin,GPIO.HIGH)
         sleep(0.5)
         GPIO.output(self.cs_pin,GPIO.LOW)
