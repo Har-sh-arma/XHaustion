@@ -15,83 +15,70 @@
     </div>
 
     <div class="content">
-        <h2>Damper Configuration</h2>
-        <div class="counter-box">
-            <div class="counter">
-                <button id="decrement">−</button>
-                <span id="value">1</span>
-                <button id="increment">+</button>
-                <div class="label">NUMBER OF DAMPERS</div>
-            </div>
-        </div>
-        <div class="damper-container">
-            <!-- Dynamically generate input bars for damper angles -->
-        </div>
+       <div class="section">
+        <div class="value"></div>
+        <div class="dec button">-</div>
+        <div class="inc button">+</div>
+       </div>
+       <div class="section"></div>
     </div>
-
     <script src="../../global.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const valueElement = document.getElementById("value");
-            const incrementButton = document.getElementById("increment");
-            const decrementButton = document.getElementById("decrement");
+        let animate= async() => {
+            let config = await getConfig()
 
-            function generateDamperInputs(numDampers) {
-                const damperContainer = document.querySelector('.damper-container');
-                damperContainer.innerHTML = '';
+            let content = document.querySelector('.content')
 
-                for (let i = 0; i < numDampers; i++) {
-                    const label = document.createElement('label');
-                    label.textContent = `Damper ${i + 1} Angle:`;
-                    const input = document.createElement('input');
-                    input.type = 'range';
-                    input.min = '0';
-                    input.max = '90';
-                    input.value = localStorage.getItem(`damper_${i + 1}`) || '25';
-                    input.addEventListener('input', function () {
-                        updateDamperAngle(i, parseInt(input.value));
-                    });
+            content.innerHTML = `
+            <div class="section">
+            <div class="value">${config["num_dampers"]}</div>
+            <div class="dec button" data="num_dampers">-</div>
+            <div class="inc button" data="num_dampers">+</div>
+            </div>
+            <div class="section">
+            <div class="value">${config["damper_step"]}</div>
+            <div class="dec button" data="damper_step">-</div>
+            <div class="inc button" data="damper_step">+</div>
+            </div>
+       `
 
-                    const valueSpan = document.createElement('span');
-                    valueSpan.textContent = input.value;
+            let inc = document.querySelectorAll('.inc')
+            let dec = document.querySelectorAll('.dec')
 
-                    const degreeSpan = document.createElement('span');
-                    degreeSpan.textContent = '°';
-
-                    label.appendChild(input);
-                    label.appendChild(valueSpan);
-                    label.appendChild(degreeSpan);
-
-                    damperContainer.appendChild(label);
+            inc[0].addEventListener('click', (event) => {
+                if(config[event.target.getAttribute('data')] < 20){
+                    config[event.target.getAttribute('data')] += 1
                 }
-            }
-
-            function updateNumDampers(newValue) {
-                valueElement.textContent = newValue;
-                localStorage.setItem('num_dampers', newValue);
-                generateDamperInputs(newValue);
-            }
-
-            function updateDamperAngle(index, value) {
-                localStorage.setItem(`damper_${index + 1}`, value);
-                console.log(`Damper ${index + 1} angle updated: ${value}°`);
-            }
-
-            const initialNumDampers = localStorage.getItem('num_dampers') || '1';
-            updateNumDampers(initialNumDampers);
-
-            incrementButton.addEventListener("click", function () {
-                let currentValue = parseInt(valueElement.textContent);
-                updateNumDampers(currentValue + 1);
-            });
-
-            decrementButton.addEventListener("click", function () {
-                let currentValue = parseInt(valueElement.textContent);
-                if (currentValue > 1) {
-                    updateNumDampers(currentValue - 1);
+                setConfig(config)
+                setTimeout(animate, 0)
+            })
+            inc[1].addEventListener('click', (event) => {
+                if(config[event.target.getAttribute('data')] < 20){
+                    config[event.target.getAttribute('data')] += 1
                 }
-            });
-        });
+                setConfig(config)
+                setTimeout(animate, 0)
+            })
+            dec[0].addEventListener('click', (event) => {
+                if(config[event.target.getAttribute('data')] > 1){
+                    config[event.target.getAttribute('data')] -= 1
+                }
+                setConfig(config)
+                setTimeout(animate, 0)
+            })
+            dec[1].addEventListener('click', (event) => {
+                if(config[event.target.getAttribute('data')] > 1){
+                    config[event.target.getAttribute('data')] -= 1
+                }
+                setConfig(config)
+                setTimeout(animate, 0)
+            })
+            
+
+
+        }
+        
+        animate()
     </script>
 </body>
 </html>

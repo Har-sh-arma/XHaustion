@@ -8,14 +8,16 @@ body{
     width: 98vw;
     display: grid;
     height: 99%;
-    grid-template-columns: repeat(4, 25vw);
-    grid-template-rows: 3fr, 3fr;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.inp_cont{
+    display: grid;
+    place-items: center;
+    grid-template-rows: 1fr 8fr 1fr;
 }
 
 
-  
-  
-  
   
   
   

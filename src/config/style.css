@@ -1,3 +1,7 @@
+body{
+    grid-template-rows: 1fr 7fr;
+}
+
 .content {
     display: grid;
     height: 90vh;
@@ -6,7 +10,6 @@
     font-style: italic;
     padding: 10px;
     box-sizing: border-box;
-    margin-top: 1rem;
 }
 .nav{
     height: 100%;
@@ -74,55 +77,62 @@ button:active {
 }
 
 .additional-links {
-    grid-column: 1 / span 3;
     display: grid;
-    grid-template-rows: auto auto auto; /* Create three rows for the links */
-    justify-items: center;
-    gap: 10px;
-    margin-top: 1px;
+    place-items: center;
+    grid-template-rows: repeat(3, 1fr); 
     font-size: 2.8rem;
+
 }
 
-.additional-links div {
+.additional-links > div {
     border-radius: 5%;
     background-color:#D67B60 ;
     border: 3px solid white;
-    padding: 10px 20px;
     text-align: center;
-    size: 3rem;
+    color: var(--very-light);
+    width: 50%;
+    height: 70%;
 }
 
 .additional-links a {
-    color: white;
+    color: inherit;
     text-decoration: none;
 }
 
-.additional-links div:hover {
-    background-color: #e66439;
+.additional-links>div:hover {
+    background-color: var(--very-light);
+    color: var(--primary-color);
 }
 
 .tempinput {
-    display: block;
-    width: 80%; /* Adjusted the width */
-    margin-left: 50%; /* Align to the right */
-    margin-top: 10px;
-    font-size: 1.5rem;
+    width: 80% !important;    
 }
 
 .tempr {
     display: grid;
-    grid-template-rows: repeat(4, auto);
-    gap: 20px;
-    align-items: right;
-    height: 80vh;
-    width: 48vw;
+    grid-template-rows: repeat(5, 1fr);
+}
+
+.section {
+    height: 100%;
+    width: 100%;
+    border: 4px solid white;
+}
+
+.temp-heading {
+    /* grid-column: 1 / span 3; */
+    /* text-align: center; */
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    color: white;
 }
 
 .temp-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Align items to the right */
-    width: 80%;
+    display: grid;
+    grid-template-rows: 1fr 1fr; /* Align items to the right */
+    width: 100%;
+    place-items: center;
     /* margin: none; */
 }
 

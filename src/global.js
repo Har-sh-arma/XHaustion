@@ -15,7 +15,7 @@ if (!flag) {
 }
 
 
-let config = {
+let conf1 = {
     "pwm_pins": [12, 32],
     "CS_PIN": 38,
     "SCK_PIN":40,
@@ -24,6 +24,8 @@ let config = {
     "intake_max_rpm": 3000,
     "has_intake": 1,
     "num_dampers": 4,
+    "damper_step":4,
+    "fan_step": 4,
     "temperature_range": [
         40,
         70,
@@ -114,38 +116,64 @@ let config = {
     ]
 }
 
+let sys_st1 = {
+    "air_flow": 0,
+    "temperatures": [
+        0,
+        0,
+        0,
+        0
+    ],
+    "dampers": [
+        0,
+        0,
+        0,
+        0
+    ],
+    "mode": "passive",
+    "passive_mode": "default",
+    "override": {"fans":{"exhaust": 0, "intake": 0}, "dampers": [0, 0, 0, 0]}
+}
+
 const getSystemState = async() => {
     // let res = await fetch(`${window.location.origin}/api/system_state/` , {origin: window.location.origin})
     // let data = await res.json()
     // return JSON.parse(data)
-    
+    return sys_st1
 }
 
 const getConfig = async() => {
-    let res = await fetch(`${window.location.origin}/api/config/`)
-    let data = await res.json()
-    return data
+    // let res = await fetch(`${window.location.origin}/api/config/`)
+    // let data = await res.json()
+    // return data
+    return conf1
 }
 
 const setConfig = async(config) => {
-    let res = await fetch(`${window.location.origin}/api/config/`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(config),
-    })
+    // let res = await fetch(`${window.location.origin}/api/config/`, {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(config),
+    // })
+
+    // remove the below in prod
+    conf1 = config
+    return
 }
 
 
 const setSystemState = async(sys_state) => {
-    let res = await fetch(`${window.location.origin}/api/system_state/`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sys_state),
-    })
+    // let res = await fetch(`${window.location.origin}/api/system_state/`, {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(sys_state),
+    // })
+    sys_st1 = sys_state
+    return
 }
 
 document.addEventListener('contextmenu', event => {

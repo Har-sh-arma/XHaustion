@@ -10,182 +10,57 @@
 </head>
 <body>
     <div class="nav">
-        <div class="nav-font"><a href="../index.html">BACK</a></div>
-        <div class="nav-font"><a href="#" onclick="loadContent('hood1')">hood1</a></div>
-        <div class="nav-font"><a href="#" onclick="loadContent('hood2')">hood2</a></div>
-        <div class="nav-font"><a href="#" onclick="loadContent('hood3')">hood3</a></div>
-        <div class="nav-font"><a href="#" onclick="loadContent('hood4')">hood4</a></div>
+        <div class="nav-font"><a href="../">BACK</a></div>
     </div>
         
     <div class="content" id="content">
-        <!-- Input bars for hood 1 -->
-        <div id="hood1" style="display: none;">
-            <span id="temp1Value">5</span>
-            <input id="temp1" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-            <span id="temp2Value">5</span>
-            <input id="temp2" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-            <span id="temp3Value">5</span>
-            <input id="temp3" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-            <span id="temp4Value">5</span>
-            <input id="temp4" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-        </div>
-
-        <!-- Input bars for hood 2 -->
-        <div id="hood2" style="display: none;">
-            <!-- Similar structure as hood 1 -->
-            <span id="temp1Value">5</span>
-            <input id="temp1" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-            <span id="temp2Value">5</span>
-            <input id="temp2" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-            <span id="temp3Value">5</span>
-            <input id="temp3" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-            <span id="temp4Value">5</span>
-            <input id="temp4" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-        </div>
-
-        <!-- Input bars for hood 3 -->
-        <div id="hood3" style="display: none;">
-            <!-- Similar structure as hood 1 -->
-            <span id="temp1Value">5</span>
-            <input id="temp1" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-            <span id="temp2Value">5</span>
-            <input id="temp2" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-            <span id="temp3Value">5</span>
-            <input id="temp3" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-            <span id="temp4Value">5</span>
-            <input id="temp4" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-        </div>
-
-        <!-- Input bars for hood 4 -->
-        <div id="hood4" style="display: none;">
-            <!-- Similar structure as hood 1 -->
-            <span id="temp1Value">5</span>
-            <input id="temp1" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-            <span id="temp2Value">5</span>
-            <input id="temp2" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-            <span id="temp3Value">5</span>
-            <input id="temp3" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-            <span id="temp4Value">5</span>
-            <input id="temp4" class="input-range" orient="horizontal" type="range" step="0.5" value="5" min="1" max="100">
-        </div>
+        
     </div>
     
     <script src="../../global.js"></script>
-    <script src="../../../config/config.json"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const configUrl = '/src/config/fans/config.json'; // Update with the correct path to your config file
 
-            const inputs = {
-                temp1: document.getElementById("temp1"),
-                temp2: document.getElementById("temp2"),
-                temp3: document.getElementById("temp3"),
-                temp4: document.getElementById("temp4")
-            };
-
-            const values = {
-                temp1: document.getElementById("temp1Value"),
-                temp2: document.getElementById("temp2Value"),
-                temp3: document.getElementById("temp3Value"),
-                temp4: document.getElementById("temp4Value")
-            };
-
-            let config = {};
-
-            // Function to fetch and load the config data
-            function loadConfig() {
-                fetch(configUrl)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        config = data;
-                        updateInputValues();
-                    })
-                    .catch(error => console.error('Error loading config:', error));
-            }
-
-            // Function to update input values based on the config
-            function updateInputValues() {
-                inputs.temp1.value = config.temperature_range[0];
-                inputs.temp2.value = config.temperature_range[1];
-                inputs.temp3.value = config.temperature_range[2];
-                inputs.temp4.value = config.temperature_range[3];
-
-                values.temp1.textContent = config.temperature_range[0];
-                values.temp2.textContent = config.temperature_range[1];
-                values.temp3.textContent = config.temperature_range[2];
-                values.temp4.textContent = config.temperature_range[3];
-            }
-
-            // Function to update the config object and save it
-            function updateConfig() {
-                config.temperature_range = [
-                    parseFloat(inputs.temp1.value),
-                    parseFloat(inputs.temp2.value),
-                    parseFloat(inputs.temp3.value),
-                    parseFloat(inputs.temp4.value)
-                ];
-
-                saveConfig();
-                updateValueDisplays();
-            }
-
-            // Function to update value displays
-            function updateValueDisplays() {
-                values.temp1.textContent = inputs.temp1.value;
-                values.temp2.textContent = inputs.temp2.value;
-                values.temp3.textContent = inputs.temp3.value;
-                values.temp4.textContent = inputs.temp4.value;
-            }
-
-            // Function to save the updated config
-            function saveConfig() {
-                // As PUT is not allowed, we might need a server-side endpoint to handle this
-                // Here we simulate saving to a local file which won't work without a proper backend setup
-                fetch(configUrl, {
-                    method: 'P', // Use POST if PUT is not allowed, and handle appropriately on the server-side
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(config)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('Config updated successfully');
-                    } else {
-                        console.error('Error updating config:', response.statusText);
-                    }
-                })
-                .catch(error => console.error('Error updating config:', error));
-            }
-
-            // Add event listeners to input ranges
-            for (const key in inputs) {
-                if (inputs.hasOwnProperty(key)) {
-                    inputs[key].addEventListener("input", updateConfig);
+        let selectedHood = 0
+        let animate =  async() => {
+            let config = await getConfig()
+            document.querySelector(".nav").innerHTML = `<div class="nav-font"><a href="../">BACK</a></div>`
+            for (let i = 0; i < config["num_dampers"]; i++) {
+                let buttonHTML = `<div class="nav-font"><a onclick="selectHood(${i})">Hood ${i+1}</a></div>`
+                if(i == selectedHood){
+                buttonHTML = `<div class="nav-font"><a class="current_nav" onclick="console.log("hello")">Hood ${i+1}</a></div>`
                 }
+                document.querySelector(".nav").innerHTML += buttonHTML
             }
-
-            // Load the initial config
-            loadConfig();
-        });
-
-        // Function to show the content of a specific hood
-        function loadContent(hood) {
-            const contentDivs = document.querySelectorAll('.content > div');
-            contentDivs.forEach(div => {
-                if (div.id === hood) {
-                    div.style.display = 'block'; // Show the selected hood content
-                } else {
-                    div.style.display = 'none'; // Hide other hood content
-                }
-            });
+            let content = document.querySelector(".content")
+            content.innerHTML = ""
+            for (let i = 0; i < config["num_dampers"]; i++) {
+                content.innerHTML += `<div class="inp_cont">
+                    <div class="currValue">${config["fan_power_scaling_for_hoods"][selectedHood][i]} %</div>
+                    <input type="range" value="${config["fan_power_scaling_for_hoods"][selectedHood][i]}" min="0" max="100" class="vertical"><div class="temperature">${config["temperature_range"][i]} C</div></div>`
+            }
+            let inps = document.querySelectorAll("input")
+            for (let i = 0; i < inps.length; i++) {
+                inps[i].addEventListener("input", function (value) {
+                    config["fan_power_scaling_for_hoods"][selectedHood][i] = Number(value.target.value)
+                    setConfig(config)
+                    setTimeout(animate, 0)
+                })
+            }
         }
+
+
+
+
+        const selectHood = (i) => {
+            selectedHood = i
+            animate()
+        }
+
+        animate()
+
+        
+
     </script>
 </body>
 </html>

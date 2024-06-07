@@ -12,114 +12,30 @@
 <body>
     <div class="nav">
         <div class="nav-font"><a href="/">DASHBOARD</a></div>
-        <div class="nav-font"><a href="hoods/">HOODS</a></div>
-        <div class="nav-font"><a href="fan/">FAN</a></div>
-        <div class="nav-font"><a href="help/">HELP</a></div>
-        <div class="nav-font"><a href="config/">CONFIG</a></div>
+        <div class="nav-font"><a href="../hoods/">HOODS</a></div>
+        <div class="nav-font"><a href="../fan/">FAN</a></div>
+        <div class="nav-font"><a href="../help/">HELP</a></div>
+        <div class="nav-font"><a href="../config/">CONFIG</a></div>
     </div>
     <div class="content">
-        <div class="counter-box">
-             <div class="counter">
-             </div>
-                <div class="additional-links">
+                <div class="additional-links section">
                     <div><a href="../config/fans/">FANS</a></div>
                     <div><a href="../config/damper/">DAMPER</a></div>
                     <div><a href="../config/modes/">PASSIVE MODES</a></div>
                 </div>
+            <div class="tempr section">
+                <div class="temp-heading">THRESHOLDS</div>
+
             </div>
-        </div>
-        <div class="tempr">
-            <div class="temp-container">
-                <label for="temp1">Temperature 1: <span id="temp1value" style="font-size: 1.8rem;">5</span> °C</label>
-                <input class="tempinput" id="temp1" type="range" step="0.5" value="5" min="1" max="200">
-            </div>
-            <div class="temp-container">
-                <label for="temp2">Temperature 2: <span id="temp2value" style="font-size: 1.8rem;">5</span> °C</label>
-                <input class="tempinput" id="temp2" type="range" step="0.5" value="5" min="1" max="200">
-            </div>
-            <div class="temp-container">
-                <label for="temp3">Temperature 3: <span id="temp3value" style="font-size: 1.8rem;">5</span> °C</label>
-                <input class="tempinput" id="temp3" type="range" step="0.5" value="5" min="1" max="200">
-            </div>
-            <div class="temp-container">
-                <label for="temp4">Temperature 4: <span id="temp4value" style="font-size: 1.8rem;">5</span> °C</label>
-                <input class="tempinput" id="temp4" type="range" step="0.5" value="5" min="1" max="200">
-            </div>
-        </div>
     </div>
+   
     <script src="../global.js"></script>
 
     <script>
-   document.addEventListener("DOMContentLoaded", function () {
-    // const valueElement = document.getElementById("value");
-    // const incrementButton = document.getElementById("increment");
-    // const decrementButton = document.getElementById("decrement");
+
     const tempInputs = document.querySelectorAll(".tempinput");
 
-    const config = {
-        pwm_pins: [12, 32],
-        CS_PIN: 38,
-        SCK_PIN: 40,
-        temperature_pins: [37, 35, 33, 31, 29],
-        exhaust_max_rpm: 5000,
-        intake_max_rpm: 3000,
-        has_intake: 1,
-        num_dampers: 4,
-        temperature_range: [40, 70, 100, 150],
-        passive_modes: {
-            "default": {
-                "fans": {
-                    "exhaust": 10,
-                    "intake": 5
-                },
-                "dampers": [25, 25, 25, 25]
-            },
-            "1": {
-                "fans": {
-                    "exhaust": 40,
-                    "intake": 10
-                },
-                "dampers": [35, 25, 35, 25]
-            },
-            "2": {
-                "fans": {
-                    "exhaust": 50,
-                    "intake": 10
-                },
-                "dampers": [35, 35, 35, 35]
-            },
-            "3": {
-                "fans": {
-                    "exhaust": 70,
-                    "intake": 20
-                },
-                "dampers": [45, 45, 45, 45]
-            }
-        },
-        fan_power_scaling_for_hoods: [
-            [40, 60, 80, 100],
-            [30, 50, 70, 90],
-            [20, 40, 50, 80],
-            [10, 30, 50, 70]
-        ],
-        damper_angles: [25, 45, 60, 90]
-    };
 
-    // incrementButton.addEventListener("click", function () {
-    //     let currentValue = parseInt(valueElement.textContent);
-    //     valueElement.textContent = currentValue + 1;
-    //     updateNumDampers(currentValue + 1);
-    // });
-
-    // decrementButton.addEventListener("click", function () {
-    //     let currentValue = parseInt(valueElement.textContent);
-    //     if (currentValue > 1) {
-    //         valueElement.textContent = currentValue - 1;
-    //         updateNumDampers(currentValue - 1);
-    //     }
-    // });
-
-    // Update start temperature for each input
     tempInputs.forEach(function (input, index) {
         input.addEventListener("input", function () {
             let currentValue = parseFloat(input.value);
@@ -135,17 +51,45 @@
         });
     });
 
-    function updateNumDampers(newValue) {
-        config.num_dampers = newValue;
-        updateConfig();
+    temp_div = `<div class="temp-container">
+                    <label for="temp1">Temperature 1: 3°C</label>
+                    <input class="tempinput" id="temp1" type="range" step="5" value="5" min="1" max="200">
+                </div>`
+
+    const animate = async() => {
+        let conf = await getConfig();
+            
+        let main_cont = document.querySelector(".tempr")
+        main_cont.innerHTML = '<div class="temp-heading">THRESHOLDS</div>'
+        for (let i = 0; i < 4; i++) {
+            let min = 0
+            if(i!=0){
+                min = conf["temperature_range"][i-1] +1
+            }
+            if(i!=3){
+                if(conf["temperature_range"][i] > conf["temperature_range"][i+1]){
+                    conf["temperature_range"][i+1] = conf["temperature_range"][i] +1
+
+                }
+                setConfig(conf)
+            }
+
+            const elementHTML = `<div class="temp-container">
+                    <label for="temp1">Temperature 1: ${conf["temperature_range"][i]}°C</label>
+                    <input class="tempinput" id="temp_inp${i}" type="range" step="5" value="${conf["temperature_range"][i]}" min="${min}" max="${min+100}">
+                </div>`
+            main_cont.innerHTML += elementHTML
+        }
+        for (let i = 0; i < 4; i++) {
+            document.getElementById(`temp_inp${i}`).addEventListener("input", function (value) {
+                conf["temperature_range"][i] = Number(value.target.value)
+                setConfig(conf)
+                setTimeout(animate, 0)
+            })
+        }
     }
 
-    function updateConfig() {
-        config.temperature_range = Array.from(tempInputs).map(input => parseFloat(input.value));
-        console.log(JSON.stringify(config, null, 2));
-        // Here you can add the code to save the config object to a file or a database
-    }
-});
+    animate()
 
 
     </script>

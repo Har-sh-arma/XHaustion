@@ -14,6 +14,7 @@
     background-color: var(--dark);
     margin: 0;
     padding: 0;
+    overflow: hidden;
   }
   
   .nav > div>a:hover{
@@ -99,6 +100,14 @@ input[type="range"]::-webkit-slider-thumb {
   height: 2rem;
   width: 1rem;
 }
+
+input[type="range"].vertical {
+  writing-mode:vertical-lr;
+  height: 80%;
+}
+
+
+
 
 input[type="range"]:focus::-webkit-slider-thumb {   
  border: 1px solid #053a5f;
