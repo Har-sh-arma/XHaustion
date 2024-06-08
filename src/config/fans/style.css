@@ -3,6 +3,10 @@ body{
     grid-template-rows: 1fr 7fr;
 }
 
+.nav{
+	grid-template-columns: repeat(7, 1fr);
+}
+
 .content {
     width: 98vw;
     display: grid;

@@ -99,9 +99,10 @@
     }
     
     document.querySelector(".start-label").addEventListener("click", () => {
-      sys_state["override"] = {"fans":{"exhaust": 0, "intake": 0}, "dampers": [0, 0, 0, 0]}
+      sys_state["override"] = {"fans":{"exhaust": 0, "intake": 0}, "dampers": Array(conf["num_dampers"]).fill(0)}
       sys_state["mode"] = "passive"
-      sys_state["passive_mode"] = "default"    
+      sys_state["passive_mode"] = "default"
+	setSystemState(sys_state);
     })
     
 

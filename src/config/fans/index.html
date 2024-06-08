@@ -25,7 +25,7 @@
         let animate =  async() => {
             let config = await getConfig()
             document.querySelector(".nav").innerHTML = `<div class="nav-font"><a href="../">BACK</a></div>`
-            for (let i = 0; i < config["temperature_range"].length; i++) {
+            for (let i = 0; i < config["num_dampers"]; i++) {
                 let buttonHTML = `<div class="nav-font"><a onclick="selectHood(${i})">Hood ${i+1}</a></div>`
                 if(i == selectedHood){
                 buttonHTML = `<div class="nav-font"><a class="current_nav" onclick="console.log("hello")">Hood ${i+1}</a></div>`
@@ -34,7 +34,7 @@
             }
             let content = document.querySelector(".content")
             content.innerHTML = ""
-            for (let i = 0; i < config["num_dampers"]; i++) {
+            for (let i = 0; i < config["temperature_range"].length; i++) {
                 content.innerHTML += `<div class="inp_cont">
                     <div class="currValue">${config["fan_power_scaling_for_hoods"][selectedHood][i]} %</div>
                     <input type="range" value="${config["fan_power_scaling_for_hoods"][selectedHood][i]}" min="0" max="100" step="${config["fan_step"]}"class="vertical"><div class="temperature">${config["temperature_range"][i]} °C</div></div>`

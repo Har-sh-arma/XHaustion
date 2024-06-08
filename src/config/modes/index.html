@@ -84,7 +84,7 @@
 }
 
     function updateFan(fan){
-        config["passive_modes"][selected_mode]['fans'][fan] = document.querySelector(`.fan_input.${fan}`).value
+        config["passive_modes"][selected_mode]['fans'][fan] = Number(document.querySelector(`.fan_input.${fan}`).value)
         setConfig(config).then(()=>{
             getConfig().then(data=>{
                 config = data;
@@ -93,7 +93,7 @@
         })
     }
     function updateDampers(i){
-        config["passive_modes"][selected_mode]['dampers'][i] = document.querySelector(`.d${i}`).value
+        config["passive_modes"][selected_mode]['dampers'][i] = Number(document.querySelector(`.d${i}`).value)
         setConfig(config).then(()=>{
             getConfig().then(data=>{
                 config = data;
