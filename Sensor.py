@@ -36,7 +36,6 @@ class temperatureSensor:
             b += str(GPIO.input(self.so_pin))
             GPIO.output(self.clk_pin,GPIO.LOW)
             n -= 1
-        print()
         self.temperature = int(b[1:-5], 2)+ int(b[-5])*0.5 + int(b[-4])*0.25
         self.lock.release()
 

@@ -56,6 +56,7 @@ class Handler(FileSystemEventHandler):
     @staticmethod
     def on_modified(event):
         try:
+            print(sys.shm)
             config = json.load(open("./config/config.json"))#add try except
             sys.config = config
             logger.info("System Config Changed")

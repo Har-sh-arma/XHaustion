@@ -46,6 +46,7 @@ class System:
             # if multiple stations are active then the power will be scaled accordingly [can vary the way to scale]
             power = 0
             for i in self.tempSensors:
+                print(i.id)
                 temperature_i = i.temperature
                 l = len(self.config["temperature_range"])
                 while(l):
@@ -77,7 +78,7 @@ class System:
                 if(default_damper):
                     self.dampers[i.id].set_damper_angle(self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i.id])
              else:
-                self.dampers[i.id].set_damper_angle(self.shm["dampers"][i.id])
+                self.dampers[i.id].set_damper_angle(self.shm["dampers"][i])
 
         if (((self.shm["mode"] == "passive") and (active_flag)) or ((self.shm["mode"] == "active")and (not active_flag))):
             if(active_flag):
