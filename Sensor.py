@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 from time import sleep
 import threading
+import smbus
 
 
 
@@ -10,7 +11,6 @@ class temperatureSensor:
         self.cs_pin = cs_pin
         self.clk_pin = clk_pin
         self.so_pin = so_pin
-        # self.temperature = self.get_temperature()
         GPIO.setwarnings(False)			#disable warnings
         GPIO.setmode(GPIO.BOARD)		#set pin numbering system
         GPIO.setup(cs_pin,GPIO.OUT)
@@ -45,13 +45,27 @@ class temperatureSensor:
             sleep(0.1)
 
 class pressureSensor:
-    def __init__(self, id):
+    def __init__(self, id, address, A0, zero_offset, scaling):
         self.id = id
-        self.pressure = self.get_pressure()
-        self.unit = "Bar"
+        self.pressure = 0
+        self.unit = "Pascal"
+        self.address = int(address, 16)
+        self.A0 = int(A0, 16)
+        self.zero_offset=zero_offset
+        self.scaling=scaling
+        self.bus = smbus.SMBus(1)
+        self.thread = threading.Thread(target=self.sense)
+        self.thread.daemon = True
+        self.thread.start()
 
     def get_pressure(self) -> float:
-        #Actual GPIO Program to get Pressure
-        default_pressure = 1
-        # print(f"Pressure Sensor {self.id}: {default_pressure}")
-        return default_pressure
+        self.bus.write_byte(self.address,self.A0)
+        value = self.bus.read_byte(self.address)
+        self.pressure = (value-self.zero_offset)*self.scaling
+        print(f"pressure: {self.pressure}")
+        return
+    def sense(self):
+        while True:
+                self.get_pressure()
+                sleep(1)
+

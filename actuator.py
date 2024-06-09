@@ -4,6 +4,7 @@ import threading
 import RPi.GPIO as GPIO
 from time import sleep
 
+
 class Fan():
 
     def __init__(self, id , pin , default_speed ):
