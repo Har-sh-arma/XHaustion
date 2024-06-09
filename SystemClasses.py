@@ -90,7 +90,8 @@ class System:
                 self.shm["override"] = {"fans": {"exhaust": 0, "intake": 0}, "dampers": [0, 0, 0, 0]} 
                 # so that changes to the system made while cooking are transient and if the over ride is done while the system is in passive mode they stay
             logger.info("System Mode: " + self.shm["mode"])
-        
+
+        self.shm["pressure"] = self.pressureSensor.pressure
         self.shm["temperatures"] = [i.temperature for i in self.tempSensors]
         self.shm["dampers"] = [i.damper_angle for i in self.dampers]
         self.shm["intake"] = self.intake.fan_speed

@@ -59,13 +59,12 @@ class pressureSensor:
         self.thread.start()
 
     def get_pressure(self) -> float:
-        self.bus.write_byte(self.address,self.A0)
+        #self.bus.write_byte(self.address,self.A0)
         value = self.bus.read_byte(self.address)
         self.pressure = (value-self.zero_offset)*self.scaling
-        print(f"pressure: {self.pressure}")
         return
     def sense(self):
         while True:
                 self.get_pressure()
-                sleep(1)
+                sleep(0.1)
 

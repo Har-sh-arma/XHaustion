@@ -1,8 +1,8 @@
 {
     "pressure_address": "0x48",
-    "pressure_A0": "0x1a",
-    "pressure_offset": 60,
-    "pressure_scaling": 12,
+    "pressure_A0": "0x40",
+    "pressure_offset": 49,
+    "pressure_scaling": 12.5,
     "pwm_pins": [
         12,
         32
