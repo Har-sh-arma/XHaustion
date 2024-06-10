@@ -23,7 +23,7 @@ class System:
         self.dampers = [Damper(i, self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i]) for i in range(self.config["num_dampers"])]
         TempSensorsLock = threading.Lock()
         self.tempSensors = [temperatureSensor(i, self.config["CS_PIN"], self.config["SCK_PIN"] , self.config["temperature_pins"][i], TempSensorsLock) for i in range(self.config["num_dampers"])]
-        self.pressureSensor = pressureSensor(0, self.config["pressure_address"], self.config["pressure_A0"], self.config["pressure_offset"], self.config["pressure_scaling"])
+        self.exhaustPressureSensor = pressureSensor(0, self.config["pressure_address"], self.config["pressure_A0"], self.config["pressure_offset"], self.config["pressure_scaling"])
         self.init_sys_state()
     
     def init_sys_state(self):
@@ -33,9 +33,13 @@ class System:
         self.shm["exhaust"] = self.exhaust.fan_speed
         self.shm["dampers"] = [i.damper_angle for i in self.dampers]
         self.shm["temperatures"] = [i.temperature for i in self.tempSensors]
-        self.shm["pressure"] = self.pressureSensor.pressure
+        self.shm["exhaustPressure"] = self.pressureSensor.pressure
 
     def update(self):
+        
+        
+        
+        #Fan zone
         active_flag = False
         if(self.config["has_intake"]):
             if (not self.shm["override"]["fans"]["intake"]):
@@ -65,6 +69,9 @@ class System:
                 self.exhaust.set_fan_speed(power)
         else:
             self.exhaust.set_fan_speed(self.shm["exhaust"])
+        
+        
+        #Damper zone
         for i in self.tempSensors:
              temperature_i = i.temperature
              if( not self.shm["override"]["dampers"][i.id]):
@@ -91,7 +98,7 @@ class System:
                 # so that changes to the system made while cooking are transient and if the over ride is done while the system is in passive mode they stay
             logger.info("System Mode: " + self.shm["mode"])
 
-        self.shm["pressure"] = self.pressureSensor.pressure
+        self.shm["exhaustPressure"] = self.pressureSensor.pressure
         self.shm["temperatures"] = [i.temperature for i in self.tempSensors]
         self.shm["dampers"] = [i.damper_angle for i in self.dampers]
         self.shm["intake"] = self.intake.fan_speed
