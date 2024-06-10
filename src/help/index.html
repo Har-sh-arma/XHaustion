@@ -25,5 +25,14 @@
 
   </div>
   <script src="../global.js"></script>
+  <script>
+	let abc = async()=>{
+		getConfig().then(data=>{
+			document.getElementsByClassName("content")[0].innerText = JSON.stringify(data)
+		})
+	}
+
+	abc()
+  </script>
 </body>
 </html>

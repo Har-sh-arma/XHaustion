@@ -57,10 +57,10 @@
         }
 
         const makeSection =(fan_name, fan_speed, max_rpm)=>{
-          return `<div class="section"><div class="heading">${fan_name.toUpperCase()}</div><div class="stats"><div class="stat"> 250 l / min</div><div class="stat"> 40°C</div><div class="stat"> ${sys_state[fan_name+"Pressure"]}Pa</div></div><div class="speed"><div class="speed_val">Fan Speed: ${max_rpm* (fan_speed/100)}Rpm</div><input class="${fan_name}" type="range" min="0" max="100" step ="1" value="${fan_speed}" class="speed_slider"></div></div>`
+		return `<div class="section"><div class="heading">${fan_name.toUpperCase()}</div><div class="stats"><div class="stat"> 250 l / min</div><div class="stat"> 40°C</div><div class="stat"> ${sys_state[fan_name+"Pressure"]}Pa</div></div><div class="speed"><div class="speed_val">Fan Speed: ${max_rpm* (fan_speed/100)}Rpm</div><input class="${fan_name}" type="range" min="0" max="100" step ="${100/config["fan_step"]}" value="${fan_speed}" class="speed_slider"></div></div>`
         }
-
-        setInterval(animate, 1000);
+	animate()
+        setInterval(animate,1000);
 
     
     </script>

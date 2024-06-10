@@ -46,9 +46,8 @@
             if(i!=3){
                 if(conf["temperature_range"][i] > conf["temperature_range"][i+1]){
                     conf["temperature_range"][i+1] = conf["temperature_range"][i] +1
-
+                    setConfig(conf)
                 }
-                setConfig(conf)
             }
 
             const elementHTML = `<div class="temp-container">

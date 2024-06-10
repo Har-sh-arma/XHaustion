@@ -27,7 +27,6 @@ class temperatureSensor:
     def get_temperature(self) -> float:
         self.lock.acquire()
         GPIO.output(self.cs_pin,GPIO.HIGH)
-        sleep(0.5)
         GPIO.output(self.cs_pin,GPIO.LOW)
         n = 16
         b = ""
@@ -37,6 +36,7 @@ class temperatureSensor:
             GPIO.output(self.clk_pin,GPIO.LOW)
             n -= 1
         self.temperature = int(b[1:-5], 2)+ int(b[-5])*0.5 + int(b[-4])*0.25
+        print(self.id, b, self.temperature)
         self.lock.release()
 
     def sense(self):

@@ -36,19 +36,18 @@ class Watcher:
         try:
             while True:
                 sys.update()
-                time.sleep(0.5)
-                print(sys.shm)
+                #time.sleep(0.5)
+#                print(sys.shm)
                 #time.sleep(15)
                 #system.exit()
         except Exception as e:
-            print(e)
+            print(f"Error Detected: {e}")
             self.observer.stop()
             print("Observer Stopped")
             sys.shm.shm.close()
             sys.shm.shm.unlink()
             self.observer.join()
-            system.exit()
-        self.observer.join()
+            #system.exit()
  
  
 class Handler(FileSystemEventHandler):
