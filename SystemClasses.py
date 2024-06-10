@@ -36,9 +36,8 @@ class System:
         self.shm["exhaustPressure"] = self.exhaustPressureSensor.pressure
 
     def update(self):
-        
-        
-        
+
+
         #Fan zone
         active_flag = False
         if(self.config["has_intake"]):
@@ -61,6 +60,16 @@ class System:
                         active_flag = True
                         break
                     l-=1
+            #check for exhaust pressure
+            l = len(self.config["exhaust_pressure_range"])
+            while(l):
+                if(self.shm["exhaustPressure"] > self.config["exhaust_pressure_range"][l-1]):
+                    if(self.config["fan_power_scaling_exhaust_pressure"][l-1] > power):
+                        power= self.config["fan_power_scaling_exhaust_pressure"][l-1]
+                        active_flag = True
+                        break
+                l-=1
+
             if(power == 0):
                 self.exhaust.set_fan_speed(self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["exhaust"])
             else:
@@ -79,7 +88,7 @@ class System:
                 default_damper = True
                 while(l):
                     if(temperature_i > self.config["temperature_range"][l-1]):
-                        self.dampers[i.id].set_damper_angle(self.config["damper_step"]*(l-1))
+                        self.dampers[i.id].set_damper_angle((90/self.config["damper_step"])*(l-1))
                         active_flag = True
                         default_damper = False
                         break
@@ -89,6 +98,8 @@ class System:
              else:
                 self.dampers[i.id].set_damper_angle(self.shm["dampers"][i.id])
 
+
+        #Mode zone
         if (((self.shm["mode"] == "passive") and (active_flag)) or ((self.shm["mode"] == "active")and (not active_flag))):
             if(active_flag):
                 self.shm["mode"] = "active"

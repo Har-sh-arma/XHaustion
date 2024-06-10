@@ -37,7 +37,7 @@
             for (let i = 0; i < config["temperature_range"].length; i++) {
                 content.innerHTML += `<div class="inp_cont">
                     <div class="currValue">${config["fan_power_scaling_for_hoods"][selectedHood][i]} %</div>
-                    <input type="range" value="${config["fan_power_scaling_for_hoods"][selectedHood][i]}" min="0" max="100" step="${config["fan_step"]}"class="vertical"><div class="temperature">${config["temperature_range"][i]} °C</div></div>`
+                    <input type="range" value="${config["fan_power_scaling_for_hoods"][selectedHood][i]}" min="0" max="100" step="${100/config["fan_step"]}"class="vertical"><div class="temperature">${config["temperature_range"][i]} °C</div></div>`
             }
             let inps = document.querySelectorAll("input")
             for (let i = 0; i < inps.length; i++) {
