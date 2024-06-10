@@ -37,7 +37,7 @@ class Watcher:
             while True:
                 sys.update()
                 time.sleep(0.5)
-                print(sys.shm["pressure"], sys.shm["temperatures"])
+                print(sys.shm)
                 #time.sleep(15)
                 #system.exit()
         except Exception as e:

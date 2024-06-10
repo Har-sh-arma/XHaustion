@@ -33,7 +33,7 @@ class System:
         self.shm["exhaust"] = self.exhaust.fan_speed
         self.shm["dampers"] = [i.damper_angle for i in self.dampers]
         self.shm["temperatures"] = [i.temperature for i in self.tempSensors]
-        self.shm["exhaustPressure"] = self.pressureSensor.pressure
+        self.shm["exhaustPressure"] = self.exhaustPressureSensor.pressure
 
     def update(self):
         
@@ -98,7 +98,7 @@ class System:
                 # so that changes to the system made while cooking are transient and if the over ride is done while the system is in passive mode they stay
             logger.info("System Mode: " + self.shm["mode"])
 
-        self.shm["exhaustPressure"] = self.pressureSensor.pressure
+        self.shm["exhaustPressure"] = self.exhaustPressureSensor.pressure
         self.shm["temperatures"] = [i.temperature for i in self.tempSensors]
         self.shm["dampers"] = [i.damper_angle for i in self.dampers]
         self.shm["intake"] = self.intake.fan_speed
