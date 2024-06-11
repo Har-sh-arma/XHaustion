@@ -78,7 +78,7 @@ class System:
                 self.exhaust.set_fan_speed(power)
         else:
             self.exhaust.set_fan_speed(self.shm["exhaust"])
-        
+
         
         #Damper zone
         for i in self.tempSensors:
