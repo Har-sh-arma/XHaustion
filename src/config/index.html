@@ -34,6 +34,9 @@
 
     <script>
 
+    let rangeSelected = 0
+    let range_array= ["temperature_range", "exhaust_pressure_range"]
+    let max_val = [100, 500]
     const animate = async() => {
         let conf = await getConfig();
             
@@ -42,28 +45,33 @@
         for (let i = 0; i < 4; i++) {
             let min = 0
             if(i!=0){
-                min = conf["temperature_range"][i-1] +1
+                min = conf[range_array[rangeSelected]][i-1] +1
             }
             if(i!=3){
-                if(conf["temperature_range"][i] > conf["temperature_range"][i+1]){
-                    conf["temperature_range"][i+1] = conf["temperature_range"][i] +1
+                if(conf[range_array[rangeSelected]][i] > conf[range_array[rangeSelected]][i+1]){
+                    conf[range_array[rangeSelected]][i+1] = conf[range_array[rangeSelected]][i] +1
                     setConfig(conf)
                 }
             }
 
             const elementHTML = `<div class="temp-container">
-                    <label for="temp1">Temperature ${i+1}: <b>${conf["temperature_range"][i]}°C</b></label>
-                    <input class="tempinput" id="temp_inp${i}" type="range" step="5" value="${conf["temperature_range"][i]}" min="${min}" max="${min+100}">
+                    <label for="temp1">Temperature ${i+1}: <b>${conf[range_array[rangeSelected]][i]}</b></label>
+                    <input class="tempinput" id="temp_inp${i}" type="range" step="5" value="${conf[range_array[rangeSelected]][i]}" min="${min}" max="${min+max_val[rangeSelected]}">
                 </div>`
             main_cont.innerHTML += elementHTML
         }
         for (let i = 0; i < 4; i++) {
             document.getElementById(`temp_inp${i}`).addEventListener("change", function (value) {
-                conf["temperature_range"][i] = Number(value.target.value)
+                conf[range_array[rangeSelected]][i] = Number(value.target.value)
                 setConfig(conf)
                 setTimeout(animate, 0)
             })
         }
+        document.querySelector(".temp-heading").innerHTML = range_array[rangeSelected].replaceAll("_", " ").replaceAll("range", "").toUpperCase()
+        document.querySelector(".temp-heading").addEventListener("click", () => {
+            rangeSelected = (rangeSelected + 1) % range_array.length
+            requestAnimationFrame(animate)
+        })
     }
 
     animate()

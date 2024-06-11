@@ -70,9 +70,10 @@ body{
 .temp-heading {
     display: grid;
     place-items: center;
-    font-size: 10vh;
+    font-size: 7.5vh;
     color: white;
     background-color: var(--very-dark);
+    box-shadow: inset 1vh 1vh 0.5vh 0vh rgba(255, 255, 255, 1),1vh 1vh 0.5vh 0vh rgba(0, 0, 0, 1) ;
 }
 
 .temp-container {
