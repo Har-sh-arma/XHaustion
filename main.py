@@ -8,6 +8,8 @@ import logging.handlers
 import os
 from shared_memory_dict import SharedMemoryDict
 import sys as system
+import traceback
+
 
 sys = None
 time_format = "%m-%d %H:%M:%S"
@@ -36,12 +38,13 @@ class Watcher:
         try:
             while True:
                 sys.update()
-                #time.sleep(0.5)
-#                print(sys.shm)
+                #time.sleep(1)
+                print(sys.shm["temperatures"], sys.shm["exhaustPressure"])
                 #time.sleep(15)
                 #system.exit()
         except Exception as e:
             print(f"Error Detected: {e}")
+            traceback.print_exception(e)
             self.observer.stop()
             print("Observer Stopped")
             sys.shm.shm.close()
