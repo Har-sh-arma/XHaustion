@@ -48,7 +48,7 @@
             }  
 
             document.querySelectorAll("input").forEach(el => {
-              el.addEventListener("input", () => {
+              el.addEventListener("change", () => {
                 sys_state[el.className] = el.value
                 sys_state["override"]["fans"][el.className] = 1
                 setSystemState(sys_state).then(() => { requestAnimationFrame(animate) })
