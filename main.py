@@ -46,6 +46,14 @@ class Watcher:
         except Exception as e:
             print(f"Error Detected: {e}")
             traceback.print_exception(e)
+            sys.exhaustPressureSensor.thread.join()
+            for i in sys.tempSensors:
+                i.thread.join()
+            for i in sys.dampers:
+                i.thread.join()
+            sys.exhaust.thread.join()
+            if(sys.config["has_intake"]):
+                sys.intake.thread.join()
             self.observer.stop()
             print("Observer Stopped")
             sys.shm.shm.close()
