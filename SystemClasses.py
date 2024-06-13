@@ -6,6 +6,7 @@ from shared_memory_dict import SharedMemoryDict
 import json
 from actuator import Fan, Damper
 import threading
+import smbus
 
 
 
@@ -14,6 +15,7 @@ class System:
     def __init__(self, config, shm):
         self.shm = shm
         self.config = config
+        self.i2c_bus = smbus.SMBus(1)
         self.shm["mode"] = "passive"
         self.shm["passive_mode"] = "default"
         self.shm["override"] = {"fans":{"exhaust": 0, "intake": 0}, "dampers": [0]*config["num_dampers"]}
@@ -21,9 +23,13 @@ class System:
             self.intake = Fan(1, self.config["pwm_pins"][1] ,self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["intake"])
         self.exhaust = Fan(0, self.config["pwm_pins"][0] , self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["exhaust"]) 
         self.dampers = [Damper(i, self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i]) for i in range(self.config["num_dampers"])]
-        TempSensorsLock = threading.Lock()
-        self.tempSensors = [temperatureSensor(i, self.config["CS_PIN"], self.config["SCK_PIN"] , self.config["temperature_pins"][i], TempSensorsLock) for i in range(self.config["num_dampers"])]
-        self.exhaustPressureSensor = pressureSensor(0, self.config["pressure_address"], self.config["pressure_A0"], self.config["pressure_offset"], self.config["pressure_scaling"])
+        i2c_Lock = threading.Lock()
+        
+        self.tempSensors = [temperatureSensor(i, self.i2c_bus, self.config["ADC_i2c_address"], self.config["ADC_channels"]["temperature"][i], i2c_Lock, self.config["temperature_offset"], self.config["temperature_scaling"]) for i in range(self.config["num_dampers"])]
+        
+        
+        self.exhaustPressureSensor = pressureSensor(0, self.i2c_bus, self.config["ADC_i2c_address"], self.config["ADC_channels"]["exhaust_pressure"], i2c_Lock, self.config["pressure_offset"], self.config["pressure_scaling"])
+        
         self.init_sys_state()
     
     def init_sys_state(self):
