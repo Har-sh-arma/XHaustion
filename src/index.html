@@ -70,11 +70,7 @@
       conf = await getConfig();
       sys_state = await getSystemState();
     }
-    init().then(() => {animate();setInterval(animate, 1000);})
-
-
-    const animate = () => {
-      init()
+    init().then(() => {
       let modeList = document.querySelector('.mode-list')
       modeList.innerHTML = ''
       Object.keys(conf.passive_modes).forEach((mode) => {
@@ -89,7 +85,14 @@
           })
         })
         modeList.appendChild(div)
-      })
+      });
+      
+      setInterval(animate, 1000);})
+
+
+    const animate = () => {
+      init()
+
       document.querySelector(".fan-speed .current").innerText = selected_fan.toUpperCase()
       document.querySelector(".dampers .current").innerText = selected_damper+1
       document.querySelector(".status-label").innerText = sys_state["mode"].toUpperCase()
