@@ -10,6 +10,8 @@ class temperatureSensor:
         self.channel = channel
         self.smbus_address = int(smbus_address, 16)
         self.temperature = 0
+        self.zero_offset = zero_offset
+        self.scaling= scaling
         self.unit = "Celsius"
         self.lock = lock
         self.thread = threading.Thread(target=self.sense)
@@ -19,9 +21,10 @@ class temperatureSensor:
 
     def get_temperature(self) -> float:
         self.lock.acquire()
-        self.smbus.bus.write_byte(self.smbus_address, self.channel)
-        value = self.smbus.bus.read_byte(self.smbus_address)
+        self.smbus.write_byte(self.smbus_address, self.channel)
+        value = self.smbus.read_byte(self.smbus_address)
         self.temperature = (value-self.zero_offset)*self.scaling
+        #print(f"temperature: {self.temperature}, channel: {self.channel}")
         self.lock.release()
 
     def sense(self):
@@ -46,9 +49,10 @@ class pressureSensor:
 
     def get_pressure(self) -> float:
         self.lock.acquire()
-        self.smbus.bus.write_byte(self.smbus_address, self.channel)
-        value = self.smbus.bus.read_byte(self.smbus_address)
+        self.smbus.write_byte(self.smbus_address, self.channel)
+        value = self.smbus.read_byte(self.smbus_address)
         self.pressure = (value-self.zero_offset)*self.scaling
+       # print(f"pressure: {self.pressure}, channel: {self.channel}")
         self.lock.release()
         return
     def sense(self):

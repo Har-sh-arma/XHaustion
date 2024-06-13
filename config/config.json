@@ -12,13 +12,13 @@
         100
     ],
     "ADC_i2c_address": "0x48",
-    "pressure_offset": 90,
-    "pressure_scaling": 1,
-    "temperature_offset":0,
+    "pressure_offset": 56,
+    "pressure_scaling": 12,
+    "temperature_offset":100,
     "temperature_scaling":1,
     "ADC_channels":{
-        "exhaust_pressure": 3,
-        "temperature": [0,1,2]
+        "exhaust_pressure": 0,
+        "temperature": [3, 2, 1]
     },
     "pwm_pins": [
         12,

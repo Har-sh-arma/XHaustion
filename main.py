@@ -37,8 +37,9 @@ class Watcher:
         self.observer.start()
         try:
             while True:
+                pass
                 sys.update()
-                #time.sleep(1)
+                time.sleep(1)
                 print(sys.shm["temperatures"], sys.shm["exhaustPressure"])
                 #time.sleep(15)
                 #system.exit()
