@@ -71,26 +71,34 @@
       sys_state = await getSystemState();
     }
     init().then(() => {
-      let modeList = document.querySelector('.mode-list')
-      modeList.innerHTML = ''
-      Object.keys(conf.passive_modes).forEach((mode) => {
-        let div = document.createElement('div')
-        div.innerText = mode.toUpperCase()
-        if(mode === sys_state["passive_mode"]) div.classList.add('selected')
-        div.addEventListener('click', async() => {
-          sys_state = await getSystemState();
-          sys_state["passive_mode"] = mode
-          setSystemState(sys_state).then(() => {
-            requestAnimationFrame(animate)
-          })
-        })
-        modeList.appendChild(div)
-      });
-      
+	    drawModeList();
       setInterval(animate, 1000);})
 
 
+
+      const drawModeList = ()=>{
+        let modeList = document.querySelector('.mode-list')
+        modeList.innerHTML = ''
+        Object.keys(conf.passive_modes).forEach((mode) => {
+          let div = document.createElement('div')
+          div.innerText = mode.toUpperCase()
+          if(mode === sys_state["passive_mode"]) div.classList.add('selected')
+          div.addEventListener('click', async() => {
+            sys_state = await getSystemState();
+            sys_state["passive_mode"] = mode
+            setSystemState(sys_state).then(() => {
+              requestAnimationFrame(()=>{
+                animate()
+                drawModeList()
+              })
+            })
+          })
+          modeList.appendChild(div)
+        });
+      }
+
     const animate = () => {
+	
       init()
 
       document.querySelector(".fan-speed .current").innerText = selected_fan.toUpperCase()
@@ -106,21 +114,8 @@
       sys_state["mode"] = "passive"
       sys_state["passive_mode"] = "default"
 	setSystemState(sys_state).then(() => { requestAnimationFrame(()=>{
-    let modeList = document.querySelector('.mode-list')
-      modeList.innerHTML = ''
-      Object.keys(conf.passive_modes).forEach((mode) => {
-        let div = document.createElement('div')
-        div.innerText = mode.toUpperCase()
-        if(mode === sys_state["passive_mode"]) div.classList.add('selected')
-        div.addEventListener('click', async() => {
-          sys_state = await getSystemState();
-          sys_state["passive_mode"] = mode
-          setSystemState(sys_state).then(() => {
-            requestAnimationFrame(animate)
-          })
-        })
-        modeList.appendChild(div)
-      });
+    animate()
+    drawModeList()
   }) })
     })
     

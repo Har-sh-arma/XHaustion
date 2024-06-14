@@ -1,5 +1,6 @@
 # write the http server using Python SimpleHTTPServer base class
-import flask
+import http.server
+import socketserver
 import json
 from shared_memory_dict import SharedMemoryDict
 import shared_memory_dict
