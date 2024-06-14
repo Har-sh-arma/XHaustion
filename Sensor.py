@@ -23,6 +23,7 @@ class temperatureSensor:
         self.lock.acquire()
         self.smbus.write_byte(self.smbus_address, self.channel)
         value = self.smbus.read_byte(self.smbus_address)
+        value = self.smbus.read_byte(self.smbus_address)
         self.temperature = (value-self.zero_offset)*self.scaling
         #print(f"temperature: {self.temperature}, channel: {self.channel}")
         self.lock.release()
@@ -50,6 +51,7 @@ class pressureSensor:
     def get_pressure(self) -> float:
         self.lock.acquire()
         self.smbus.write_byte(self.smbus_address, self.channel)
+        value = self.smbus.read_byte(self.smbus_address)
         value = self.smbus.read_byte(self.smbus_address)
         self.pressure = (value-self.zero_offset)*self.scaling
        # print(f"pressure: {self.pressure}, channel: {self.channel}")
