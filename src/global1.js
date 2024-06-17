@@ -87,17 +87,57 @@ document.addEventListener('contextmenu', event => {
 //// document.onkeydown = function (e) {
 ////     return false;
 //// }
-document.addEventListener("gesturestart", function (e) {
-	e.preventDefault();
-    document.body.style.zoom = 0.99;
+// Prevent context menu
+document.addEventListener('contextmenu', event => {
+    event.preventDefault();
 });
 
-document.addEventListener("gesturechange", function (e) {
-	e.preventDefault();
+// Function to disable zooming
+const disableZoom = () => {
+    // Prevent pinch-to-zoom and zoom-in/out on touch devices
+    document.addEventListener('touchstart', event => {
+        if (event.touches.length > 1) {
+            event.preventDefault();
+        }
+    }, { passive: false });
 
-  document.body.style.zoom = 0.99;
-});
-document.addEventListener("gestureend", function (e) {
-	  e.preventDefault();
-    document.body.style.zoom = 1;
-}); 
+    document.addEventListener('touchmove', event => {
+        if (event.scale !== 1) {
+            event.preventDefault();
+        }
+    }, { passive: false });
+
+    document.addEventListener('gesturestart', event => {
+        event.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('gesturechange', event => {
+        event.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('gestureend', event => {
+        event.preventDefault();
+    }, { passive: false });
+
+    // Disable double-tap to zoom
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', event => {
+        let now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, { passive: false });
+
+    // Prevent zooming using touchpad gestures on laptops
+    document.addEventListener('wheel', event => {
+        if (event.ctrlKey) {
+            event.preventDefault();
+        }
+    }, { passive: false });
+};
+
+// Execute the function to disable zooming
+disableZoom();
+
+
