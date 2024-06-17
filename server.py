@@ -1,5 +1,6 @@
 # write the http server using Python SimpleHTTPServer base class
-import flask
+import http.server
+import socketserver
 import json
 from shared_memory_dict import SharedMemoryDict
 import shared_memory_dict
@@ -24,7 +25,19 @@ Shared memory manipulation works only on the higher level so pull the dict modif
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=DIRECTORY, **kwargs)
-    
+   
+    def end_headers(self):
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', '*')
+        self.send_header('Access-Control-Allow-Headers', '*')
+        self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate')
+        return super(CORSRequestHandler, self).end_headers()
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.end_headers()
+
+
     #add a get method to serve when super returns 404 (not found)
     def do_GET(self):
         # print(self.path.split("/"))
