@@ -35,3 +35,19 @@
 06-17 20:50:10 - INFO - System Initialized Successfully
 06-18 11:59:17 - INFO - System Initialized Successfully
 06-18 12:12:27 - INFO - System Initialized Successfully
+06-18 12:34:12 - INFO - System Initialized Successfully
+06-18 13:53:09 - INFO - Fan 1: set to 50%
+06-18 13:53:09 - INFO - Fan 0: set to 100%
+06-18 13:53:09 - INFO - Damper 0 is set to 18 degrees
+06-18 13:53:09 - INFO - Damper 1 is set to 18 degrees
+06-18 13:53:13 - INFO - Fan 1: set to 25%
+06-18 13:53:13 - INFO - Fan 0: set to 75%
+06-18 14:15:22 - INFO - System Initialized Successfully
+06-18 14:18:51 - INFO - Fan 0: set to 50%
+06-18 14:18:52 - INFO - Fan 0: set to 75%
+06-18 14:18:54 - INFO - Fan 0: set to 50%
+06-18 14:18:55 - INFO - Fan 0: set to 0%
+06-18 14:18:56 - INFO - Fan 0: set to 25%
+06-18 14:18:58 - INFO - Fan 0: set to 0%
+06-18 14:19:04 - INFO - Fan 0: set to 25%
+06-18 14:40:05 - INFO - System Initialized Successfully
