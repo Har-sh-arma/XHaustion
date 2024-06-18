@@ -41,8 +41,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     #add a get method to serve when super returns 404 (not found)
     def do_GET(self):
         # print(self.path.split("/"))
-        if (self.path == "raspi"):
+        if (self.path == "/raspi"):
             self.send_response(200)
+            self.end_headers()
             return 
         if(not api_req(self)):
             super().do_GET()
