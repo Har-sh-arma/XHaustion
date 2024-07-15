@@ -11,6 +11,7 @@ class Fan():
     def __init__(self, id , pins , default_speed , fan_step):
         self.id = id
         print(f"Fan {self.id} init")
+        self.fan_step = fan_step
         self.fan_speed = default_speed
         self.pins = pins
         self.set_fan_speed(default_speed)
@@ -34,19 +35,19 @@ class Fan():
     def start(self):
         while True:
             # PUll gpio pin high
-            if int(str(bin(math.floor(abs(70-1)/(100/4)))).split("b")[-1][-1]):
+            if int(str(bin(math.floor(abs(int(self.fan_speed)-1)/(100/self.fan_step)))).split("b")[-1][-1]):
                 GPIO.output(self.pins[0],GPIO.HIGH)
             else:
                 GPIO.output(self.pins[0],GPIO.LOW)
             try:
-                if int(str(bin(math.floor(abs(70-1)/(100/4)))).split("b")[-1][-2]):
+                if int(str(bin(math.floor(abs(int(self.fan_speed)-1)/(100/self.fan_step)))).split("b")[-1][-2]):
                     GPIO.output(self.pins[1],GPIO.HIGH)
                 else:
                     GPIO.output(self.pins[1],GPIO.LOW)
             except IndexError:
                 GPIO.output(self.pins[1],GPIO.LOW)
 
-                
+
     def __str__(self) -> str:
         return str(self.id)
 
