@@ -20,9 +20,9 @@ class System:
         self.shm["passive_mode"] = "default"
         self.shm["override"] = {"fans":{"exhaust": 0, "intake": 0}, "dampers": [0]*config["num_dampers"]}
         if(self.config["has_intake"]):
-            self.intake = Fan(1, self.config["pwm_pins"][1] ,self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["intake"])
-        self.exhaust = Fan(0, self.config["pwm_pins"][0] , self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["exhaust"]) 
-        self.dampers = [Damper(i, self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i]) for i in range(self.config["num_dampers"])]
+            self.intake = Fan(1, self.config["fan_pins"][1] ,self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["intake"], self.config["fan_step"])
+        self.exhaust = Fan(0, self.config["fan_pins"][0] , self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["exhaust"], self.config["fan_step"]) 
+        self.dampers = [Damper(i, self.config["passive_modes"][self.shm["passive_mode"]]["dampers"][i], self.config["pwm_pins"][i]) for i in range(self.config["num_dampers"])]
         i2c_Lock = threading.Lock()
         
         self.tempSensors = [temperatureSensor(i, self.i2c_bus, self.config["ADC_i2c_address"], self.config["ADC_channels"]["temperature"][i], i2c_Lock, self.config["temperature_offset"], self.config["temperature_scaling"]) for i in range(self.config["num_dampers"])]

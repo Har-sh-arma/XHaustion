@@ -10,6 +10,7 @@ from shared_memory_dict import SharedMemoryDict
 import sys as system
 import traceback
 
+# Number of Hoods is limited to 4 due to hardware constraints(PWM pins)
 
 sys = None
 time_format = "%m-%d %H:%M:%S"
