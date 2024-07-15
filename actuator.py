@@ -44,7 +44,7 @@ class Fan():
                     GPIO.output(self.pins[1],GPIO.HIGH)
                 else:
                     GPIO.output(self.pins[1],GPIO.LOW)
-            except:
+            except IndexError:
                 GPIO.output(self.pins[1],GPIO.LOW)
 
 
