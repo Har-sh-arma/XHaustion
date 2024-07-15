@@ -45,7 +45,7 @@
     "has_intake": 1,
     "num_dampers": 2,
     "damper_step": 5,
-    "fan_step": 4,
+    "fan_step": 3,
     "temperature_range": [
         45,
         71,
