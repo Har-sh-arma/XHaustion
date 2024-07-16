@@ -4,11 +4,13 @@ from watchdog.events import FileSystemEventHandler
 import json
 from SystemClasses import System
 import logging
-import logging.handlers
 import os
+from logging.handlers import TimedRotatingFileHandler
+import threading
 from shared_memory_dict import SharedMemoryDict
 import sys as system
 import traceback
+import math
 
 # Number of Hoods is limited to 4 due to hardware constraints(PWM pins)
 
@@ -23,6 +25,29 @@ logger.addHandler(handler)
 logger.setLevel(logging.INFO)
 config = json.load(open("./config/config.json"))
 
+
+powerLogger = logging.Logger('PowerLogger')
+powerLogger.setLevel(25)
+powerLogFormatter = logging.Formatter(fmt='%(asctime)s\t%(message)s', datefmt=time_format)
+powerLogHandler = TimedRotatingFileHandler("powerlogs/log", "m", 1, 5)
+powerLogHandler.setFormatter(powerLogFormatter)
+powerLogger.addHandler(powerLogHandler)
+
+class PowerLoggingThread():
+    def __init__(self, system:System, delay:int):
+        self.system = system
+        self.delay = delay
+        self.thread = threading.Thread(target=self.run)
+        self.thread.daemon = True
+        self.thread.start()
+
+    def run(self):
+        while True:
+            time.sleep(self.delay)
+            exhaustPower = self.system.config["exhaust_fan_power_consumption_curve"][ math.floor(abs(int(self.system.shm.exhaust)-1)/(100/self.system.config["fan_step"]))]
+            if(self.system.config["has_intake"]):
+                intakePower = self.system.config["intake_fan_power_consumption_curve"][ math.floor(abs(int(self.system.shm.intake)-1)/(100/self.system.config["fan_step"]))]
+            powerLogger.log(25, f"{exhaustPower},{intakePower}")
 
 
 class Watcher:
@@ -84,4 +109,5 @@ if __name__ == '__main__':
     sys = System(config, system_state)
     logger.info("System Initialized Successfully")
     watch = Watcher(os.path.join( os.getcwd(), "config"))
+    powerLoggerThread = PowerLoggingThread(sys, 5)
     watch.run()

@@ -1,9 +1,25 @@
 {
+
+    "exhaust_max_rpm": 5000,
+    "intake_max_rpm": 3000,
+    "has_intake": 1,
+    "num_dampers": 2,
+    "damper_step": 5,
+    "fan_step": 4,
+    "exhaust_fan_power_consumption_curve":[0, 100, 150 , 280],
+    "intake_fan_power_consumption_curve":[0, 70, 100 , 180],
+
     "exhaust_pressure_range": [
         255,
         651,
         1500,
         2000
+    ],
+    "temperature_range": [
+        45,
+        71,
+        122,
+        188
     ],
     "exhaust_fan_power_scaling_exhaust_pressure": [
         25,
@@ -17,46 +33,42 @@
         75,
         100
     ],
-    "ADC_i2c_address": "0x48",
-    "pressure_offset": 56,
-    "pressure_scaling": 12,
-    "temperature_offset": 100,
-    "temperature_scaling": 1,
-    "ADC_channels": {
-        "exhaust_pressure": 0,
-        "temperature": [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7
+
+
+    "exhaust_fan_power_scaling_for_hoods": [
+        [
+            0,
+            0,
+            0,
+            0
+        ],
+        [
+            0,
+            0,
+            0,
+            0
         ]
-    },
-    "pwm_pins": [
-        12,
-        32,
-        33,
-        35
     ],
-    "fan_pins": [
-        [11, 13],
-        [22, 24],
-        [26, 28],
-        [29, 31]
+    "intake_fan_power_scaling_for_hoods": [
+        [
+            0,
+            0,
+            0,
+            0
+        ],
+        [
+            0,
+            0,
+            0,
+            0
+        ]
     ],
-    "exhaust_max_rpm": 5000,
-    "intake_max_rpm": 3000,
-    "has_intake": 1,
-    "num_dampers": 2,
-    "damper_step": 5,
-    "fan_step": 4,
-    "temperature_range": [
+
+    "damper_angles": [
+        25,
         45,
-        71,
-        122,
-        188
+        60,
+        90
     ],
     "passive_modes": {
         "1": {
@@ -100,39 +112,35 @@
             ]
         }
     },
-    "exhaust_fan_power_scaling_for_hoods": [
-        [
-            0,
-            0,
-            0,
-            0
-        ],
-        [
-            0,
-            0,
-            0,
-            0
-        ]
-    ],
-"intake_fan_power_scaling_for_hoods": [
-        [
-            0,
-            0,
-            0,
-            0
-        ],
-        [
-            0,
-            0,
-            0,
-            0
-        ]
-    ],
 
-    "damper_angles": [
-        25,
-        45,
-        60,
-        90
+    "ADC_i2c_address": "0x48",
+    "pressure_offset": 56,
+    "pressure_scaling": 12,
+    "temperature_offset": 100,
+    "temperature_scaling": 1,
+    "ADC_channels": {
+        "exhaust_pressure": 0,
+        "temperature": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+        ]
+    },
+    "pwm_pins": [
+        12,
+        32,
+        33,
+        35
+    ],
+    "fan_pins": [
+        [11, 13],
+        [22, 24],
+        [26, 28],
+        [29, 31]
     ]
+
 }
