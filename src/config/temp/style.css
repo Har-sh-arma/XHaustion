@@ -43,10 +43,24 @@ body{
     font-size: 5vh;
     color: var(--primary-color);
     background-color: var(--very-light);
-    color: 
 }
 
 input[type="range"]::-webkit-slider-thumb {
 
     transform: rotate(90deg);
+}
+
+#fanSwitch{
+    display: grid;
+    background-color: rgba(0, 0, 0, 0.2);
+    grid-template-rows: 1fr, 1fr;
+    z-index: 1000;
+    position: fixed;
+    top:40vh;
+    left:88vw;
+    text-wrap: nowrap;
+}
+
+#fanSwitch>div{
+    font-size: 4vh !important;
 }

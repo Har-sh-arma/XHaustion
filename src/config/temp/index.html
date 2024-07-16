@@ -16,11 +16,23 @@
     <div class="content" id="content">
         
     </div>
+    <div id="fanSwitch">
+            <div>
+
+            <input type="radio" name="selected_fan" value="exhaust" onchange="selectFan('exhaust')">Exhaust
+            </div>
+            <div>
+
+            <input type="radio" name="selected_fan" value="intake" onchange="selectFan('intake')">Intake
+            </div>
+
+    </div>
     
     <script src="../../global.js"></script>
 
     <script>
         selectedHood = 0
+        selected_fan = "exhaust"
         let animate =  async() => {
             let config = await getConfig()
             document.querySelector(".nav").innerHTML = `<div class="nav-font"><a href="../">BACK</a></div>`
@@ -35,13 +47,13 @@
             content.innerHTML = ""
             for (let i = 0; i < config["temperature_range"].length; i++) {
                 content.innerHTML += `<div class="inp_cont">
-                    <div class="currValue">${config["fan_power_scaling_for_hoods"][selectedHood][i]} %</div>
-                    <input type="range" value="${config["fan_power_scaling_for_hoods"][selectedHood][i]}" min="0" max="100" step="${100/config["fan_step"]}"class="vertical"><div class="temperature">${config["temperature_range"][i]} °C</div></div>`
+                    <div class="currValue">${config[`${selected_fan}_fan_power_scaling_for_hoods`][selectedHood][i]} %</div>
+                    <input type="range" value="${config[`${selected_fan}_fan_power_scaling_for_hoods`][selectedHood][i]}" min="0" max="100" step="${100/config["fan_step"]}"class="vertical"><div class="temperature">${config["temperature_range"][i]} °C</div></div>`
             }
             let inps = document.querySelectorAll("input")
             for (let i = 0; i < inps.length; i++) {
                 inps[i].addEventListener("change", function (value) {
-                    config["fan_power_scaling_for_hoods"][selectedHood][i] = Number(value.target.value)
+                    config[`${selected_fan}_fan_power_scaling_for_hoods`][selectedHood][i] = Number(value.target.value)
                     setConfig(config)
                     setTimeout(animate, 0)
                 })
@@ -53,6 +65,11 @@
 
         const selectHood = (i) => {
             selectedHood = i
+            animate()
+        }
+
+        const selectFan = (i) => {
+            selected_fan = i
             animate()
         }
 

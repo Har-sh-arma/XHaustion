@@ -48,8 +48,30 @@ class System:
         active_flag = False
         if(self.config["has_intake"]):
             if (not self.shm["override"]["fans"]["intake"]):
-                # Query how does intake scale with the temperature        ????? 
-                self.intake.set_fan_speed(self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["intake"])
+                power = 0
+                for i in self.tempSensors:
+                    temperature_i = i.temperature
+                    l = len(self.config["temperature_range"])
+                    while(l):
+                        if(temperature_i > self.config["temperature_range"][l-1]):
+                            power+= self.config["intake_fan_power_scaling_for_hoods"][i.id][l-1]
+                            break
+                        l-=1
+                #check for exhaust pressure
+                l = len(self.config["exhaust_pressure_range"])
+                while(l):
+                    if(self.shm["exhaustPressure"] > self.config["exhaust_pressure_range"][l-1]):
+                        if(self.config["intake_fan_power_scaling_exhaust_pressure"][l-1] > power):
+                            power= self.config["intake_fan_power_scaling_exhaust_pressure"][l-1]
+                            break
+                    l-=1
+
+                if(power == 0):
+                    self.intake.set_fan_speed(self.config["passive_modes"][self.shm["passive_mode"]]["fans"]["intake"])
+                else:
+                    if power>100:
+                        power = 100
+                    self.intake.set_fan_speed(power)
             else:
                 self.intake.set_fan_speed(self.shm["intake"])
 
@@ -62,7 +84,7 @@ class System:
                 l = len(self.config["temperature_range"])
                 while(l):
                     if(temperature_i > self.config["temperature_range"][l-1]):
-                        power+= self.config["fan_power_scaling_for_hoods"][i.id][l-1]
+                        power+= self.config["exhaust_fan_power_scaling_for_hoods"][i.id][l-1]
                         active_flag = True
                         break
                     l-=1
@@ -70,8 +92,8 @@ class System:
             l = len(self.config["exhaust_pressure_range"])
             while(l):
                 if(self.shm["exhaustPressure"] > self.config["exhaust_pressure_range"][l-1]):
-                    if(self.config["fan_power_scaling_exhaust_pressure"][l-1] > power):
-                        power= self.config["fan_power_scaling_exhaust_pressure"][l-1]
+                    if(self.config["exhaust_fan_power_scaling_exhaust_pressure"][l-1] > power):
+                        power= self.config["exhaust_fan_power_scaling_exhaust_pressure"][l-1]
                         active_flag = True
                         break
                 l-=1
