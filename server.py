@@ -52,16 +52,20 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if(self.path.split("/")[2] == "config"):
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
-            self.end_headers()
             config = json.load(open("./config/config.json"))
-            self.wfile.write(json.dumps(config).encode("utf-8"))
+            data = json.dumps(config).encode("utf-8")
+            self.send_header("Content-Length", len(data))
+            self.end_headers()
+            self.wfile.write(data)
             return
         if(self.path.split("/")[2] == "system_state"):
             print(system_state)
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
+            data = shared_memory_dict.serializers.JSONSerializer().dumps(str(system_state).replace("'", '"'))
+            self.send_header("Content-Length", len(data))
             self.end_headers()
-            self.wfile.write(shared_memory_dict.serializers.JSONSerializer().dumps(str(system_state).replace("'", '"')))
+            self.wfile.write(data)
             return
         self.send_response(404)
         self.end_headers()
