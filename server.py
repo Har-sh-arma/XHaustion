@@ -5,6 +5,8 @@ import json
 from shared_memory_dict import SharedMemoryDict
 import shared_memory_dict
 import shared_memory_dict.serializers
+import os
+import re
 
 
 system_state = None
@@ -22,9 +24,14 @@ def api_req(request) -> bool:
 Shared memory manipulation works only on the higher level so pull the dict modify and push it back
 '''
 
+class powerLogHandler(http.server.SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=".", **kwargs)
+
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=DIRECTORY, **kwargs)
+    
    
     def end_headers(self):
         self.send_header('Access-Control-Allow-Origin', '*')
@@ -40,7 +47,27 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     #add a get method to serve when super returns 404 (not found)
     def do_GET(self):
-        # print(self.path.split("/"))
+        # at path logs serve to directory powerlogs
+        if (self.path == "/powerLogs"):
+            #create a list of all files in the directory poerlog
+            self.send_response(200)
+            data = json.dumps([f for f in os.listdir("./powerLogs")]).encode("utf-8")
+            self.send_header("Content-Length", len(data))
+            self.end_headers()  
+            self.wfile.write(data)
+            return
+        
+        # Serve the files
+        pattern = re.compile(r"^/powerLogs/.*")
+        if (pattern.match(self.path)):
+            self.send_response(200)
+            filename = self.path.split("/")[-1]
+            data = open("./powerLogs/" + filename, "rb").read()
+            self.send_header("Content-Length", len(data))
+            self.end_headers()
+            self.wfile.write(data)
+            return
+
         if (self.path == "/raspi"):
             self.send_response(200)
             self.end_headers()
@@ -93,6 +120,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 if __name__ == "__main__":
     system_state = SharedMemoryDict('system_state', 1024)
+    
     with socketserver.TCPServer(("", PORT), Handler) as httpd:
         print("serving at port", PORT)
         httpd.serve_forever()
