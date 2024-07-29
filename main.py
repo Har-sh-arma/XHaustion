@@ -44,9 +44,9 @@ class PowerLoggingThread():
     def run(self):
         while True:
             time.sleep(self.delay)
-            exhaustPower = self.system.config["exhaust_fan_power_consumption_curve"][ math.floor(abs(int(self.system.shm.exhaust)-1)/(100/self.system.config["fan_step"]))]
+            exhaustPower = self.system.config["exhaust_fan_power_consumption_curve"][ math.floor(abs(int(self.system.shm["exhaust"])-1)/(100/self.system.config["fan_step"]))]
             if(self.system.config["has_intake"]):
-                intakePower = self.system.config["intake_fan_power_consumption_curve"][ math.floor(abs(int(self.system.shm.intake)-1)/(100/self.system.config["fan_step"]))]
+                intakePower = self.system.config["intake_fan_power_consumption_curve"][ math.floor(abs(int(self.system.shm["intake"])-1)/(100/self.system.config["fan_step"]))]
             powerLogger.log(25, f"{exhaustPower},{intakePower}")
 
 

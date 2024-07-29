@@ -55,7 +55,7 @@ class Damper():
 
     def __init__(self, id, default_angle:int, pin):
         self.id = id
-        print(f"Damper {self.id} init")
+        print(f"Damper {self.id} init on {pin}")
         self.damper_angle = default_angle
         self.pin = pin
         self.set_damper_angle(default_angle)
@@ -74,6 +74,7 @@ class Damper():
         self.damper_angle = angle
     def start(self):
         while True:
+            print(((int(self.damper_angle)/90)*100))
             self.pi_pwm.ChangeDutyCycle(((int(self.damper_angle)/90)*100))
             sleep(1)    
     def __str__(self) -> str:
