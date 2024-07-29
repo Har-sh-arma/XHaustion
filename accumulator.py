@@ -17,7 +17,7 @@ class accumulator():
         for file in os.listdir("./powerlogs"):
             if (file == "log"):
                 continue
-            file_time = time.strptime(file.removeprefix("log."), "%Y-%m-%d_%H-%M")
+            file_time = time.strptime(file.removeprefix("log."), "%Y-%m-%d_%H")
             if(file_time.tm_hour >= current_time.tm_hour):
                 continue
 
