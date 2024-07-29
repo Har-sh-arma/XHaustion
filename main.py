@@ -29,7 +29,7 @@ config = json.load(open("./config/config.json"))
 powerLogger = logging.Logger('PowerLogger')
 powerLogger.setLevel(25)
 powerLogFormatter = logging.Formatter(fmt='%(asctime)s\t%(message)s', datefmt=time_format)
-powerLogHandler = TimedRotatingFileHandler("powerlogs/log", "m", 1, 5)
+powerLogHandler = TimedRotatingFileHandler("powerLogs/log", "h", 1, 5)
 powerLogHandler.setFormatter(powerLogFormatter)
 powerLogger.addHandler(powerLogHandler)
 
