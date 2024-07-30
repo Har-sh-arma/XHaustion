@@ -57,12 +57,21 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(data)
             return
         
+        if (self.path == "/accumulated"):
+            #create a list of all files in the directory poerlog
+            self.send_response(200)
+            data = json.dumps([f for f in os.listdir("./accumulated")]).encode("utf-8")
+            self.send_header("Content-Length", len(data))
+            self.end_headers()  
+            self.wfile.write(data)
+            return
+        
         # Serve the files
-        pattern = re.compile(r"^/powerLogs/.*")
+        pattern = re.compile(r"^/accumulated/.*")
         if (pattern.match(self.path)):
             self.send_response(200)
             filename = self.path.split("/")[-1]
-            data = open("./powerLogs/" + filename, "rb").read()
+            data = open("./accumulated/" + filename, "rb").read()
             self.send_header("Content-Length", len(data))
             self.end_headers()
             self.wfile.write(data)
