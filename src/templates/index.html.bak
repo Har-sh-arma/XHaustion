@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XHaustion Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">XHaustion Dashboard</h1>
+            <p class="text-gray-600">Smart Kitchen Exhaust Control System</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Temperature Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Temperature</h2>
+                <div class="text-4xl font-bold text-blue-600 mb-2">
+                    <span id="temperature">--</span>°C
+                </div>
+                <canvas id="tempChart" class="w-full h-48"></canvas>
+            </div>
+
+            <!-- Gas Level Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Gas Level</h2>
+                <div class="text-4xl font-bold text-green-600 mb-2">
+                    <span id="gasLevel">--</span> ppm
+                </div>
+                <canvas id="gasChart" class="w-full h-48"></canvas>
+            </div>
+
+            <!-- Fan Control Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Fan Control</h2>
+                <div class="flex items-center mb-4">
+                    <span class="text-4xl font-bold text-purple-600 mr-2">
+                        <span id="fanSpeed">--</span>%
+                    </span>
+                    <label class="inline-flex items-center ml-4">
+                        <input type="checkbox" id="autoMode" class="form-checkbox h-5 w-5 text-blue-600">
+                        <span class="ml-2">Auto Mode</span>
+                    </label>
+                </div>
+                <input type="range" id="fanSpeedControl" min="0" max="100" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            </div>
+
+            <!-- System Status Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">System Status</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-gray-600">Last Update</p>
+                        <p id="lastUpdate" class="font-semibold">--</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600">Power Usage</p>
+                        <p id="powerUsage" class="font-semibold">-- W</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart configurations
+        const tempChartConfig = {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Temperature',
+                    data: [],
+                    borderColor: 'rgb(59, 130, 246)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        };
+
+        const gasChartConfig = {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Gas Level',
+                    data: [],
+                    borderColor: 'rgb(34, 197, 94)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        };
+
+        // Initialize charts
+        const tempChart = new Chart(document.getElementById('tempChart'), tempChartConfig);
+        const gasChart = new Chart(document.getElementById('gasChart'), gasChartConfig);
+
+        // Update system state
+        function updateSystemState() {
+            fetch('/api/system_state')
+                .then(response => response.json())
+                .then(data => {
+                    // Update current values
+                    document.getElementById('temperature').textContent = data.temperature;
+                    document.getElementById('gasLevel').textContent = data.gas_level;
+                    document.getElementById('fanSpeed').textContent = data.fan_speed;
+                    document.getElementById('lastUpdate').textContent = new Date(data.timestamp).toLocaleTimeString();
+                    
+                    // Update charts
+                    const time = new Date(data.timestamp).toLocaleTimeString();
+                    
+                    tempChart.data.labels.push(time);
+                    tempChart.data.datasets[0].data.push(data.temperature);
+                    if (tempChart.data.labels.length > 20) {
+                        tempChart.data.labels.shift();
+                        tempChart.data.datasets[0].data.shift();
+                    }
+                    tempChart.update();
+
+                    gasChart.data.labels.push(time);
+                    gasChart.data.datasets[0].data.push(data.gas_level);
+                    if (gasChart.data.labels.length > 20) {
+                        gasChart.data.labels.shift();
+                        gasChart.data.datasets[0].data.shift();
+                    }
+                    gasChart.update();
+                });
+        }
+
+        // Fan control
+        const fanSpeedControl = document.getElementById('fanSpeedControl');
+        fanSpeedControl.addEventListener('change', () => {
+            fetch('/api/system_state', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    fan_speed: parseInt(fanSpeedControl.value)
+                })
+            });
+        });
+
+        // Auto mode toggle
+        const autoMode = document.getElementById('autoMode');
+        autoMode.addEventListener('change', () => {
+            fetch('/api/config', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    fan_speed_auto: autoMode.checked
+                })
+            });
+        });
+
+        // Initial state and periodic updates
+        updateSystemState();
+        setInterval(updateSystemState, 500);
+    </script>
+</body>
+</html> 

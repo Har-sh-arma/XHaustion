@@ -1,9 +1,13 @@
-from flask import jsonify, request
+from flask import jsonify, request, render_template
 from src.api import init_app
 from src.core.system_state import SystemState
 
 def create_app(system: SystemState):
     app = init_app()
+
+    @app.route('/')
+    def index():
+        return render_template('index.html')
 
     @app.route('/api/system_state', methods=['GET'])
     def get_system_state():
