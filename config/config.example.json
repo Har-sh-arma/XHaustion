@@ -1,0 +1,14 @@
+{
+    "temp_threshold": 30,
+    "gas_threshold": 500,
+    "fan_speed_auto": true,
+    "update_interval": 500,
+    "logging": {
+        "level": "INFO",
+        "file": "logs/system.log"
+    },
+    "security": {
+        "jwt_secret": "your-secret-key",
+        "rate_limit": 100
+    }
+} 
