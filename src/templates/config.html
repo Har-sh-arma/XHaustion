@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XHaustion - Configuration</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow mb-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center space-x-4">
+          <span class="text-xl font-bold text-blue-600">XHaustion</span>
+          <a href="/" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+          <a href="/hoods" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Hoods</a>
+          <a href="/fan" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Fan</a>
+          <a href="/help" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Help</a>
+          <a href="/config" class="text-white bg-blue-600 px-3 py-2 rounded-md text-sm font-medium">Config</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto px-4">
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold text-gray-800">System Configuration</h1>
+      <p class="text-gray-600">Manage system settings</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- General Settings -->
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">General Settings</h2>
+        <form id="generalSettings" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">System Name</label>
+            <input type="text" value="XHaustion Main" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Location</label>
+            <input type="text" value="Main Kitchen" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Time Zone</label>
+            <select class="w-full border rounded px-3 py-2">
+              <option>UTC+00:00</option>
+              <option selected>UTC+01:00</option>
+              <option>UTC+02:00</option>
+            </select>
+          </div>
+          <div class="flex items-center">
+            <input type="checkbox" id="notifications" class="mr-2" checked>
+            <label for="notifications">Enable Notifications</label>
+          </div>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save Changes</button>
+        </form>
+      </div>
+
+      <!-- Fan Control Settings -->
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Fan Control Settings</h2>
+        <form id="fanSettings" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Default Mode</label>
+            <select class="w-full border rounded px-3 py-2">
+              <option>Manual</option>
+              <option selected>Automatic</option>
+              <option>Eco</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Minimum Speed (%)</label>
+            <input type="number" value="20" min="0" max="100" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Maximum Speed (%)</label>
+            <input type="number" value="100" min="0" max="100" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Speed Ramp Time (seconds)</label>
+            <input type="number" value="5" min="1" max="30" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save Changes</button>
+        </form>
+      </div>
+
+      <!-- Sensor Settings -->
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Sensor Settings</h2>
+        <form id="sensorSettings" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Temperature Unit</label>
+            <select class="w-full border rounded px-3 py-2">
+              <option selected>Celsius (°C)</option>
+              <option>Fahrenheit (°F)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Update Interval (seconds)</label>
+            <input type="number" value="1" min="1" max="60" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Gas Level Alert Threshold (ppm)</label>
+            <input type="number" value="500" min="100" max="1000" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Temperature Alert Threshold (°C)</label>
+            <input type="number" value="35" min="20" max="50" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save Changes</button>
+        </form>
+      </div>
+
+      <!-- Maintenance Settings -->
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Maintenance Settings</h2>
+        <form id="maintenanceSettings" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Service Interval (days)</label>
+            <input type="number" value="90" min="30" max="365" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Filter Change Reminder (hours)</label>
+            <input type="number" value="720" min="100" max="1000" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Maintenance Contact</label>
+            <input type="email" value="service@xhaustion.com" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div class="flex items-center">
+            <input type="checkbox" id="maintenanceAlerts" class="mr-2" checked>
+            <label for="maintenanceAlerts">Enable Maintenance Alerts</label>
+          </div>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const forms = ['generalSettings', 'fanSettings', 'sensorSettings', 'maintenanceSettings'];
+    forms.forEach(id => {
+      document.getElementById(id).addEventListener('submit', e => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        console.log(`Saving ${id}:`, Object.fromEntries(formData));
+        const button = e.target.querySelector('button[type="submit"]');
+        const originalText = button.textContent;
+        button.textContent = 'Saved!';
+        button.classList.replace('bg-blue-600', 'bg-green-600');
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.classList.replace('bg-green-600', 'bg-blue-600');
+        }, 2000);
+      });
+    });
+  </script>
+</body>
+</html>

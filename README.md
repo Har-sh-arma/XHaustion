@@ -1,171 +1,86 @@
-# XHaustion - Smart Kitchen Exhaust Control System
+# XHaustion - Smart Kitchen Exhaust Monitoring System
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
-![Flask Version](https://img.shields.io/badge/flask-3.0%2B-green)
+XHaustion is a modern web-based monitoring and control system for kitchen exhaust systems. It provides real-time monitoring of temperature, gas levels, fan speeds, and overall system performance.
 
-XHaustion is an intelligent kitchen ventilation control system designed to optimize air quality, reduce fire hazards, and improve energy efficiency. Originally designed for Raspberry Pi, this demo version simulates the hardware interactions for demonstration purposes.
+## Features
 
-## 🌟 Features
+- **Real-time Dashboard**: Monitor temperature, gas levels, fan speed, and air quality
+- **Hood Management**: Control multiple hood zones with individual temperature and airflow monitoring
+- **Fan Control**: Adjust fan speeds, monitor performance metrics, and view historical data
+- **Responsive Design**: Modern, mobile-friendly interface built with Tailwind CSS
+- **API Integration**: RESTful API endpoints for system state and configuration
 
-### Core Functionality
-- Real-time temperature and gas level monitoring
-- Automated fan speed control with fuzzy logic
-- Manual and automatic operation modes
-- Energy consumption tracking
-- Air quality assessment
+## Tech Stack
 
-### Technical Features
-- Modern web-based dashboard
-- Real-time data visualization
-- RESTful API
-- Secure authentication system
-- Comprehensive logging system
+- HTML5/CSS3/JavaScript
+- Tailwind CSS for styling
+- Chart.js for data visualization
+- Python backend API
+- Vercel for deployment
 
-## 🛠️ Technology Stack
-
-### Backend
-- Python 3.8+
-- Flask 3.0+
-- Flask-CORS
-- Flask-JWT-Extended
-- Pydantic
-
-### Frontend
-- HTML5/CSS3
-- JavaScript
-- Chart.js
-- Tailwind CSS
-
-### Deployment
-- Vercel (Demo)
-- NGINX (Production)
-- Gunicorn
-
-## 📋 Prerequisites
-
-- Python 3.8 or higher
-- pip (Python package manager)
-- Node.js and npm (for development)
-
-## 🔧 Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Har-sh-arma/XHaustion.git
-   cd XHaustion
-   ```
-
-2. Create and activate a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # Linux/Mac
-   venv\Scripts\activate     # Windows
-   ```
-
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Run the application:
-   ```bash
-   python main.py
-   ```
-
-5. Access the dashboard at `http://localhost:5000`
-
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 XHaustion/
-├── src/                # Source code directory
-├── config/            # Configuration files
-├── logs/             # System logs
-├── powerLogs/        # Power consumption logs
-├── service/          # Service related files
-├── splash/           # Splash screen assets
-├── temp_test/        # Testing files
-├── SystemClasses.py  # Core system classes
-├── Sensor.py         # Sensor implementations
-├── actuator.py       # Actuator control
-├── server.py         # Web server
-├── main.py           # Main application
-└── requirements.txt   # Python dependencies
+├── api/
+│   ├── index.py          # Python API handler
+│   └── requirements.txt  # Python dependencies
+├── src/
+│   ├── static/          # Static assets (CSS, JS)
+│   └── templates/       # HTML templates
+│       ├── index.html   # Dashboard
+│       ├── hoods.html   # Hood management
+│       ├── fan.html     # Fan control
+│       ├── help.html    # Help documentation
+│       └── config.html  # System configuration
+├── vercel.json          # Vercel deployment config
+└── .vercelignore       # Vercel ignore patterns
 ```
 
-## 🔌 API Endpoints
+## Getting Started
 
-### System State
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/XHaustion.git
+   cd XHaustion
+   ```
+
+2. Install dependencies:
+   ```bash
+   # For Python API
+   cd api
+   pip install -r requirements.txt
+   ```
+
+3. Run locally:
+   ```bash
+   # Using Vercel CLI
+   vercel dev
+   ```
+
+4. Deploy to Vercel:
+   ```bash
+   vercel
+   ```
+
+## API Endpoints
+
 - `GET /api/system_state` - Get current system state
 - `POST /api/system_state` - Update system state
-
-### Configuration
 - `GET /api/config` - Get system configuration
 - `POST /api/config` - Update system configuration
 
-## 📊 Dashboard Features
+## Version History
 
-- Real-time temperature and gas level monitoring
-- Interactive fan speed control
-- System status indicators
-- Historical data visualization
-- Performance metrics
-- Energy consumption tracking
+### v1.0
+- Initial release
+- Modern UI with responsive design
+- Real-time monitoring dashboard
+- Hood zone management
+- Fan control system
+- Help documentation
+- System configuration
 
-## 🔐 Security
+## License
 
-- JWT-based authentication
-- API rate limiting
-- CORS protection
-- Input validation
-- Error handling
-
-## 🔄 Hardware Simulation
-
-The demo version includes simulated hardware components:
-- Temperature sensor (20-35°C range)
-- Gas sensor (0-1000 ppm)
-- Exhaust fan with variable speed
-- Power consumption monitoring
-
-## 📈 Performance
-
-- Real-time updates (500ms refresh rate)
-- Smooth data transitions
-- Responsive design
-- Optimized for mobile devices
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Authors
-
-- Harsh Sharma - *Initial work* - [Har-sh-arma](https://github.com/Har-sh-arma)
-- Mayank Chouhan - *maintenance and bug fixing* - [MAYANK2264](https://github.com/MAYANK2264)
-
-## 📄 Documentation
-
-For detailed documentation and system requirements specification, please refer to our [SRS Document](https://docs.google.com/document/d/1cHztWfM1maviUGyw1m9Zhh6XxKp-vSWppw0n4d6HxLQ/edit?usp=sharing)
-
-## 🙏 Acknowledgments
-
-- Chart.js for data visualization
-- Flask community for the excellent framework
-- All contributors who helped in testing and development
-
-## 📞 Contact
-
-- Project Link: [https://github.com/Har-sh-arma/XHaustion](https://github.com/Har-sh-arma/XHaustion)
-
----
-⭐️ If you find this project useful, please consider giving it a star!
+MIT License - See LICENSE file for details

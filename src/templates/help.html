@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XHaustion - Help</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    .card {
+      background-color: #ffffff;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow mb-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center space-x-4">
+          <span class="text-xl font-bold text-blue-600">XHaustion</span>
+          <a href="/" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+          <a href="/hoods" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Hoods</a>
+          <a href="/fan" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Fan</a>
+          <a href="/help" class="text-white bg-blue-600 px-3 py-2 rounded-md text-sm font-medium">Help</a>
+          <a href="/config" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Config</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto px-4">
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold text-gray-800">Help Center</h1>
+      <p class="text-gray-600">Find answers and support</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Quick Start Guide -->
+      <div class="card">
+        <h2 class="text-xl font-semibold mb-4">Quick Start Guide</h2>
+        <div class="space-y-4">
+          <div>
+            <h3 class="font-medium text-gray-800 mb-2">1. Dashboard Overview</h3>
+            <p class="text-gray-600">Monitor your kitchen exhaust system in real time—airflow, fan status, and more.</p>
+          </div>
+          <div>
+            <h3 class="font-medium text-gray-800 mb-2">2. Hood Management</h3>
+            <p class="text-gray-600">Configure individual zones, monitor temperature, and adjust damper positions.</p>
+          </div>
+          <div>
+            <h3 class="font-medium text-gray-800 mb-2">3. Fan Control</h3>
+            <p class="text-gray-600">Set modes, control speeds, view performance metrics, and schedule maintenance.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Troubleshooting -->
+      <div class="card">
+        <h2 class="text-xl font-semibold mb-4">Troubleshooting</h2>
+        <div class="space-y-4">
+          <div>
+            <h3 class="font-medium text-gray-800 mb-2">Common Issues</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-2">
+              <li>System not responding: Check power and network connections</li>
+              <li>Incorrect readings: Verify sensor calibration</li>
+              <li>Fan speed issues: Check for obstructions or maintenance needs</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-medium text-gray-800 mb-2">Error Codes</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-2">
+              <li>E01: Communication error</li>
+              <li>E02: Sensor malfunction</li>
+              <li>E03: Fan motor issue</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Support -->
+      <div class="card md:col-span-2">
+        <h2 class="text-xl font-semibold mb-4">Contact Support</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium text-gray-800 mb-2">Technical Support</h3>
+            <p class="text-gray-600 mb-2">Available 24/7 for urgent issues</p>
+            <p class="text-gray-800">Email: support@xhaustion.com</p>
+            <p class="text-gray-800">Phone: +1 (555) 123-4567</p>
+          </div>
+          <div>
+            <h3 class="font-medium text-gray-800 mb-2">Sales & General Inquiries</h3>
+            <p class="text-gray-600 mb-2">Monday - Friday, 9 AM - 5 PM EST</p>
+            <p class="text-gray-800">Email: info@xhaustion.com</p>
+            <p class="text-gray-800">Phone: +1 (555) 987-6543</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

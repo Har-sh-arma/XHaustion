@@ -1,173 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XHaustion Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XHaustion Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .status-badge { padding: 4px 12px; border-radius: 12px; font-size: 0.875rem; font-weight: 500; }
+    .status-badge.running, .status-badge.good { background-color: #10B981; color: white; }
+    .metric-value { font-size: 2rem; font-weight: bold; color: #1F2937; }
+    .metric-unit { font-size: 1.25rem; color: #6B7280; }
+    .range-info { color: #6B7280; font-size: 0.875rem; }
+    .aqi-bar { height: 8px; border-radius: 4px; background: linear-gradient(to right, #EF4444 0%, #F59E0B 33%, #10B981 66%); }
+  </style>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto px-4 py-8">
-        <header class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">XHaustion Dashboard</h1>
-            <p class="text-gray-600">Smart Kitchen Exhaust Control System</p>
-        </header>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Navbar -->
+  <nav class="bg-white shadow sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="text-2xl font-bold text-gray-800">XHaustion</div>
+      <div class="space-x-4">
+        <a href="/" class="text-gray-600 hover:text-blue-600">Dashboard</a>
+        <a href="/hoods" class="text-gray-600 hover:text-blue-600">Hoods</a>
+        <a href="/fan" class="text-gray-600 hover:text-blue-600">Fan</a>
+        <a href="/help" class="text-gray-600 hover:text-blue-600">Help</a>
+        <a href="/config" class="text-gray-600 hover:text-blue-600">Config</a>
+      </div>
+    </div>
+  </nav>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Temperature Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-xl font-semibold mb-4">Temperature</h2>
-                <div class="text-4xl font-bold text-blue-600 mb-2">
-                    <span id="temperature">--</span>°C
-                </div>
-                <canvas id="tempChart" class="w-full h-48"></canvas>
-            </div>
+  <!-- Main Content -->
+  <main class="container mx-auto px-6 py-8">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-800">Smart Kitchen Exhaust Dashboard</h1>
+      <p class="text-gray-600">Live monitoring system for temperature, gas, fan, and air quality</p>
+    </header>
 
-            <!-- Gas Level Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-xl font-semibold mb-4">Gas Level</h2>
-                <div class="text-4xl font-bold text-green-600 mb-2">
-                    <span id="gasLevel">--</span> ppm
-                </div>
-                <canvas id="gasChart" class="w-full h-48"></canvas>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+      <!-- System Status -->
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">System Status</h2>
+        <div class="space-y-4">
+          <div class="flex justify-between">
+            <span>Status:</span>
+            <span class="status-badge running" id="systemStatus">Running</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Air Quality:</span>
+            <span class="status-badge good" id="airQuality">Good</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span>Auto Mode:</span>
+            <input type="checkbox" id="autoMode" class="form-checkbox h-5 w-5 text-green-600">
+          </div>
+          <div>
+            <div class="flex justify-between mb-1">
+              <span>Fan Speed:</span>
+              <span id="fanSpeedValue">0%</span>
             </div>
-
-            <!-- Fan Control Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-xl font-semibold mb-4">Fan Control</h2>
-                <div class="flex items-center mb-4">
-                    <span class="text-4xl font-bold text-purple-600 mr-2">
-                        <span id="fanSpeed">--</span>%
-                    </span>
-                    <label class="inline-flex items-center ml-4">
-                        <input type="checkbox" id="autoMode" class="form-checkbox h-5 w-5 text-blue-600">
-                        <span class="ml-2">Auto Mode</span>
-                    </label>
-                </div>
-                <input type="range" id="fanSpeedControl" min="0" max="100" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-            </div>
-
-            <!-- System Status Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-xl font-semibold mb-4">System Status</h2>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <p class="text-gray-600">Last Update</p>
-                        <p id="lastUpdate" class="font-semibold">--</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-600">Power Usage</p>
-                        <p id="powerUsage" class="font-semibold">-- W</p>
-                    </div>
-                </div>
-            </div>
+            <input type="range" id="fanSpeedControl" min="0" max="100" class="w-full">
+          </div>
         </div>
+      </div>
+
+      <!-- Sensor Readings -->
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Sensor Readings</h2>
+        <div class="space-y-6">
+          <div>
+            <p class="text-gray-600 mb-1">Temperature</p>
+            <div class="flex items-baseline">
+              <span class="metric-value" id="temperature">25.0</span>
+              <span class="metric-unit ml-1">°C</span>
+            </div>
+            <p class="range-info">Normal range: 20-35°C</p>
+          </div>
+          <div>
+            <p class="text-gray-600 mb-1">Gas Level</p>
+            <div class="flex items-baseline">
+              <span class="metric-value" id="gasLevel">100</span>
+              <span class="metric-unit ml-1">ppm</span>
+            </div>
+            <p class="range-info">Safe level: &lt; 500 ppm</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Metrics -->
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Performance Metrics</h2>
+        <div class="space-y-4">
+          <div class="flex justify-between">
+            <span>Fan Efficiency</span>
+            <span id="fanEfficiency">90%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Power Consumption</span>
+            <span id="powerConsumption">10W</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Total Energy Used</span>
+            <span id="totalEnergy">0Wh</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Air Quality Index -->
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Air Quality Index</h2>
+        <div class="space-y-4">
+          <div class="flex items-baseline mb-2">
+            <span class="metric-value" id="aqiScore">100</span>
+            <span class="metric-unit ml-1">AQI</span>
+          </div>
+          <div class="aqi-bar w-full"></div>
+          <p class="range-info mt-2">0-50: Poor | 51-80: Moderate | 81-100: Good</p>
+        </div>
+      </div>
     </div>
 
-    <script>
-        // Chart configurations
-        const tempChartConfig = {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'Temperature',
-                    data: [],
-                    borderColor: 'rgb(59, 130, 246)',
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        };
+    <!-- Historical Data -->
+    <div class="bg-white p-6 rounded-lg shadow mt-6">
+      <h2 class="text-xl font-semibold mb-4">Historical Data</h2>
+      <canvas id="historyChart" height="150"></canvas>
+    </div>
+  </main>
 
-        const gasChartConfig = {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'Gas Level',
-                    data: [],
-                    borderColor: 'rgb(34, 197, 94)',
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        };
-
-        // Initialize charts
-        const tempChart = new Chart(document.getElementById('tempChart'), tempChartConfig);
-        const gasChart = new Chart(document.getElementById('gasChart'), gasChartConfig);
-
-        // Update system state
-        function updateSystemState() {
-            fetch('/api/system_state')
-                .then(response => response.json())
-                .then(data => {
-                    // Update current values
-                    document.getElementById('temperature').textContent = data.temperature;
-                    document.getElementById('gasLevel').textContent = data.gas_level;
-                    document.getElementById('fanSpeed').textContent = data.fan_speed;
-                    document.getElementById('lastUpdate').textContent = new Date(data.timestamp).toLocaleTimeString();
-                    
-                    // Update charts
-                    const time = new Date(data.timestamp).toLocaleTimeString();
-                    
-                    tempChart.data.labels.push(time);
-                    tempChart.data.datasets[0].data.push(data.temperature);
-                    if (tempChart.data.labels.length > 20) {
-                        tempChart.data.labels.shift();
-                        tempChart.data.datasets[0].data.shift();
-                    }
-                    tempChart.update();
-
-                    gasChart.data.labels.push(time);
-                    gasChart.data.datasets[0].data.push(data.gas_level);
-                    if (gasChart.data.labels.length > 20) {
-                        gasChart.data.labels.shift();
-                        gasChart.data.datasets[0].data.shift();
-                    }
-                    gasChart.update();
-                });
+  <script>
+    const historyChart = new Chart(document.getElementById('historyChart'), {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [
+          { label: 'Temperature', data: [], borderColor: '#EF4444', borderWidth: 2, fill: false },
+          { label: 'Gas Level', data: [], borderColor: '#3B82F6', borderWidth: 2, fill: false },
+          { label: 'Fan Speed', data: [], borderColor: '#10B981', borderWidth: 2, fill: false }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: { display: true },
+          y: { beginAtZero: true }
         }
+      }
+    });
 
-        // Fan control
-        const fanSpeedControl = document.getElementById('fanSpeedControl');
-        fanSpeedControl.addEventListener('change', () => {
-            fetch('/api/system_state', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    fan_speed: parseInt(fanSpeedControl.value)
-                })
-            });
+    function updateDashboard() {
+      fetch('/api/system_state')
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('temperature').textContent = data.temperature.toFixed(1);
+          document.getElementById('gasLevel').textContent = data.gas_level;
+          document.getElementById('fanSpeedValue').textContent = `${data.fan_speed}%`;
+          document.getElementById('fanSpeedControl').value = data.fan_speed;
+          document.getElementById('fanEfficiency').textContent = `${data.fan_efficiency}%`;
+          document.getElementById('powerConsumption').textContent = `${data.power_consumption}W`;
+          document.getElementById('totalEnergy').textContent = `${data.total_energy}Wh`;
+          document.getElementById('aqiScore').textContent = data.aqi_score;
+
+          const time = new Date().toLocaleTimeString();
+          historyChart.data.labels.push(time);
+          historyChart.data.datasets[0].data.push(data.temperature);
+          historyChart.data.datasets[1].data.push(data.gas_level);
+          historyChart.data.datasets[2].data.push(data.fan_speed);
+
+          if (historyChart.data.labels.length > 20) {
+            historyChart.data.labels.shift();
+            historyChart.data.datasets.forEach(ds => ds.data.shift());
+          }
+
+          historyChart.update();
         });
+    }
 
-        // Auto mode toggle
-        const autoMode = document.getElementById('autoMode');
-        autoMode.addEventListener('change', () => {
-            fetch('/api/config', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    fan_speed_auto: autoMode.checked
-                })
-            });
-        });
+    document.getElementById('fanSpeedControl').addEventListener('input', e => {
+      fetch('/api/system_state', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fan_speed: parseInt(e.target.value) })
+      });
+    });
 
-        // Initial state and periodic updates
-        updateSystemState();
-        setInterval(updateSystemState, 500);
-    </script>
+    document.getElementById('autoMode').addEventListener('change', e => {
+      fetch('/api/config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fan_speed_auto: e.target.checked })
+      });
+    });
+
+    setInterval(updateDashboard, 1000);
+    updateDashboard();
+  </script>
 </body>
-</html> 
+</html>

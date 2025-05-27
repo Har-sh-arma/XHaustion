@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XHaustion - Hoods</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <style>
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    .status-badge.running {
+      background-color: #10B981;
+      color: white;
+    }
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #1F2937;
+    }
+    .metric-unit {
+      font-size: 1rem;
+      color: #6B7280;
+      margin-left: 4px;
+    }
+    .card {
+      background-color: #ffffff;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow mb-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center space-x-4">
+          <span class="text-xl font-bold text-blue-600">XHaustion</span>
+          <a href="/" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+          <a href="/hoods" class="text-white bg-blue-600 px-3 py-2 rounded-md text-sm font-medium">Hoods</a>
+          <a href="/fan" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Fan</a>
+          <a href="/help" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Help</a>
+          <a href="/config" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Config</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto px-4">
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold text-gray-800">Hood Management</h1>
+      <p class="text-gray-600">Monitor and control your kitchen hoods</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="hoodZones">
+      <!-- Hood cards inserted here -->
+    </div>
+
+    <div class="mt-6 text-right">
+      <button id="addZone" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        Add Hood Zone
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="addZoneModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 z-50 flex justify-center items-start pt-24">
+    <div class="bg-white rounded-md shadow-lg w-96 p-6">
+      <h2 class="text-lg font-bold mb-4">Add New Hood Zone</h2>
+      <form id="addZoneForm">
+        <label class="block mb-2 text-sm font-medium text-gray-700">Zone Name</label>
+        <input type="text" id="zoneName" required class="w-full border px-3 py-2 mb-4 rounded outline-none focus:ring-2 focus:ring-blue-500"/>
+
+        <label class="block mb-2 text-sm font-medium text-gray-700">Location</label>
+        <input type="text" id="zoneLocation" required class="w-full border px-3 py-2 mb-4 rounded outline-none focus:ring-2 focus:ring-blue-500"/>
+
+        <div class="flex justify-end space-x-2">
+          <button type="button" id="cancelAdd" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Zone</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Create a hood card
+    function createHoodZone(name, location) {
+      return `
+        <div class="card">
+          <div class="flex justify-between items-center mb-4">
+            <div>
+              <h2 class="text-xl font-semibold">${name}</h2>
+              <p class="text-gray-600">${location}</p>
+            </div>
+            <span class="status-badge running">Active</span>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <p class="text-gray-600 mb-1">Temperature</p>
+              <div class="flex items-baseline">
+                <span class="metric-value temperature">25.0</span>
+                <span class="metric-unit">°C</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-gray-600 mb-1">Air Flow</p>
+              <div class="flex items-baseline">
+                <span class="metric-value">250</span>
+                <span class="metric-unit">m³/h</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-gray-600 mb-1">Damper Position</p>
+              <input type="range" class="w-full" min="0" max="100" value="50">
+              <div class="flex justify-between text-sm text-gray-500">
+                <span>0%</span><span>50%</span><span>100%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Initial zones
+    const hoodZones = document.getElementById('hoodZones');
+    const initialZones = [
+      { name: 'Main Kitchen Hood', location: 'Main Cooking Area' },
+      { name: 'Grill Section', location: 'Grilling Station' }
+    ];
+    initialZones.forEach(zone => {
+      hoodZones.innerHTML += createHoodZone(zone.name, zone.location);
+    });
+
+    // Modal handling
+    const modal = document.getElementById('addZoneModal');
+    document.getElementById('addZone').onclick = () => modal.classList.remove('hidden');
+    document.getElementById('cancelAdd').onclick = () => modal.classList.add('hidden');
+    document.getElementById('addZoneForm').onsubmit = (e) => {
+      e.preventDefault();
+      const name = document.getElementById('zoneName').value.trim();
+      const location = document.getElementById('zoneLocation').value.trim();
+      if (name && location) {
+        hoodZones.innerHTML += createHoodZone(name, location);
+        modal.classList.add('hidden');
+        e.target.reset();
+      }
+    };
+
+    // Simulated live data
+    setInterval(() => {
+      document.querySelectorAll('.temperature').forEach(el => {
+        const randomTemp = (Math.random() * 5 + 23).toFixed(1);
+        el.textContent = randomTemp;
+      });
+    }, 3000);
+  </script>
+</body>
+</html>

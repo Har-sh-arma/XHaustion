@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XHaustion - Fan Control</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      background-color: #10B981;
+      color: white;
+    }
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #1F2937;
+    }
+    .metric-unit {
+      font-size: 1rem;
+      color: #6B7280;
+      margin-left: 4px;
+    }
+    .card {
+      background-color: #ffffff;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow mb-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center space-x-4">
+          <span class="text-xl font-bold text-blue-600">XHaustion</span>
+          <a href="/" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+          <a href="/hoods" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Hoods</a>
+          <a href="/fan" class="text-white bg-blue-600 px-3 py-2 rounded-md text-sm font-medium">Fan</a>
+          <a href="/help" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Help</a>
+          <a href="/config" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Config</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto px-4">
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold text-gray-800">Fan Control</h1>
+      <p class="text-gray-600">Monitor and adjust fan settings</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Fan Speed Control -->
+      <div class="card">
+        <h2 class="text-xl font-semibold mb-4">Fan Speed Control</h2>
+        <div class="space-y-4">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">Status:</span>
+            <span class="status-badge" id="fanStatus">Running</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">Mode:</span>
+            <select id="fanMode" class="border rounded px-3 py-1">
+              <option value="auto">Automatic</option>
+              <option value="manual">Manual</option>
+              <option value="eco">Eco Mode</option>
+            </select>
+          </div>
+          <div>
+            <p class="text-gray-600 mb-2">Speed Control</p>
+            <input type="range" id="fanSpeedControl" class="w-full" min="0" max="100" value="60">
+            <div class="flex justify-between text-sm text-gray-600">
+              <span>0%</span>
+              <span id="currentSpeed">60%</span>
+              <span>100%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current Metrics -->
+      <div class="card">
+        <h2 class="text-xl font-semibold mb-4">Current Metrics</h2>
+        <div class="space-y-4">
+          <div>
+            <p class="text-gray-600 mb-1">RPM</p>
+            <div class="flex items-baseline">
+              <span class="metric-value" id="fanRPM">1800</span>
+              <span class="metric-unit">RPM</span>
+            </div>
+          </div>
+          <div>
+            <p class="text-gray-600 mb-1">Power Draw</p>
+            <div class="flex items-baseline">
+              <span class="metric-value" id="powerDraw">120</span>
+              <span class="metric-unit">W</span>
+            </div>
+          </div>
+          <div>
+            <p class="text-gray-600 mb-1">Efficiency</p>
+            <div class="flex items-baseline">
+              <span class="metric-value" id="efficiency">92</span>
+              <span class="metric-unit">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance History -->
+      <div class="card md:col-span-2">
+        <h2 class="text-xl font-semibold mb-4">Performance History</h2>
+        <div style="height: 200px;">
+          <canvas id="performanceChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Maintenance Status -->
+      <div class="card md:col-span-2">
+        <h2 class="text-xl font-semibold mb-4">Maintenance Status</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 border rounded">
+            <p class="text-gray-600">Last Maintenance</p>
+            <p class="font-semibold" id="lastMaintenance">2024-03-15</p>
+          </div>
+          <div class="p-4 border rounded">
+            <p class="text-gray-600">Run Time</p>
+            <p class="font-semibold" id="runTime">1,234 hours</p>
+          </div>
+          <div class="p-4 border rounded">
+            <p class="text-gray-600">Next Service Due</p>
+            <p class="font-semibold" id="nextService">2024-06-15</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    const performanceChart = new Chart(document.getElementById('performanceChart'), {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: 'RPM',
+            borderColor: '#EF4444',
+            data: [],
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.4,
+            yAxisID: 'rpm'
+          },
+          {
+            label: 'Power (W)',
+            borderColor: '#3B82F6',
+            data: [],
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.4,
+            yAxisID: 'power'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+          intersect: false,
+          mode: 'index'
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { maxTicksLimit: 8 }
+          },
+          rpm: {
+            type: 'linear',
+            position: 'left',
+            title: { display: true, text: 'RPM' }
+          },
+          power: {
+            type: 'linear',
+            position: 'right',
+            title: { display: true, text: 'Power (W)' }
+          }
+        }
+      }
+    });
+
+    const speedControl = document.getElementById('fanSpeedControl');
+    const currentSpeed = document.getElementById('currentSpeed');
+    speedControl.addEventListener('input', () => {
+      currentSpeed.textContent = `${speedControl.value}%`;
+    });
+
+    const fanMode = document.getElementById('fanMode');
+    fanMode.addEventListener('change', () => {
+      speedControl.disabled = (fanMode.value === 'auto');
+    });
+
+    function updateMetrics() {
+      const speed = parseInt(speedControl.value);
+      const rpm = Math.round(speed * 30 + 1000);
+      const power = Math.round(speed * 2 + 60);
+      const efficiency = Math.round(90 + Math.random() * 4);
+
+      document.getElementById('fanRPM').textContent = rpm;
+      document.getElementById('powerDraw').textContent = power;
+      document.getElementById('efficiency').textContent = efficiency;
+
+      const time = new Date().toLocaleTimeString();
+      performanceChart.data.labels.push(time);
+      performanceChart.data.datasets[0].data.push(rpm);
+      performanceChart.data.datasets[1].data.push(power);
+
+      if (performanceChart.data.labels.length > 20) {
+        performanceChart.data.labels.shift();
+        performanceChart.data.datasets.forEach(ds => ds.data.shift());
+      }
+
+      performanceChart.update();
+    }
+
+    setInterval(updateMetrics, 1000);
+  </script>
+
+</body>
+</html>

@@ -9,6 +9,22 @@ def create_app(system: SystemState):
     def index():
         return render_template('index.html')
 
+    @app.route('/hoods')
+    def hoods():
+        return render_template('hoods.html')
+
+    @app.route('/fan')
+    def fan():
+        return render_template('fan.html')
+
+    @app.route('/help')
+    def help():
+        return render_template('help.html')
+
+    @app.route('/config')
+    def config():
+        return render_template('config.html')
+
     @app.route('/api/system_state', methods=['GET'])
     def get_system_state():
         return jsonify(system.get_state())
@@ -28,5 +44,9 @@ def create_app(system: SystemState):
         data = request.get_json()
         system.update_config(data)
         return jsonify({"status": "success"})
+
+    @app.route('/static/css/<path:filename>')
+    def serve_static(filename):
+        return app.send_static_file(f'css/{filename}')
 
     return app 

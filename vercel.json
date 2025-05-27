@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "src/templates/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "src/static/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/",
+      "dest": "src/templates/index.html"
+    },
+    {
+      "src": "/hoods",
+      "dest": "src/templates/hoods.html"
+    },
+    {
+      "src": "/fan",
+      "dest": "src/templates/fan.html"
+    },
+    {
+      "src": "/help",
+      "dest": "src/templates/help.html"
+    },
+    {
+      "src": "/config",
+      "dest": "src/templates/config.html"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "src/static/$1"
+    }
+  ]
+} 

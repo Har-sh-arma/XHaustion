@@ -1,0 +1,208 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    @apply bg-gray-50;
+    min-height: 100vh;
+}
+
+/* Main Layout */
+.main-layout {
+    @apply flex min-h-screen;
+}
+
+/* Sidebar Navigation */
+.sidebar {
+    @apply fixed top-0 left-0 bottom-0 w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out;
+    width: 250px;
+}
+
+.sidebar.collapsed {
+    @apply -translate-x-full;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+    @apply flex items-center px-6 py-4 border-b border-gray-200;
+}
+
+.sidebar-brand {
+    @apply flex items-center space-x-3 text-gray-800 hover:text-blue-600 transition-colors duration-200;
+}
+
+.sidebar-brand svg {
+    @apply h-8 w-8 text-blue-600;
+}
+
+.sidebar-brand span {
+    @apply text-xl font-semibold;
+}
+
+/* Sidebar Navigation Links */
+.sidebar-nav {
+    @apply px-4 py-4 space-y-2;
+}
+
+.nav-item {
+    @apply block w-full;
+}
+
+.nav-link {
+    @apply flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-all duration-200;
+}
+
+.nav-link.active {
+    @apply bg-blue-50 text-blue-600 font-medium;
+}
+
+.nav-link svg {
+    @apply h-5 w-5 mr-3 transition-transform duration-200;
+}
+
+.nav-link:hover svg {
+    @apply transform scale-110;
+}
+
+.nav-link span {
+    @apply text-sm font-medium;
+}
+
+/* Main Content */
+.main-content {
+    @apply flex-1 ml-64;
+}
+
+.content-wrapper {
+    @apply p-6;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        @apply -translate-x-full;
+    }
+    
+    .sidebar.mobile-open {
+        @apply translate-x-0;
+    }
+    
+    .main-content {
+        @apply ml-0;
+    }
+    
+    .mobile-nav-trigger {
+        @apply block fixed top-4 left-4 z-50 bg-white rounded-lg shadow-lg p-2;
+    }
+}
+
+/* Utility Classes */
+.status-badge {
+    @apply px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.status-badge.running {
+    @apply bg-green-100 text-green-800;
+}
+
+.status-badge.good {
+    @apply bg-green-100 text-green-800;
+}
+
+.metric-value {
+    @apply text-2xl font-bold text-gray-900;
+}
+
+.metric-unit {
+    @apply text-base text-gray-500 ml-1;
+}
+
+.range-info {
+    @apply text-sm text-gray-500;
+}
+
+/* Page Transition Effects */
+.page-content {
+    @apply opacity-0 transform translate-y-4 transition-all duration-300;
+}
+
+.page-content.loaded {
+    @apply opacity-100 translate-y-0;
+}
+
+/* Loading Indicator */
+.loading-bar {
+    @apply fixed top-0 left-0 w-full h-1 bg-blue-600 transform scale-x-0 transition-transform duration-300;
+    transform-origin: left;
+}
+
+.loading-bar.loading {
+    @apply scale-x-100;
+}
+
+/* Simple Navbar */
+.navbar {
+    @apply bg-blue-500 text-white py-4;
+}
+
+.navbar-container {
+    @apply flex justify-center items-center gap-8;
+}
+
+.nav-link {
+    @apply text-white font-medium hover:text-gray-200;
+}
+
+/* Content Area */
+.content {
+    @apply p-6;
+}
+
+/* Form Elements */
+input[type="range"] {
+    width: 100%;
+    height: 0.5rem;
+    border-radius: 0.25rem;
+    background-color: #e5e7eb;
+    appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 9999px;
+    background-color: #3b82f6;
+    cursor: pointer;
+}
+
+/* Grid Layouts */
+.grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+    .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    
+    .md\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Cards */
+.card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+} 
