@@ -151,6 +151,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👥 Authors
 
 - Harsh Sharma - *Initial work* - [Har-sh-arma](https://github.com/Har-sh-arma)
+- Mayank Chouhan - *maintenance and bug fixing* - [MAYANK2264](https://github.com/MAYANK2264)
 
 ## 📄 Documentation
 
